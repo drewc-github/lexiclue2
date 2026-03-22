@@ -252,13 +252,13 @@ export default function Game({
                             <div className="howEyebrow">How to Play</div>
                             <div className="howText">
                                 Each day, <b>Lexiclues</b> will give you <b>{totalRounds} </b>new words to work
-                                through. Your goal is to choose the definition that fits best!
+                                through. Your goal is to choose the definition that fits.
                                 Some words you've seen, some you've never heard of, but either way
-                                you'll be improving your vocab!
+                                you'll be improving your vocab.
                             </div>
                             <div className="howText">
                                 If stumped, you can use hints before locking in
-                                your answer. The fewer hints you use, the more points you keep!
+                                your answer. The fewer hints you use, the more points you keep.
                             </div>
                         </div>
                     </div>
