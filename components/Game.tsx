@@ -101,8 +101,27 @@ export default function Game({
             };
 
             if (Array.isArray(saved.progress) && saved.progress.length === daily.rounds.length) {
-                setProgress(saved.progress);
+                const repaired = saved.progress.map((p, idx) => {
+                    const selectedIndex =
+                        typeof p?.selectedIndex === "number" ? p.selectedIndex : null;
+
+                    return {
+                        selectedIndex,
+                        isCorrect:
+                            selectedIndex === null
+                                ? null
+                                : selectedIndex === daily.rounds[idx].correctIndex,
+                        used: {
+                            pos: !!p?.used?.pos,
+                            synonym: !!p?.used?.synonym,
+                            sentence: !!p?.used?.sentence,
+                        },
+                    };
+                });
+
+                setProgress(repaired);
             }
+
             if (typeof saved.current === "number") {
                 setCurrent(saved.current);
             }

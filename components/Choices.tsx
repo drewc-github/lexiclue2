@@ -43,7 +43,7 @@ export default function Choices({
               if (disabled) return;
               onSelect(i);
             }}
-            disabled={false}
+            disabled={disabled}
             aria-pressed={isSelected}
           >
             {c}
