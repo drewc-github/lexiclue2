@@ -3,13 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lexiclues.com"),
-  title: "LexiClues - Learn new vocabulary everyday",
+  title: "Lexiclues - Learn new vocabulary everyday",
   description: "Daily word game",
   openGraph: {
-    title: "LexiClues - Learn new vocabulary everyday",
+    title: "Lexiclues - Learn new vocabulary everyday",
     description: "Daily word game",
     url: "https://lexiclues.com",
-    siteName: "LexiClue",
+    siteName: "Lexiclues",
     images: [
       {
         url: "/og-image.png",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LexiClue",
+    title: "Lexiclues - Learn new vocabulary everyday",
     description: "Daily word game",
     images: ["/og-image.png"],
   },
