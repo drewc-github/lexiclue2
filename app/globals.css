@@ -458,12 +458,17 @@ select {
   padding: 12px 12px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
+  color: #111827 !important;
   background: #ffffff;
   font-weight: 600;
   font-size: 14px;
   line-height: 1.25;
   cursor: pointer;
-  transition: transform 120ms var(--ease), background 120ms var(--ease), border-color 120ms var(--ease);
+
+  transition:
+    transform 120ms var(--ease),
+    background-color 120ms var(--ease),
+    border-color 120ms var(--ease);
 }
 
 .choiceBtn:hover:not(:disabled) {
