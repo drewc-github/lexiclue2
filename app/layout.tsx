@@ -3,10 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lexiclues.com"),
-  title: "LexiClue",
+  title: "LexiClues - Learn new vocabulary everyday",
   description: "Daily word game",
   openGraph: {
-    title: "LexiClue",
+    title: "LexiClues - Learn new vocabulary everyday",
     description: "Daily word game",
     url: "https://lexiclues.com",
     siteName: "LexiClue",
