@@ -1,26 +1,1111 @@
-@import "tailwindcss";
-
+/* ------------------------------
+   Global: NYT / Apple-ish base
+-------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f6f7f9;
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.65);
+
+  --panel: #ffffff;
+  --border: rgba(17, 24, 39, 0.10);
+  --borderSoft: rgba(17, 24, 39, 0.06);
+
+  --shadow: 0 8px 28px rgba(17, 24, 39, 0.08);
+
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Apple-like system font everywhere */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: var(--text);
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI Variable",
+    "Segoe UI",
+    "SF Pro Text",
+    "SF Pro Display",
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  /* optional: prevents “fake” bold/italics on some systems */
+  font-synthesis: none;
+}
+
+/* Ensure every element uses the same font */
+*,
+*::before,
+*::after {
+  font-family: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Normalize form controls (common source of mismatched fonts) */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Page shell */
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 28px 14px;
+  background: linear-gradient(#f6f7f9, #f3f4f6);
+}
+
+.shell {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ------------------------------
+   Header
+-------------------------------- */
+.topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.roundMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.roundMeta .helpBtn {
+  margin: 0;
+}
+
+.roundFrac {
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.7);
+}
+
+/* ------------------------------
+   Big Vertical Panel
+-------------------------------- */
+.panel {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(17, 24, 39, 0.10);
+
+  overflow: hidden;
+}
+
+.panelInner {
+  padding: 18px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* consistent spacing between top/mid/bottom */
+}
+
+.panelTop {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.panelMid {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.panelMid .sectionLabel {
+  margin-bottom: 14px;
+  /* extra breathing room under Choose the best match */
+}
+
+.panelBottom {
+  padding-top: 10px;
+  border-top: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+/* --- Card-to-card carousel transition --- */
+.carouselViewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.carouselTrack {
+  display: flex;
+  width: 200%;
+  transform: translateX(0%);
+  will-change: transform;
+}
+
+.carouselPage {
+  flex: 0 0 50%;
+  width: 50%;
+}
+
+.carouselTrack.slideLeft {
+  transition: transform 340ms var(--ease);
+  transform: translateX(-50%);
+}
+
+.panelAnimating {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 14px 36px rgba(17, 24, 39, 0.14);
+}
+
+/* optional: a tiny “lift” while animating */
+.panelAnimating {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    0 14px 36px rgba(17, 24, 39, 0.14);
+}
+
+.sectionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* space between label and content */
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+  text-align: center;
+}
+
+/* ------------------------------
+   Primary Button
+-------------------------------- */
+.primaryBtn {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  background: #111827;
+  color: white;
+  transition: transform 120ms var(--ease), opacity 120ms var(--ease);
+  text-align: center;
+  border-radius: 14px;
+  /* slightly more Apple */
+}
+
+.primaryBtn.finish {
+  font-weight: 700;
+}
+
+.primaryBtn:active {
+  transform: scale(0.99);
+}
+
+.primaryBtn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.fineprint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.6);
+  text-align: center;
+}
+
+/* ------------------------------
+   WordCard: Flip Card + Hints
+-------------------------------- */
+.card {
+  perspective: 1000px;
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.cardInner {
+  position: relative;
+  height: 150px;
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--ease);
+  border-radius: 16px;
+}
+
+.cardInner.flipped {
+  transform: rotateY(180deg);
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 16px;
+
+  background: #fbfbfc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+/* Front: the WORD */
+.cardFace:not(.cardBack) {
+  font-size: 34px;
+  font-weight: 600;
+  /* Apple headline weight */
+  letter-spacing: -0.02em;
+  /* less aggressive tracking */
+  line-height: 1.05;
+}
+
+/* Back: hint text */
+.cardBack {
+  transform: rotateY(180deg);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.45;
+  /* slightly airier */
+  /* Apple-style body weight */
+  text-align: center;
+  line-height: 1.35;
+  color: rgba(17, 24, 39, 0.88);
+}
+
+/* hint-type text on back of card */
+
+.hintBackLabel {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(17, 24, 39, 0.45);
+  letter-spacing: 0.01em;
+}
+
+.cardBackText {
+  text-align: center;
+}
+
+.cardBack {
+  padding-top: 30px;
+}
+
+/* Remaining hints counter pill */
+.counter {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.08);
+  color: rgba(17, 24, 39, 0.85);
+}
+
+/* Hint buttons row */
+.hints {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Hint pills */
+.hintBtn {
+  flex: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  cursor: pointer;
+
+  transition: transform 120ms var(--ease), background 120ms var(--ease);
+
+  color: rgba(17, 24, 39, 0.85);
+}
+
+.hintBtn svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke: currentColor;
+}
+
+.hintBtn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.hintBtn:hover:not(:disabled) {
+  background: rgba(17, 24, 39, 0.05);
+}
+
+.hintBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Subtle color accents via border, not fill */
+.hintPos {
+  color: #2563eb;
+  /* refined blue */
+  border-color: rgba(37, 99, 235, 0.35);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.hintSyn {
+  color: #059669;
+  /* elegant green */
+  border-color: rgba(5, 150, 105, 0.35);
+  background: rgba(5, 150, 105, 0.06);
+}
+
+.hintSent {
+  color: #dc8426;
+  /* soft red */
+  border-color: rgba(220, 123, 38, 0.3);
+  background: rgba(220, 147, 38, 0.06);
+}
+
+/* ------------------------------
+   Back-side switching wobble
+-------------------------------- */
+.cardInner.switching {
+  animation: hintSwitch 240ms var(--ease);
+}
+
+@keyframes hintSwitch {
+  0% {
+    transform: rotateY(180deg);
+  }
+
+  50% {
+    transform: rotateY(142deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+/* ------------------------------
+   Choices (Answer list)
+-------------------------------- */
+.choiceList {
+  display: grid;
+  gap: 10px;
+}
+
+.choiceBtn {
+  width: 100%;
+  text-align: left;
+  padding: 12px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: transform 120ms var(--ease), background 120ms var(--ease), border-color 120ms var(--ease);
+}
+
+.choiceBtn:hover:not(:disabled) {
+  background: rgba(17, 24, 39, 0.02);
+}
+
+.choiceBtn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.choiceBtn.selected {
+  border-color: rgba(17, 24, 39, 0.25);
+  background: rgba(17, 24, 39, 0.03);
+}
+
+.choiceBtn.correct {
+  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.choiceBtn.wrong {
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.choiceBtn:disabled {
+  cursor: default;
+}
+
+.choiceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.choiceText {
+  flex: 1;
+}
+
+.choiceMark {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-weight: 800;
+  opacity: 0.82;
+}
+
+/* ------------------------------
+   Mobile polish
+-------------------------------- */
+@media (max-width: 380px) {
+  .panelInner {
+    padding: 14px;
+  }
+
+  .cardInner {
+    height: 140px;
+  }
+
+  .cardFace:not(.cardBack) {
+    font-size: 32px;
+  }
+}
+
+/* Hints section wrapper */
+.hintsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Light gray small header */
+.hintsLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+}
+
+.hintBtn.used {
+  opacity: 0.35;
+}
+
+/* ------------------------------
+   Results / Report Card
+-------------------------------- */
+.reportCard {
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+
+  /* match panel feel: solid + subtle depth */
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+
+  /* ensure typography looks consistent */
+  color: var(--text);
+}
+
+.reportHeader {
+  position: relative;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.reportNote {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.78);
+  margin-top: 10px;
+}
+
+.reportGrade {
+  margin-top: 10px;
+  font-size: 64px;
+  font-weight: 700;
+  /* more Apple-like than 900 */
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Results header meta line: "95% 🏆" */
+.reportMeta {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportPercent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.55);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.reportTitle {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.breakdownRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.breakdownRow:first-child {
+  border-top: none;
+}
+
+.breakdownLeft {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  /* allows wrapping nicely */
+}
+
+.breakdownMark {
+  width: 22px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.2;
+  margin-top: 1px;
+}
+
+.breakdownWord {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.breakdownDef {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.25;
+  color: rgba(17, 24, 39, 0.72);
+  word-break: break-word;
+}
+
+.breakdownPts {
+  font-weight: 700;
+  min-width: 42px;
+  /* a bit more room so it lines up */
+  text-align: right;
+}
+
+.reportFooter {
+  text-align: center;
+}
+
+.reportFooterLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.60);
+}
+
+.reportFooterScore {
+  margin-top: 4px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.reportFooterOutOf {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.breakdownWord {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: 15px;
+}
+
+.breakdownDefLine {
+  margin-top: 3px;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.breakdownPos {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.55);
+  font-style: italic;
+  /* dictionary vibe */
+  white-space: nowrap;
+}
+
+.breakdownDefText {
+  font-size: 13px;
+  line-height: 1.25;
+  color: rgba(17, 24, 39, 0.72);
+  word-break: break-word;
+}
+
+/* ------------------------------
+   Whole-panel flip container
+-------------------------------- */
+.panelFlip {
+  perspective: 1200px;
+  position: relative;
+  min-height: 620px;
+}
+
+.panelInner3d {
+  position: relative;
+  width: 100%;
+  min-height: 620px;
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--ease);
+}
+
+.panelInner3d.flipped {
+  transform: rotateY(180deg);
+}
+
+/* Front face stays in normal flow so it sets height */
+.panelFront {
+  position: relative;
+  width: 100%;
+  min-height: 620px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Back face overlays exactly on top */
+.panelBack {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 620px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+/* top-right help button row */
+.panelTopRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+/* purple circular ? like a hint pill but circle */
+.helpBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(147, 51, 234, 0.35);
+  background: rgba(147, 51, 234, 0.08);
+  color: rgb(147, 51, 234);
+  font-weight: 800;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 120ms var(--ease), background 120ms var(--ease);
+  position: relative;
+  z-index: 5;
+  line-height: 1;
+}
+
+.helpBtn:hover {
+  background: rgba(147, 51, 234, 0.12);
+}
+
+.helpBtn:active {
+  transform: scale(0.96);
+}
+
+/* ------------------------------
+   How to Play card
+-------------------------------- */
+.howPanel {
+  min-height: 620px;
+}
+
+.howPanelInner {
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+}
+
+.howPanelInner .panelTop,
+.howPanelInner .panelMid,
+.howPanelInner .panelBottom {
+  flex: 1 1 auto;
+}
+
+.howHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.howEyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+}
+
+.howTitle {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+  text-align: center;
+}
+
+.howText {
+  margin-top: 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(17, 24, 39, 0.78);
+  text-align: left;
+}
+
+.howHints {
+  margin-top: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.howHintRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.howHintIcon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.howHintIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.howHintLabel {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.howHintDesc {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.3;
+  color: rgba(17, 24, 39, 0.72);
+}
+
+.howScoringText {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(17, 24, 39, 0.78);
+  text-align: left;
+}
+
+.howScorePill {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.05);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.72);
+  align-self: center;
+}
+
+.howFooter {
+  margin-top: 16px;
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.55);
+  text-align: center;
+  font-weight: bold;
+}
+
+/* ------------------------------
+   Mobile polish
+-------------------------------- */
+@media (max-width: 380px) {
+
+  .panelFlip,
+  .panelInner3d,
+  .panelFront,
+  .panelBack,
+  .howPanel,
+  .howPanelInner {
+    min-height: 580px;
+  }
+}
+
+.breakdownWordRow {
+  display: flex;
+  align-items: center;
+  /* fixes vertical alignment */
+  gap: 6px;
+}
+
+.breakdownHints {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.45);
+  line-height: 1;
+  /* prevents bottom bias */
+}
+
+.hintDot {
+  font-size: 14px;
+  line-height: 1;
+  transform: translateY(-1px);
+  /* visually centers the dot */
+}
+
+.hintScore {
+  background: #fff;
+  border-color: rgba(17, 24, 39, 0.10);
+  font-size: 16px;
+}
+
+.hintGlass {
+  background: #fff;
+  border-color: rgba(17, 24, 39, 0.10);
+  font-size: 16px;
+}
+
+.hintWrong {
+  background: #fff;
+  border-color: rgba(17, 24, 39, 0.10);
+  font-size: 16px;
+}
+
+/* ------------------------------
+   Intro page
+-------------------------------- */
+.introPage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  /* background: #fff4f7; */
+  background: linear-gradient(180deg,
+      #fff4f8 0%,
+      #ffeaf2 60%,
+      #ffe3ee 100%);
+}
+
+.introShell {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.introLogo {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
+}
+
+.introLens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 122px;
+  height: 122px;
+  border-radius: 999px;
+  border: 8px solid #111827;
+  background: rgba(255, 255, 255, 0.72);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+}
+
+.introLensInner {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: rgba(244, 114, 182, 0.14);
+  border: 2px solid rgba(244, 114, 182, 0.22);
+}
+
+.introHandle {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 74px;
+  height: 18px;
+  border-radius: 999px;
+  background: #111827;
+  transform: rotate(45deg);
+  transform-origin: center;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.12);
+}
+
+.introSpark {
+  position: absolute;
+  border-radius: 999px;
+  background: rgba(244, 114, 182, 0.9);
+}
+
+.sparkOne {
+  width: 10px;
+  height: 10px;
+  top: 22px;
+  right: 24px;
+}
+
+.sparkTwo {
+  width: 6px;
+  height: 6px;
+  top: 38px;
+  right: 14px;
+}
+
+.introTitle {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: #111827;
+}
+
+.introTagline {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgba(17, 24, 39, 0.7);
+}
+
+.introPlayBtn {
+  margin-top: 28px;
+  min-width: 170px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 26px;
+  background: #111827;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform 120ms var(--ease), opacity 120ms var(--ease);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
+}
+
+.introPlayBtn:hover {
+  opacity: 0.94;
+}
+
+.introPlayBtn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+.introCredit {
+  margin-top: 28px;
+  font-size: 13px;
+  color: rgba(17, 24, 39, 0.55);
 }
