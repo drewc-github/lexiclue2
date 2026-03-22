@@ -318,8 +318,21 @@ async function enrichWord(word) {
             definitions.find((d) => d.text && d.partOfSpeech) ||
             definitions.find((d) => d.text);
 
-        const definition = stripHtml(bestDef?.text);
+        const definition = cleanDefinition(bestDef?.text);
         const partOfSpeech = bestDef?.partOfSpeech ?? "";
+
+        const lowerDef = normalize(definition);
+
+        if (!definition || !partOfSpeech) return null;
+        if (!["noun", "verb", "adjective", "adverb"].includes(partOfSpeech)) return null;
+        if (definition.length < 16 || definition.length > 120) return null;
+
+        // Reject circular / giveaway definitions
+        if (lowerDef.includes(normalize(word))) return null;
+        if (lowerDef.includes("synonym is")) return null;
+        if (lowerDef.includes("synonyms are")) return null;
+        if (lowerDef.startsWith("synonym")) return null;
+        if (lowerDef.startsWith("see ")) return null;
 
         const synonymBucket = related.find((r) => r.relationshipType === "synonym");
         const synonym =
@@ -327,24 +340,13 @@ async function enrichWord(word) {
                 (s) => normalize(s) !== normalize(word) && isGoodSurfaceWord(s)
             ) ?? word;
 
+        const rawExamples = Array.isArray(examples?.examples) ? examples.examples : [];
+
         const exampleSentence =
-            stripHtml(
-                examples?.examples?.find(
-                    (e) => e.text && stripHtml(e.text).length >= 24
-                )?.text
-            ) ||
-            stripHtml(examples?.examples?.[0]?.text) ||
+            rawExamples
+                .map((e) => cleanExampleSentence(e?.text))
+                .find((text) => isGoodExampleSentence(text, word)) ||
             `The meaning of "${word}" became clear in context.`;
-
-        if (!definition || !partOfSpeech) return null;
-        if (!["noun", "verb", "adjective", "adverb"].includes(partOfSpeech)) return null;
-
-        const normalizedWord = normalize(word);
-        const normalizedDef = normalize(definition);
-
-        // reject circular or low-quality defs
-        if (definition.length < 12 || definition.length > 140) return null;
-        if (normalizedDef === normalizedWord) return null;
 
         return {
             word,
@@ -356,6 +358,50 @@ async function enrichWord(word) {
     } catch {
         return null;
     }
+}
+
+function cleanDefinition(text = "") {
+    let def = stripHtml(text).replace(/\s+/g, " ").trim();
+
+    // Remove leading labels
+    def = def.replace(/^(synonym|synonyms)\s*[:\-]\s*/i, "");
+    def = def.replace(/^(see also|see)\s+.+$/i, "");
+
+    // Remove giveaway phrases inside the definition
+    def = def.replace(/\b(synonym|synonyms)\s+(is|are)\s+[^.;]+[.;]?/gi, "");
+    def = def.replace(/\bor\s+"?[^"]+"?\s+as a synonym[^.;]*[.;]?/gi, "");
+
+    // Clean up punctuation left behind
+    def = def.replace(/\s{2,}/g, " ").trim();
+    def = def.replace(/^[,;:\- ]+|[,;:\- ]+$/g, "").trim();
+
+    return def;
+}
+
+function cleanExampleSentence(text = "") {
+    return stripHtml(text)
+        .replace(/\s+/g, " ")
+        .replace(/^["'“”‘’]+|["'“”‘’]+$/g, "")
+        .trim();
+}
+
+function isGoodExampleSentence(sentence, word) {
+    if (!sentence) return false;
+
+    const s = cleanExampleSentence(sentence);
+    const lower = normalize(s);
+    const lowerWord = normalize(word);
+
+    if (s.length < 24) return false;
+    if (s.length > 140) return false;
+
+    // Avoid weird dictionary-style fragments
+    if (!/[.!?]$/.test(s)) return false;
+
+    // Prefer real context sentences that actually use the word
+    if (!lower.includes(lowerWord)) return false;
+
+    return true;
 }
 
 function formatGeneratedWordsFile(words) {
