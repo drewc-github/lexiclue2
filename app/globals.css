@@ -100,11 +100,14 @@ select {
   position: sticky;
   top: 0;
   z-index: 20;
-  margin: -10px 0 4px;
-  padding: 10px 0;
-  background: rgba(246, 247, 249, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  margin: -10px 0 2px;
+  padding: 10px 0 18px;
+  background: linear-gradient(
+    to bottom,
+    #f6f7f9 0%,
+    rgba(246, 247, 249, 0.96) calc(100% - 10px),
+    rgba(246, 247, 249, 0) 100%
+  );
 }
 
 .topbar > div:first-child,
