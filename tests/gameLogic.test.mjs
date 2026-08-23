@@ -42,6 +42,23 @@ test("restored indexes are range checked and correctness is recomputed", () => {
   assert.equal(restored.progress[1].used.synonym, true);
 });
 
+test("a tentative answer on the current question is not restored", () => {
+  const raw = JSON.stringify({
+    current: 2,
+    showResults: false,
+    progress: daily.rounds.map((_, index) => ({
+      selectedIndex: index % 4,
+      isCorrect: true,
+      used: { pos: false, synonym: false, sentence: false },
+    })),
+  });
+  const restored = restoreGameProgress(raw, daily);
+
+  assert.equal(restored.progress[1].selectedIndex, 1);
+  assert.equal(restored.progress[2].selectedIndex, null);
+  assert.equal(restored.progress[3].selectedIndex, null);
+});
+
 test("daily selection is deterministic and non-overlapping within a cycle", () => {
   const bank = Array.from({ length: 20 }, (_, index) => index);
   const dayMs = 24 * 60 * 60 * 1000;

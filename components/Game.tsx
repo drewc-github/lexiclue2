@@ -102,7 +102,13 @@ export default function Game({
             JSON.stringify({
                 current,
                 showResults,
-                progress,
+                progress: showResults
+                    ? progress
+                    : progress.map((round, roundIndex) =>
+                        roundIndex === current
+                            ? { ...round, selectedIndex: null, isCorrect: null }
+                            : round
+                    ),
             })
         );
     }, [current, didHydrateProgress, progress, progressStorageKey, showResults]);

@@ -74,10 +74,19 @@ export function restoreGameProgress(
         ? (saved.current as number)
         : 0;
 
+    const showResults = saved.showResults === true;
+    const restoredProgress = showResults
+      ? progress
+      : progress.map((round, roundIndex) =>
+          roundIndex < current
+            ? round
+            : { ...round, selectedIndex: null, isCorrect: null }
+        );
+
     return {
       current,
-      showResults: saved.showResults === true,
-      progress,
+      showResults,
+      progress: restoredProgress,
     };
   } catch {
     return fallback;
