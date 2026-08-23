@@ -79,6 +79,13 @@ function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function formatChoice(value) {
+    const withoutTrailingPeriods = String(value).trim().replace(/\.+$/, "").trimEnd();
+    return withoutTrailingPeriods
+        ? `${withoutTrailingPeriods[0].toLocaleLowerCase()}${withoutTrailingPeriods.slice(1)}`
+        : withoutTrailingPeriods;
+}
+
 function normalize(str) {
     return String(str).trim().toLowerCase();
 }
@@ -256,7 +263,7 @@ async function repairEntry(entry, selectedSense, issues) {
         [
             {
                 role: "developer",
-                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, and make the example demonstrate that sense. Write the definition and all distractors with a lowercase first letter. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
+                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, and make the example demonstrate that sense. Write the definition and all distractors with a lowercase first letter and no ending period. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense, issues }) },
         ]
@@ -264,10 +271,10 @@ async function repairEntry(entry, selectedSense, issues) {
 
     return {
         ...entry,
-        definition: String(result.definition).trim(),
+        definition: formatChoice(result.definition),
         synonym: String(result.synonym).trim(),
         exampleSentence: String(result.exampleSentence).trim(),
-        distractors: result.distractors.map((value) => String(value).trim()),
+        distractors: result.distractors.map(formatChoice),
     };
 }
 
@@ -295,7 +302,7 @@ async function curateEntry(bundle) {
         [
             {
                 role: "developer",
-                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
+                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter and no ending period. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
             },
             { role: "user", content: JSON.stringify(bundle) },
         ]
@@ -307,11 +314,11 @@ async function curateEntry(bundle) {
 
     let curated = {
         word: bundle.word,
-        definition: String(result.definition).trim(),
+        definition: formatChoice(result.definition),
         partOfSpeech: selectedSense.partOfSpeech,
         synonym: String(result.synonym).trim(),
         exampleSentence: String(result.exampleSentence).trim(),
-        distractors: result.distractors.map((value) => String(value).trim()),
+        distractors: result.distractors.map(formatChoice),
         sourceDictionary: selectedSense.sourceDictionary,
         sourceAttribution: selectedSense.attributionText,
     };

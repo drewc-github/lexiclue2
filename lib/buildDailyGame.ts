@@ -48,8 +48,10 @@ function cleanBank(entries: BankWord[]): BankWord[] {
 }
 
 function formatDefinitionChoice(value: string): string {
-  const trimmed = value.trim();
-  return trimmed ? `${trimmed[0].toLocaleLowerCase()}${trimmed.slice(1)}` : trimmed;
+  const withoutTrailingPeriods = value.trim().replace(/\.+$/, "").trimEnd();
+  return withoutTrailingPeriods
+    ? `${withoutTrailingPeriods[0].toLocaleLowerCase()}${withoutTrailingPeriods.slice(1)}`
+    : withoutTrailingPeriods;
 }
 
 function contentHash(value: string): string {

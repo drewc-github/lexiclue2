@@ -39,6 +39,10 @@ for (const entry of ledger.entries) {
     if (entry.distractors?.length !== 3) errors.push(`${entry.word}: needs 3 distractors`);
     if (!entry.sourceAttribution) errors.push(`${entry.word}: missing attribution`);
     const choices = [entry.definition, ...(entry.distractors ?? [])].map((value) => value.toLowerCase());
+    for (const choice of [entry.definition, ...(entry.distractors ?? [])]) {
+      if (/\.$/.test(choice.trim())) errors.push(`${entry.word}: choice ends with a period`);
+      if (/^[A-Z]/.test(choice.trim())) errors.push(`${entry.word}: choice starts with a capital letter`);
+    }
     if (new Set(choices).size !== choices.length) errors.push(`${entry.word}: duplicate choice`);
     for (let left = 0; left < choices.length; left += 1) {
       for (let right = left + 1; right < choices.length; right += 1) {

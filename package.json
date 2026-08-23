@@ -13,6 +13,7 @@
     "review:words": "node scripts/generateWords.mjs --reprocess",
     "repair:words": "node scripts/generateWords.mjs --repair-missing",
     "repair:choices": "node scripts/generateWords.mjs --similar",
+    "normalize:choices": "node scripts/normalizeChoices.mjs",
     "schedule:games": "node scripts/generateSchedule.mjs",
     "batch:words": "node scripts/batchReviewWords.mjs",
     "backfill:words": "node scripts/generateWords.mjs --outdated",
