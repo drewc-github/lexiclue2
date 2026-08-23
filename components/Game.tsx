@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import WordCard from "./WordCard";
 import Choices from "./Choices";
 import { DailyGame, HintType } from "../lib/types";
@@ -68,6 +68,9 @@ export default function Game({ daily }: { daily: DailyGame }) {
     const [isSliding, setIsSliding] = useState(false);
     const [nextView, setNextView] = useState<number | "results" | null>(null);
     const [showHelp, setShowHelp] = useState(false);
+    const [shareStatus, setShareStatus] = useState("");
+    const [gamePanelHeight, setGamePanelHeight] = useState<number | null>(null);
+    const resultsPreviewRef = useRef<HTMLDivElement>(null);
     const progressStorageKey = `lexiclues-progress:${daily.contentKey}`;
     const [didHydrateProgress, setDidHydrateProgress] = useState(false);
     const [progress, setProgress] = useState<RoundProgress[]>(
@@ -198,6 +201,49 @@ export default function Game({ daily }: { daily: DailyGame }) {
     const percent = Math.round((scoreSummary.total / maxScore) * 100);
     const gradeData = getGradeData(percent);
 
+    useLayoutEffect(() => {
+        if (nextView !== "results" || !resultsPreviewRef.current) {
+            setGamePanelHeight(null);
+            return;
+        }
+
+        setGamePanelHeight(Math.max(668, resultsPreviewRef.current.scrollHeight));
+    }, [nextView]);
+
+    async function shareResults() {
+        const resultGrid = scoreSummary.perRound
+            .map((round) => {
+                if (!round.isCorrect) return "⬛";
+                return round.usedCount === 0 ? "🟩" : "🟨";
+            })
+            .join("");
+        const hintCount = scoreSummary.perRound.reduce((sum, round) => sum + round.usedCount, 0);
+        const shareText = [
+            `Lexiclues ${daily.dateKey}`,
+            `${scoreSummary.total}/${maxScore} points`,
+            resultGrid,
+            `${hintCount} hint${hintCount === 1 ? "" : "s"} used`,
+        ].join("\n");
+        const playUrl = new URL("/", window.location.href).toString();
+
+        try {
+            if (navigator.share) {
+                await navigator.share({
+                    title: "Lexiclues",
+                    text: shareText,
+                    url: playUrl,
+                });
+                setShareStatus("Shared!");
+            } else {
+                await navigator.clipboard.writeText(`${shareText}\n\nPlay Lexiclues: ${playUrl}`);
+                setShareStatus("Results copied!");
+            }
+        } catch (error) {
+            if (error instanceof DOMException && error.name === "AbortError") return;
+            setShareStatus("Couldn’t share results.");
+        }
+    }
+
     function HowToCard() {
         return (
             <section className="panel howPanel">
@@ -206,14 +252,13 @@ export default function Game({ daily }: { daily: DailyGame }) {
                         <div className="howHero">
                             <div className="howEyebrow">How to Play</div>
                             <div className="howText">
-                                Each day, <b>Lexiclues</b> will give you <b>{totalRounds} </b>new words to work
-                                through. Your goal is to choose the definition that fits.
-                                Some words you&apos;ve seen, some you&apos;ve never heard of, but either way
-                                you&apos;ll be improving your vocab.
+                                <b>Work through {totalRounds} words</b> each day and choose the definition that fits each one.
+                                Some may look familiar and others might be completely new. But either way, you&apos;ll
+                                finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                If stumped, you can use hints before locking in
-                                your answer. The fewer hints you use, the more points you keep.
+                                <b>Need a clue?</b> Reveal the part of speech, a synonym, or an example sentence.
+                                Each hint costs half a point, so use them wisely.
                             </div>
                         </div>
                     </div>
@@ -376,6 +421,21 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                             <div className="reportFooterScore">{scoreSummary.total}</div>
                                             <div className="reportFooterOutOf">out of {maxScore}</div>
                                         </div>
+
+                                        <div>
+                                            <button
+                                                type="button"
+                                                className="primaryBtn shareResultsBtn"
+                                                onClick={shareResults}
+                                            >
+                                                Share Results
+                                            </button>
+                                            {shareStatus && (
+                                                <div className="shareStatus" role="status" aria-live="polite">
+                                                    {shareStatus}
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </section>
                             </div>
@@ -427,7 +487,10 @@ export default function Game({ daily }: { daily: DailyGame }) {
                 <section className="panelFlip">
                     <div className={`panelInner3d ${showHelp ? "flipped" : ""}`}>
                         <div className="panelFace panelFront">
-                            <section className={`panel gamePanel ${isSliding ? "panelAnimating" : ""}`}>
+                            <section
+                                className={`panel gamePanel ${isSliding ? "panelAnimating" : ""}`}
+                                style={gamePanelHeight ? { height: `${gamePanelHeight}px` } : undefined}
+                            >
                                 <div className="carouselViewport">
                                     <div className={`carouselTrack ${isSliding ? "slideLeft" : ""}`}>
                                         <div className="carouselPage" key={`current-${current}`}>
@@ -472,7 +535,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                             {nextView === null ? (
                                                 <div className="panelInner" />
                                             ) : nextView === "results" ? (
-                                                <div className="panelInner">
+                                                <div className="panelInner" ref={resultsPreviewRef}>
                                                     <div className="reportCard reportHeader">
                                                         <div className="reportNote">{gradeData.message}</div>
                                                         <div className="reportGrade">{gradeData.letter}</div>
@@ -488,10 +551,25 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         {scoreSummary.perRound.map((r) => (
                                                             <div key={r.idx} className="breakdownRow">
                                                                 <div className="breakdownLeft">
-                                                                    <div className="breakdownMark">•</div>
+                                                                    <div className="breakdownMark">
+                                                                        {r.isCorrect ? "✅" : "❌"}
+                                                                    </div>
                                                                     <div style={{ minWidth: 0 }}>
-                                                                        <div className="breakdownWord">{r.word}</div>
-                                                                        <div className="breakdownDef">{r.correctDefinition}</div>
+                                                                        <div className="breakdownWordRow">
+                                                                            <span className="breakdownWord">{r.word}</span>
+                                                                            {r.usedCount > 0 && (
+                                                                                <span className="breakdownHints">
+                                                                                    <span className="hintDot">·</span>
+                                                                                    {r.usedCount} hint{r.usedCount > 1 ? "s" : ""} used
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                        <div className="breakdownDefLine">
+                                                                            <span className="breakdownPos">{r.pos}</span>
+                                                                            <span className="breakdownDefText">
+                                                                                {r.correctDefinition}
+                                                                            </span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div className="breakdownPts">{r.points}</div>
@@ -504,6 +582,15 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         <div className="reportFooterScore">{scoreSummary.total}</div>
                                                         <div className="reportFooterOutOf">out of {maxScore}</div>
                                                     </div>
+
+                                                    <button
+                                                        type="button"
+                                                        className="primaryBtn shareResultsBtn"
+                                                        aria-hidden="true"
+                                                        disabled
+                                                    >
+                                                        Share Results
+                                                    </button>
                                                 </div>
                                             ) : (
                                                 <div className="panelInner">
