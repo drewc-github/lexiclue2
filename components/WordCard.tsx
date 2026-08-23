@@ -49,7 +49,6 @@ export default function WordCard({
   }, []);
 
   const usedCount = Object.values(used).filter(Boolean).length;
-  const remaining = Math.max(0, 3 - usedCount);
   const hintsLocked = usedCount >= 3;
 
   function flipToFront() {
@@ -139,7 +138,6 @@ export default function WordCard({
         }}
       >
         <div className="cardFace">
-          <div className="counter">{remaining}</div>
           {round.word}
         </div>
 
