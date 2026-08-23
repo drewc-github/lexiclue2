@@ -91,9 +91,12 @@ select {
    Header
 -------------------------------- */
 .topbar {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: baseline;
+  column-gap: 12px;
+  row-gap: 0;
   position: sticky;
   top: 0;
   z-index: 20;
@@ -104,7 +107,14 @@ select {
   -webkit-backdrop-filter: blur(10px);
 }
 
+.topbar > div:first-child,
+.roundMeta {
+  display: contents;
+}
+
 .brand {
+  grid-column: 1;
+  grid-row: 1;
   font-weight: 700;
   letter-spacing: -0.02em;
   font-size: 20px;
@@ -112,23 +122,30 @@ select {
 }
 
 .subtitle {
-  margin-top: 4px;
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 0;
   font-size: 12px;
   color: var(--muted);
 }
 
 .roundMeta {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  display: contents;
 }
 
 .roundMeta .helpBtn {
-  margin: 0;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  text-align: right;
+  margin: -11px 0;
 }
 
 .roundFrac {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  text-align: right;
   font-size: 12px;
   color: rgba(17, 24, 39, 0.7);
 }
@@ -175,6 +192,10 @@ select {
   padding-top: 10px;
   padding-bottom: 16px 0;
   border-top: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.gameActions {
+  border-top: 0;
 }
 
 /* --- Card-to-card carousel transition --- */
@@ -476,8 +497,17 @@ select {
 
   transition:
     transform 120ms var(--ease),
+    opacity 120ms var(--ease),
     background-color 120ms var(--ease),
     border-color 120ms var(--ease);
+}
+
+.choiceList.hasSelection .choiceBtn:not(.selected) {
+  opacity: 0.48;
+}
+
+.choiceList.hasSelection .choiceBtn:not(.selected):hover:not(:disabled) {
+  opacity: 0.72;
 }
 
 .choiceBtn:hover:not(:disabled) {
@@ -489,43 +519,25 @@ select {
 }
 
 .choiceBtn.selected {
-  border-color: rgba(17, 24, 39, 0.25);
-  background: rgba(17, 24, 39, 0.03);
+  border-color: rgba(17, 24, 39, 0.72);
+  background: rgba(17, 24, 39, 0.07);
+  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.28);
 }
 
 .choiceBtn.correct {
   border-color: rgba(16, 185, 129, 0.35);
   background: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.12);
 }
 
 .choiceBtn.wrong {
   border-color: rgba(239, 68, 68, 0.35);
   background: rgba(239, 68, 68, 0.06);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
 }
 
 .choiceBtn:disabled {
   cursor: default;
-}
-
-.choiceRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.choiceText {
-  flex: 1;
-}
-
-.choiceMark {
-  width: 22px;
-  height: 22px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  font-weight: 800;
-  opacity: 0.82;
 }
 
 /* ------------------------------
@@ -784,12 +796,12 @@ select {
   width: auto;
   min-width: 44px;
   min-height: 44px;
-  padding: 0 13px;
-  border-radius: 999px;
-  border: 1px solid rgba(147, 51, 234, 0.35);
-  background: rgba(147, 51, 234, 0.08);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   color: rgb(147, 51, 234);
-  font-weight: 800;
+  font-weight: 500;
   font-size: 13px;
   white-space: nowrap;
   cursor: pointer;
@@ -802,7 +814,8 @@ select {
 }
 
 .helpBtn:hover {
-  background: rgba(147, 51, 234, 0.12);
+  background: transparent;
+  opacity: 0.75;
 }
 
 .helpBtn:active {

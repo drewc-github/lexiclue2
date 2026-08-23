@@ -19,7 +19,7 @@ export default function Choices({
   if (!Array.isArray(choices)) return null;
 
   return (
-    <div className="choiceList">
+    <div className={`choiceList ${selectedIndex !== null ? "hasSelection" : ""}`}>
       {choices.map((c, i) => {
         const isSelected = selectedIndex === i;
 

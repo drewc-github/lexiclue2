@@ -423,7 +423,7 @@ export default function Game({
                         </button>
 
                         <div className="roundFrac">
-                            {current + 1} / {totalRounds}
+                            {current + 1}/{totalRounds}
                         </div>
                     </div>
                 </header>
@@ -449,15 +449,17 @@ export default function Game({
                                                 <div className="panelMid">
                                                     <div className="sectionLabel">Choose the best match</div>
                                                     <Choices
+                                                        key={current}
                                                         choices={currentRound.choices}
                                                         correctIndex={currentRound.correctIndex}
                                                         selectedIndex={currentProgress.selectedIndex}
                                                         onSelect={onSelectAnswer}
                                                         revealCorrectness={false}
+                                                        disabled={isSliding}
                                                     />
                                                 </div>
 
-                                                <div className="panelBottom">
+                                                <div className="panelBottom gameActions">
                                                     <button
                                                         className={`primaryBtn ${canGoNext ? "" : "disabled"} ${current === totalRounds - 1 ? "finish" : ""
                                                             }`}
@@ -522,15 +524,17 @@ export default function Game({
                                                     <div className="panelMid">
                                                         <div className="sectionLabel">Choose the best match</div>
                                                         <Choices
+                                                            key={nextView}
                                                             choices={daily.rounds[nextView].choices}
                                                             correctIndex={daily.rounds[nextView].correctIndex}
                                                             selectedIndex={progress[nextView].selectedIndex}
                                                             onSelect={() => { }}
                                                             revealCorrectness={false}
+                                                            disabled
                                                         />
                                                     </div>
 
-                                                    <div className="panelBottom">
+                                                    <div className="panelBottom gameActions">
                                                         <button
                                                             className="primaryBtn"
                                                             type="button"
