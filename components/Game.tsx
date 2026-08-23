@@ -18,7 +18,7 @@ function calcPoints(isCorrect: boolean, usedCount: number) {
 }
 
 function getGradeData(percent: number) {
-    if (percent >= 95)
+    if (percent == 100)
         return {
             letter: "A+",
             emoji: "🏆",
@@ -411,7 +411,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="breakdownPts">{r.points}</div>
+                                                    <div className="breakdownPts">{r.points}/5</div>
                                                 </div>
                                             ))}
                                         </div>
@@ -572,7 +572,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="breakdownPts">{r.points}</div>
+                                                                <div className="breakdownPts">{r.points}/5</div>
                                                             </div>
                                                         ))}
                                                     </div>
