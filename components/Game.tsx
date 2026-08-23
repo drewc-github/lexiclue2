@@ -318,7 +318,7 @@ export default function Game({
                                 aria-label="How to play"
                                 onClick={onHelpClick}
                             >
-                                ?
+                                How to Play
                             </button>
                             <div className="roundFrac">Results</div>
                         </div>
@@ -419,7 +419,7 @@ export default function Game({
                             aria-label="How to play"
                             onClick={onHelpClick}
                         >
-                            ?
+                            How to Play
                         </button>
 
                         <div className="roundFrac">
