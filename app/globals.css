@@ -201,6 +201,25 @@ select {
   border-top: 0;
 }
 
+.gamePanel {
+  height: 668px;
+}
+
+.gamePanel .carouselViewport,
+.gamePanel .carouselTrack,
+.gamePanel .carouselPage {
+  height: 100%;
+}
+
+.gamePanel .panelInner {
+  height: 100%;
+  min-height: 0;
+}
+
+.gamePanel .gameActions {
+  margin-top: auto;
+}
+
 /* --- Card-to-card carousel transition --- */
 .carouselViewport {
   overflow: hidden;
@@ -228,6 +247,10 @@ select {
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.04),
     0 14px 36px rgba(17, 24, 39, 0.14);
+}
+
+.panelAnimating .primaryBtn {
+  transition: none;
 }
 
 /* optional: a tiny “lift” while animating */

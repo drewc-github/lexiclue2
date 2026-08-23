@@ -60,13 +60,7 @@ function getGradeData(percent: number) {
     };
 }
 
-export default function Game({
-    daily,
-    autoFlipHelpAfterMs = 0,
-}: {
-    daily: DailyGame;
-    autoFlipHelpAfterMs?: number;
-}) {
+export default function Game({ daily }: { daily: DailyGame }) {
     const totalRounds = daily.rounds.length;
 
     const [current, setCurrent] = useState(0);
@@ -113,18 +107,6 @@ export default function Game({
         );
     }, [current, didHydrateProgress, progress, progressStorageKey, showResults]);
 
-    useEffect(() => {
-        if (autoFlipHelpAfterMs <= 0) return;
-
-        setShowHelp(false);
-
-        const timer = window.setTimeout(() => {
-            setShowHelp(true);
-        }, autoFlipHelpAfterMs);
-
-        return () => window.clearTimeout(timer);
-    }, [autoFlipHelpAfterMs]);
-
     const currentRound = daily.rounds[current];
     const currentProgress = progress[current];
 
@@ -162,13 +144,21 @@ export default function Game({
         setIsSliding(true);
 
         window.setTimeout(() => {
-            setIsSliding(false);
-            setNextView(null);
-
             if (incoming === "results") {
+                setIsSliding(false);
+                setNextView(null);
                 setShowResults(true);
             } else {
                 setCurrent(incoming);
+
+                // Keep the translated page visible until the first page has
+                // rendered the same incoming round, then reset the track.
+                window.requestAnimationFrame(() => {
+                    window.requestAnimationFrame(() => {
+                        setIsSliding(false);
+                        setNextView(null);
+                    });
+                });
             }
         }, SLIDE_MS);
     }
@@ -437,10 +427,10 @@ export default function Game({
                 <section className="panelFlip">
                     <div className={`panelInner3d ${showHelp ? "flipped" : ""}`}>
                         <div className="panelFace panelFront">
-                            <section className={`panel ${isSliding ? "panelAnimating" : ""}`}>
+                            <section className={`panel gamePanel ${isSliding ? "panelAnimating" : ""}`}>
                                 <div className="carouselViewport">
                                     <div className={`carouselTrack ${isSliding ? "slideLeft" : ""}`}>
-                                        <div className="carouselPage">
+                                        <div className="carouselPage" key={`current-${current}`}>
                                             <div className="panelInner">
                                                 <div className="panelTop">
                                                     <WordCard
@@ -542,14 +532,14 @@ export default function Game({
 
                                                     <div className="panelBottom gameActions">
                                                         <button
-                                                            className="primaryBtn"
+                                                            className={`primaryBtn disabled ${nextView === totalRounds - 1 ? "finish" : ""}`}
                                                             type="button"
                                                             onClick={() => { }}
                                                             aria-hidden="true"
+                                                            disabled
                                                         >
-                                                            Next
+                                                            {nextView === totalRounds - 1 ? "Finish" : "Next"}
                                                         </button>
-                                                        <div className="fineprint"> </div>
                                                     </div>
                                                 </div>
                                             )}

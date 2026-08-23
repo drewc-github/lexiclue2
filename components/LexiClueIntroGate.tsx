@@ -11,7 +11,6 @@ const subscribe = () => () => {};
 export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
     const isReady = useSyncExternalStore(subscribe, () => true, () => false);
     const [startedHere, setStartedHere] = useState(false);
-    const [shouldAutoFlip, setShouldAutoFlip] = useState(false);
 
     const showIntro =
         isReady &&
@@ -20,7 +19,6 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
 
     function handlePlay() {
         window.sessionStorage.setItem(STORAGE_KEY, "true");
-        setShouldAutoFlip(true);
         setStartedHere(true);
     }
 
@@ -46,16 +44,11 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
                         Play
                     </button>
 
-                    <div className="introCredit">Created by Drew Corsaro</div>
+                    <div className="introCredit">Created by <b>Drew Corsaro</b></div>
                 </div>
             </main>
         );
     }
 
-    return (
-        <Game
-            daily={daily}
-            autoFlipHelpAfterMs={shouldAutoFlip ? 500 : 0}
-        />
-    );
+    return <Game daily={daily} />;
 }
