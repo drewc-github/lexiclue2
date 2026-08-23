@@ -38,7 +38,7 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
                     />
 
                     <h1 className="introTitle">Lexiclues</h1>
-                    <p className="introTagline">Learn <b>5</b> new words everyday.</p>
+                    <p className="introTagline">Learn <b>5</b> new words every day.</p>
 
                     <button type="button" className="introPlayBtn" onClick={handlePlay}>
                         Play

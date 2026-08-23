@@ -3,11 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lexiclues.com"),
-  title: "Lexiclues - Learn new vocabulary everyday",
-  description: "Daily word game",
+  title: "Lexiclues – A Daily Vocabulary Game",
+  description:
+    "Learn five new words every day with Lexiclues, a quick daily vocabulary game featuring definitions, hints, and examples.",
   openGraph: {
-    title: "Lexiclues - Learn new vocabulary everyday",
-    description: "Daily word game",
+    title: "Lexiclues – A Daily Vocabulary Game",
+    description:
+      "Learn five new words every day with Lexiclues, a quick daily vocabulary game featuring definitions, hints, and examples.",
     url: "https://lexiclues.com",
     siteName: "Lexiclues",
     images: [
@@ -22,8 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lexiclues - Learn new vocabulary everyday",
-    description: "Daily word game",
+    title: "Lexiclues – A Daily Vocabulary Game",
+    description:
+      "Learn five new words every day with Lexiclues, a quick daily vocabulary game featuring definitions, hints, and examples.",
     images: ["/og-image.png"],
   },
 };
