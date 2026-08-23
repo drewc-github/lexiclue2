@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     siteName: "Lexiclues",
     images: [
       {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
+        url: "/lexiclues-share-image.png",
+        width: 778,
+        height: 420,
         alt: "LexiClue daily word game",
       },
     ],
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     title: "Lexiclues – A Daily Vocabulary Game",
     description:
       "Learn five new words every day with Lexiclues, a quick daily vocabulary game featuring definitions, hints, and examples.",
-    images: ["/og-image.png"],
+    images: ["/lexiclues-share-image.png"],
   },
 };
 
