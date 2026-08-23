@@ -5,6 +5,24 @@ const ledger = JSON.parse(await fs.readFile(path.resolve("content/word-ledger.js
 const schedule = JSON.parse(await fs.readFile(path.resolve("content/daily-puzzles.json"), "utf8"));
 const errors = [];
 const byId = new Map();
+const choiceStopWords = new Set([
+  "a", "an", "and", "as", "at", "be", "by", "for", "from", "in", "into", "is", "it",
+  "of", "on", "or", "that", "the", "to", "with",
+]);
+
+function choiceTokens(value) {
+  return new Set(
+    value.toLowerCase().match(/[a-z]+/g)?.filter((token) => !choiceStopWords.has(token)) ?? []
+  );
+}
+
+function choiceSimilarity(left, right) {
+  const leftTokens = choiceTokens(left);
+  const rightTokens = choiceTokens(right);
+  const intersection = [...leftTokens].filter((token) => rightTokens.has(token)).length;
+  const union = new Set([...leftTokens, ...rightTokens]).size;
+  return union ? intersection / union : 0;
+}
 
 for (const entry of ledger.entries) {
   if (byId.has(entry.id)) errors.push(`Duplicate ledger id: ${entry.id}`);
@@ -14,6 +32,14 @@ for (const entry of ledger.entries) {
     if (!entry.sourceAttribution) errors.push(`${entry.word}: missing attribution`);
     const choices = [entry.definition, ...(entry.distractors ?? [])].map((value) => value.toLowerCase());
     if (new Set(choices).size !== choices.length) errors.push(`${entry.word}: duplicate choice`);
+    for (let left = 0; left < choices.length; left += 1) {
+      for (let right = left + 1; right < choices.length; right += 1) {
+        const similarity = choiceSimilarity(choices[left], choices[right]);
+        if (similarity >= 0.45) {
+          errors.push(`${entry.word}: choices ${left + 1} and ${right + 1} are too similar (${similarity.toFixed(2)})`);
+        }
+      }
+    }
     const lengths = choices.map((choice) => choice.length);
     if (Math.max(...lengths) / Math.max(1, Math.min(...lengths)) > 4) {
       errors.push(`${entry.word}: answer lengths are too revealing`);

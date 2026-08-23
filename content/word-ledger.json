@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T15:17:18.323Z",
+  "updatedAt": "2026-08-23T15:41:31.571Z",
   "entries": [
     {
       "id": "astute-adjective-1",
@@ -49,14 +49,14 @@
     {
       "id": "elusive-adjective-1",
       "word": "elusive",
-      "definition": "Hard to find, catch, understand, or remember.",
+      "definition": "difficult to find, catch, notice, understand, or remember",
       "partOfSpeech": "adjective",
-      "synonym": "hard-to-grasp",
-      "exampleSentence": "The cause of the bug in the software was elusive, so the team spent days trying to figure it out.",
+      "synonym": "evasive",
+      "exampleSentence": "The solution to the mystery remained elusive even after the detectives reviewed the evidence again.",
       "distractors": [
-        "Easy to find, catch, understand, or remember.",
-        "Likely to change quickly from place to place.",
-        "Able to create strong feelings of joy or excitement."
+        "careful and practical in making decisions",
+        "full of lively enthusiasm and confidence",
+        "easy to bend, shape, or influence"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -64,8 +64,8 @@
       "difficulty": 2,
       "reviewedAt": "2026-08-23",
       "model": "gpt-5.4",
-      "promptVersion": 2,
-      "reviewVersion": 2,
+      "promptVersion": 3,
+      "reviewVersion": 3,
       "timesUsed": 5
     },
     {
@@ -1039,23 +1039,23 @@
     {
       "id": "abstemious-adjective-1",
       "word": "abstemious",
-      "definition": "using only a small amount of food and drink; not overindulging",
+      "definition": "careful not to eat or drink too much",
       "partOfSpeech": "adjective",
-      "synonym": "moderate",
-      "exampleSentence": "Even at holiday dinners, she is abstemious and stops eating when she feels full.",
+      "synonym": "temperate",
+      "exampleSentence": "Even at holiday dinners, she remained abstemious and stopped eating when she felt full.",
       "distractors": [
-        "using only a small amount of money; not overspending",
-        "speaking only when necessary; not talkative",
-        "showing little emotion; not easily excited"
+        "showing refined judgment in matters of art and culture",
+        "giving money or help freely to other people",
+        "keeping emotions and private matters to oneself"
       ],
-      "sourceDictionary": "Lexiclues editorial bank",
-      "sourceAttribution": "Lexiclues editorial entry",
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
       "status": "approved",
       "difficulty": 4,
       "reviewedAt": "2026-08-23",
       "model": "gpt-5.4",
-      "promptVersion": 2,
-      "reviewVersion": 2,
+      "promptVersion": 3,
+      "reviewVersion": 3,
       "timesUsed": 6
     },
     {
@@ -1264,9 +1264,9 @@
       "synonym": "polysemantic",
       "exampleSentence": "Because the term is polysemous, its meaning changes depending on the context.",
       "distractors": [
-        "having several different spellings",
-        "having several different pronunciations",
-        "having several different origins"
+        "using more words than necessary to express an idea",
+        "written or spoken in two different languages",
+        "following a strict and unchanging interpretation of a rule"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1673,6 +1673,336 @@
       "promptVersion": 2,
       "reviewVersion": 2,
       "timesUsed": 6
+    },
+    {
+      "id": "austere-adjective-1",
+      "word": "austere",
+      "definition": "plain and simple, with no extra decoration or luxury",
+      "partOfSpeech": "adjective",
+      "synonym": "plain",
+      "exampleSentence": "The hotel lobby was austere, with white walls, wooden benches, and almost no decoration.",
+      "distractors": [
+        "full of bright decoration and rich detail",
+        "warm and friendly in tone or behavior",
+        "careless and relaxed about rules or discipline"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 2,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "buoyant-adjective-1",
+      "word": "buoyant",
+      "definition": "cheerful and full of energy",
+      "partOfSpeech": "adjective",
+      "synonym": "upbeat",
+      "exampleSentence": "Even after the long delay, she stayed buoyant and kept the whole team smiling.",
+      "distractors": [
+        "able to bend easily without breaking",
+        "likely to change suddenly and often",
+        "careful to avoid drawing attention"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "status": "approved",
+      "difficulty": 2,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "catalyst-noun-1",
+      "word": "catalyst",
+      "definition": "something that makes a change or event happen more quickly",
+      "partOfSpeech": "noun",
+      "synonym": "trigger",
+      "exampleSentence": "Her speech was the catalyst for a citywide effort to improve public schools.",
+      "distractors": [
+        "something that measures a change or event very precisely",
+        "something that prevents a change or event from happening",
+        "something that describes a change or event after it ends"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "adversity-noun-1",
+      "word": "adversity",
+      "definition": "a situation of serious difficulty, suffering, or bad luck",
+      "partOfSpeech": "noun",
+      "synonym": "hardship",
+      "exampleSentence": "She showed remarkable courage in the face of adversity after losing her home and job in the same year.",
+      "distractors": [
+        "a feeling of strong excitement about future success",
+        "a period of complete peace and freedom from worry",
+        "a sudden decision made without careful thought"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "aesthetic-adjective-1",
+      "word": "aesthetic",
+      "definition": "Connected with noticing and valuing beauty or good taste.",
+      "partOfSpeech": "adjective",
+      "synonym": "artistic",
+      "exampleSentence": "The cafe’s aesthetic choices—soft lighting, simple furniture, and muted colors—made the space feel calm and stylish.",
+      "distractors": [
+        "Connected with measuring accuracy or precise results.",
+        "Connected with following rules of law or government.",
+        "Connected with causing movement through physical force."
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "alleviate-verb-1",
+      "word": "alleviate",
+      "definition": "To reduce how bad something painful or difficult is.",
+      "partOfSpeech": "verb",
+      "synonym": "ease",
+      "exampleSentence": "The new policy was designed to alleviate the financial pressure on low-income families.",
+      "distractors": [
+        "To formally withdraw a statement or accusation.",
+        "To examine a subject methodically to discover facts.",
+        "To make an object stronger by adding support."
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "analogous-adjective-1",
+      "word": "analogous",
+      "definition": "similar in a way that makes a comparison useful or meaningful",
+      "partOfSpeech": "adjective",
+      "synonym": "comparable",
+      "exampleSentence": "The relationship between the coach and the team captain is analogous to that of a manager and a supervisor.",
+      "distractors": [
+        "clear enough to be understood without any comparison",
+        "identical in every detail and impossible to tell apart",
+        "related by time sequence rather than by similarity"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "belligerent-adjective-1",
+      "word": "belligerent",
+      "definition": "ready to argue or fight, and acting in a hostile way",
+      "partOfSpeech": "adjective",
+      "synonym": "aggressive",
+      "exampleSentence": "The customer became belligerent when the manager refused to give him a refund.",
+      "distractors": [
+        "ready to forgive others after a disagreement",
+        "likely to avoid conflict and stay calm",
+        "able to solve problems in a careful way"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "benevolent-adjective-1",
+      "word": "benevolent",
+      "definition": "kind and willing to help others",
+      "partOfSpeech": "adjective",
+      "synonym": "kindhearted",
+      "exampleSentence": "The benevolent neighbor quietly paid for the family’s groceries after hearing they were struggling.",
+      "distractors": [
+        "strict and unwilling to forgive mistakes",
+        "quiet and avoiding attention from others",
+        "careful and slow to make decisions"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "camaraderie-noun-1",
+      "word": "camaraderie",
+      "definition": "a feeling of close friendship and trust shared by people in a group",
+      "partOfSpeech": "noun",
+      "synonym": "comradeship",
+      "exampleSentence": "Months of practicing together built a strong sense of camaraderie on the team.",
+      "distractors": [
+        "a habit of avoiding contact with other people in a group",
+        "a formal system for ranking members by power and status",
+        "a feeling of anger or resentment shared by people in a group"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "caustic-adjective-1",
+      "word": "caustic",
+      "definition": "harsh and sharply critical in a way that hurts",
+      "partOfSpeech": "adjective",
+      "synonym": "biting",
+      "exampleSentence": "The reviewer wrote a caustic column that mocked the film’s weak plot and stiff acting.",
+      "distractors": [
+        "gentle and warmly encouraging in tone",
+        "confusing and hard to understand clearly",
+        "bright and full of lively excitement"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 2,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "clandestine-adjective-1",
+      "word": "clandestine",
+      "definition": "kept or done in secret, often to hide something illegal or improper",
+      "partOfSpeech": "adjective",
+      "synonym": "secret",
+      "exampleSentence": "Police uncovered a clandestine gambling operation running in the basement after midnight.",
+      "distractors": [
+        "done openly and legally",
+        "intended to help improve a bad situation",
+        "likely to attract a lot of public attention"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "cohesive-adjective-1",
+      "word": "cohesive",
+      "definition": "forming a united whole whose parts work well together",
+      "partOfSpeech": "adjective",
+      "synonym": "unified",
+      "exampleSentence": "Despite their different backgrounds, the team remained cohesive throughout the project.",
+      "distractors": [
+        "forming a rough surface that catches on things easily",
+        "changing shape quickly in response to pressure",
+        "showing a preference for working completely alone"
+      ],
+      "sourceDictionary": "wordnet",
+      "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "status": "approved",
+      "difficulty": 3,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "complacent-adjective-1",
+      "word": "complacent",
+      "definition": "too satisfied with how things are and not willing to see problems or make changes",
+      "partOfSpeech": "adjective",
+      "synonym": "self-satisfied",
+      "exampleSentence": "The company grew complacent after years of success and ignored warning signs from new competitors.",
+      "distractors": [
+        "too eager to agree with other people in order to be liked",
+        "deeply worried that something bad is about to happen",
+        "careful to notice small details and avoid mistakes"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
+    },
+    {
+      "id": "contentious-adjective-1",
+      "word": "contentious",
+      "definition": "likely to cause disagreement or public argument",
+      "partOfSpeech": "adjective",
+      "synonym": "controversial",
+      "exampleSentence": "The proposal to ban phones in schools became a contentious issue at the town meeting.",
+      "distractors": [
+        "easy to understand and explain",
+        "careful to avoid waste or expense",
+        "full of energy and enthusiasm"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "status": "approved",
+      "difficulty": 4,
+      "reviewedAt": "2026-08-23",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0
     }
   ]
 }

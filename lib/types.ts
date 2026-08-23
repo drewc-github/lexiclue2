@@ -25,5 +25,6 @@ export type RoundData = {
 
 export type DailyGame = {
   dateKey: string;
+  contentKey: string;
   rounds: RoundData[];
 };

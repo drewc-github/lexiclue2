@@ -131,6 +131,7 @@ async function buildDailyGameForDate(dateKey: string): Promise<DailyGame> {
 
   return {
     dateKey,
+    contentKey: `${dateKey}:${selected.map((entry) => entry.id ?? entry.word).join(",")}`,
     rounds,
   };
 }

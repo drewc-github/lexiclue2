@@ -74,7 +74,7 @@ export default function Game({
     const [isSliding, setIsSliding] = useState(false);
     const [nextView, setNextView] = useState<number | "results" | null>(null);
     const [showHelp, setShowHelp] = useState(false);
-    const progressStorageKey = `lexiclues-progress:${daily.dateKey}`;
+    const progressStorageKey = `lexiclues-progress:${daily.contentKey}`;
     const [didHydrateProgress, setDidHydrateProgress] = useState(false);
     const [progress, setProgress] = useState<RoundProgress[]>(
         () => createInitialProgress(daily)

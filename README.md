@@ -31,6 +31,8 @@ OPENAI_API_KEY=...
 OPENAI_MODEL=gpt-5.4
 ```
 
+Wordnik definitions are cached locally in `work/wordnik-cache.json`. The generator makes one Wordnik request per candidate, throttles requests to stay below the default five-per-minute limit, and automatically waits and retries when Wordnik returns HTTP 429. Set `WORDNIK_MIN_INTERVAL_MS` only if your Wordnik plan has a different documented limit.
+
 Then run:
 
 ```bash

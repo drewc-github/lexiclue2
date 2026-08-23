@@ -7,6 +7,7 @@ const ledger = JSON.parse(fs.readFileSync(new URL("../content/word-ledger.json",
 
 const daily = {
   dateKey: "2026-08-23",
+  contentKey: "2026-08-23:test-puzzle",
   rounds: Array.from({ length: 5 }, (_, index) => ({
     word: `word${index}`,
     choices: ["a", "b", "c", "d"],

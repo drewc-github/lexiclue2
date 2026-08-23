@@ -25,6 +25,10 @@ const MAX_ENRICH_ATTEMPTS = 100;
 const MAX_NEW_WORDS = 12;
 const MAX_LLM_REVIEW_ATTEMPTS = 30;
 const PROMPT_VERSION = 3;
+const WORDNIK_MIN_INTERVAL_MS = Number(process.env.WORDNIK_MIN_INTERVAL_MS || 13000);
+const WORDNIK_CACHE_PATH = path.resolve("work/wordnik-cache.json");
+let nextWordnikRequestAt = 0;
+let wordnikCachePromise;
 
 const BANNED_EASY_WORDS = new Set([
     "smart",
@@ -162,7 +166,7 @@ async function critiqueEntry(entry, selectedSense) {
         [
             {
                 role: "developer",
-                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; or if the example fails to demonstrate the intended sense.",
+                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; if options are antonyms, negated versions, minimal edits, or reuse the same sentence template; or if the example fails to demonstrate the intended sense. The four definitions should feel like definitions of four genuinely different words.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense }) },
         ]
@@ -179,6 +183,42 @@ function isValidCurated(entry) {
     if (entry.distractors.some((value) => value.length < 12 || value.length > 140)) return false;
     if (entry.distractors.some((value) => normalize(value) === normalize(entry.definition))) return false;
     return true;
+}
+
+const CHOICE_STOP_WORDS = new Set(
+    "a an the to of in on at for with and or is are be being that this someone something very from into by as".split(" ")
+);
+
+function choiceTokens(value) {
+    return new Set(
+        normalize(value)
+            .replace(/[^a-z0-9 ]/g, " ")
+            .split(/\s+/)
+            .filter((token) => token && !CHOICE_STOP_WORDS.has(token))
+    );
+}
+
+function choiceSimilarity(left, right) {
+    const a = choiceTokens(left);
+    const b = choiceTokens(right);
+    const intersection = [...a].filter((token) => b.has(token)).length;
+    return intersection / Math.max(1, new Set([...a, ...b]).size);
+}
+
+function findChoiceSimilarityIssues(entry) {
+    const choices = [entry.definition, ...entry.distractors];
+    const issues = [];
+    for (let left = 0; left < choices.length; left += 1) {
+        for (let right = left + 1; right < choices.length; right += 1) {
+            const similarity = choiceSimilarity(choices[left], choices[right]);
+            if (similarity >= 0.45) {
+                issues.push(
+                    `Options ${left + 1} and ${right + 1} are too structurally similar (${Math.round(similarity * 100)}% token overlap). Replace one with a definition of a genuinely different concept, not an antonym, negation, or template variation.`
+                );
+            }
+        }
+    }
+    return issues;
 }
 
 async function repairEntry(entry, selectedSense, issues) {
@@ -203,7 +243,7 @@ async function repairEntry(entry, selectedSense, issues) {
         [
             {
                 role: "developer",
-                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, make the example demonstrate that sense, and make all three same-form distractors plausible but unambiguously wrong.",
+                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, and make the example demonstrate that sense. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense, issues }) },
         ]
@@ -242,7 +282,7 @@ async function curateEntry(bundle) {
         [
             {
                 role: "developer",
-                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
+                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
             },
             { role: "user", content: JSON.stringify(bundle) },
         ]
@@ -252,7 +292,7 @@ async function curateEntry(bundle) {
     const selectedSense = bundle.senses[result.senseIndex];
     if (!selectedSense) return null;
 
-    const curated = {
+    let curated = {
         word: bundle.word,
         definition: String(result.definition).trim(),
         partOfSpeech: selectedSense.partOfSpeech,
@@ -264,12 +304,18 @@ async function curateEntry(bundle) {
     };
 
     if (!isValidCurated(curated)) return null;
+    const similarityIssues = findChoiceSimilarityIssues(curated);
+    if (similarityIssues.length > 0) {
+        console.log(`  deterministic option check rejected: ${similarityIssues.join("; ")}`);
+        curated = await repairEntry(curated, selectedSense, similarityIssues);
+        if (!isValidCurated(curated) || findChoiceSimilarityIssues(curated).length > 0) return null;
+    }
 
     const critique = await critiqueEntry(curated, selectedSense);
     if (!critique.accept) {
         console.log(`  critic rejected: ${critique.issues.join("; ")}`);
         const repaired = await repairEntry(curated, selectedSense, critique.issues);
-        if (!isValidCurated(repaired)) return null;
+        if (!isValidCurated(repaired) || findChoiceSimilarityIssues(repaired).length > 0) return null;
         const repairedCritique = await critiqueEntry(repaired, selectedSense);
         if (!repairedCritique.accept) {
             console.log(`  repaired entry rejected: ${repairedCritique.issues.join("; ")}`);
@@ -380,6 +426,19 @@ async function datamuseFetch(params) {
 }
 
 async function wordnikFetch(pathname, params = {}) {
+    const cacheKey = JSON.stringify([pathname, Object.entries(params).sort()]);
+    if (!wordnikCachePromise) {
+        wordnikCachePromise = fs
+            .readFile(WORDNIK_CACHE_PATH, "utf8")
+            .then(JSON.parse)
+            .catch(() => ({}));
+    }
+    const cache = await wordnikCachePromise;
+    if (cache[cacheKey]) {
+        console.log("  Wordnik cache hit");
+        return cache[cacheKey];
+    }
+
     const url = new URL(`${WORDNIK_BASE}${pathname}`);
 
     for (const [key, value] of Object.entries(params)) {
@@ -390,16 +449,40 @@ async function wordnikFetch(pathname, params = {}) {
 
     url.searchParams.set("api_key", WORDNIK_API_KEY);
 
-    const res = await fetch(url.toString(), {
-        headers: { Accept: "application/json" },
-    });
+    for (let attempt = 1; attempt <= 5; attempt += 1) {
+        const waitMs = Math.max(0, nextWordnikRequestAt - Date.now());
+        if (waitMs > 0) {
+            console.log(`  waiting ${Math.ceil(waitMs / 1000)}s for Wordnik rate limit`);
+            await sleep(waitMs);
+        }
+        nextWordnikRequestAt = Date.now() + WORDNIK_MIN_INTERVAL_MS;
 
-    if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`Wordnik error ${res.status}: ${text}`);
+        const res = await fetch(url.toString(), {
+            headers: { Accept: "application/json" },
+        });
+
+        if (res.status === 429) {
+            const retrySeconds = Math.max(1, Number(res.headers.get("retry-after")) || 15);
+            nextWordnikRequestAt = Date.now() + Math.max(
+                WORDNIK_MIN_INTERVAL_MS,
+                retrySeconds * 1000
+            );
+            console.warn(`  Wordnik rate limit reached; retrying in ${Math.ceil((nextWordnikRequestAt - Date.now()) / 1000)}s`);
+            continue;
+        }
+
+        if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Wordnik error ${res.status}: ${text}`);
+        }
+
+        const payload = await res.json();
+        cache[cacheKey] = payload;
+        await fs.mkdir(path.dirname(WORDNIK_CACHE_PATH), { recursive: true });
+        await fs.writeFile(WORDNIK_CACHE_PATH, `${JSON.stringify(cache, null, 2)}\n`, "utf8");
+        return payload;
     }
-
-    return res.json();
+    throw new Error("Wordnik rate limit retries exhausted");
 }
 
 async function loadBanks() {
@@ -497,22 +580,13 @@ async function discoverCandidates(anchorWords, existingWordSet) {
 
 async function enrichWord(word) {
     try {
-        const [definitions, related, examples] = await Promise.all([
-            wordnikFetch(`/word.json/${encodeURIComponent(word)}/definitions`, {
-                limit: 20,
-                useCanonical: true,
-                includeTags: false,
-            }),
-            wordnikFetch(`/word.json/${encodeURIComponent(word)}/relatedWords`, {
-                useCanonical: true,
-                relationshipTypes: "synonym",
-                limitPerRelationshipType: 10,
-            }),
-            wordnikFetch(`/word.json/${encodeURIComponent(word)}/examples`, {
-                useCanonical: true,
-                limit: 10,
-            }),
-        ]);
+        const definitions = await wordnikFetch(
+            `/word.json/${encodeURIComponent(word)}/definitions`,
+            { limit: 20, useCanonical: true, includeTags: false }
+        );
+        if (!Array.isArray(definitions)) {
+            throw new Error("Wordnik returned an invalid definitions payload");
+        }
 
         const senses = definitions
             .map((definition) => ({
@@ -538,23 +612,19 @@ async function enrichWord(word) {
                     ) === index
             );
 
-        if (senses.length === 0) return null;
-        const synonyms = related
-            .filter((bucket) => bucket.relationshipType === "synonym")
-            .flatMap((bucket) => bucket.words ?? [])
-            .filter((synonym) => normalize(synonym) !== normalize(word));
-        const rawExamples = Array.isArray(examples?.examples) ? examples.examples : [];
+        if (senses.length === 0) {
+            console.log("  rejected: Wordnik returned no usable contemporary senses");
+            return null;
+        }
 
         return {
             word,
             senses,
-            synonyms: [...new Set(synonyms)].slice(0, 30),
-            examples: rawExamples
-                .map((example) => cleanExampleSentence(example?.text))
-                .filter(Boolean)
-                .slice(0, 10),
+            synonyms: [],
+            examples: [],
         };
-    } catch {
+    } catch (error) {
+        console.warn(`  Wordnik enrichment error: ${error.message}`);
         return null;
     }
 }
@@ -603,7 +673,7 @@ function isGoodExampleSentence(sentence, word) {
     return true;
 }
 
-async function reprocessBank(entries, label, repairOnly = false, outdatedOnly = false) {
+async function reprocessBank(entries, label, repairOnly = false, outdatedOnly = false, similarOnly = false) {
     const reviewed = [];
     let improved = 0;
 
@@ -614,6 +684,10 @@ async function reprocessBank(entries, label, repairOnly = false, outdatedOnly = 
             continue;
         }
         if (repairOnly && existing.distractors?.length === 3) {
+            reviewed.push(existing);
+            continue;
+        }
+        if (similarOnly && findChoiceSimilarityIssues(existing).length === 0) {
             reviewed.push(existing);
             continue;
         }
@@ -663,9 +737,9 @@ async function reprocessBank(entries, label, repairOnly = false, outdatedOnly = 
     return { reviewed, improved };
 }
 
-async function reprocessAllBanks(baseLedger, seedWords, generatedWords, repairOnly = false, outdatedOnly = false) {
-    const seedResult = await reprocessBank(seedWords, "ledger word", repairOnly, outdatedOnly);
-    const generatedResult = await reprocessBank(generatedWords, "generated word", repairOnly, outdatedOnly);
+async function reprocessAllBanks(baseLedger, seedWords, generatedWords, repairOnly = false, outdatedOnly = false, similarOnly = false) {
+    const seedResult = await reprocessBank(seedWords, "ledger word", repairOnly, outdatedOnly, similarOnly);
+    const generatedResult = await reprocessBank(generatedWords, "generated word", repairOnly, outdatedOnly, similarOnly);
 
     await writeLedger(baseLedger, [...seedResult.reviewed, ...generatedResult.reviewed]);
 
@@ -680,14 +754,16 @@ async function main() {
     if (
         process.argv.includes("--reprocess") ||
         process.argv.includes("--repair-missing") ||
-        process.argv.includes("--outdated")
+        process.argv.includes("--outdated") ||
+        process.argv.includes("--similar")
     ) {
         await reprocessAllBanks(
             ledger,
             seedWords,
             generatedWords,
             process.argv.includes("--repair-missing"),
-            process.argv.includes("--outdated")
+            process.argv.includes("--outdated"),
+            process.argv.includes("--similar")
         );
         return;
     }
