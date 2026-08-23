@@ -7,7 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:words": "node scripts/generateWords.mjs"
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "typecheck": "tsc --noEmit --incremental false",
+    "generate:words": "node scripts/generateWords.mjs",
+    "review:words": "node scripts/generateWords.mjs --reprocess",
+    "repair:words": "node scripts/generateWords.mjs --repair-missing",
+    "schedule:games": "node scripts/generateSchedule.mjs",
+    "batch:words": "node scripts/batchReviewWords.mjs",
+    "backfill:words": "node scripts/generateWords.mjs --outdated",
+    "validate:content": "node scripts/validateContent.mjs"
   },
   "dependencies": {
     "dotenv": "^17.3.1",

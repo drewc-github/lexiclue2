@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HintType, RoundData } from "../lib/types";
 import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
@@ -46,26 +46,7 @@ export default function WordCard({
     return () => {
       clearTimers();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // ✅ Stronger round reset key (works even if word repeats)
-  const roundResetKey = useMemo(() => {
-    return [
-      round.word,
-      round.partOfSpeech ?? "",
-      round.synonym ?? "",
-      round.exampleSentence ?? "",
-    ].join("|");
-  }, [round.word, round.partOfSpeech, round.synonym, round.exampleSentence]);
-
-  useEffect(() => {
-    clearTimers();
-    queuedHintRef.current = null;
-    setSwitching(false);
-    setActive(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roundResetKey]);
 
   const usedCount = Object.values(used).filter(Boolean).length;
   const remaining = Math.max(0, 3 - usedCount);

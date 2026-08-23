@@ -8,15 +8,23 @@ dotenv.config({ path: ".env.local" });
 const WORDNIK_BASE = "https://api.wordnik.com/v4";
 const DATAMUSE_BASE = "https://api.datamuse.com/words";
 const WORDNIK_API_KEY = process.env.WORDNIK_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.4";
 
 if (!WORDNIK_API_KEY) {
     throw new Error("Missing WORDNIK_API_KEY in environment.");
+}
+
+if (!OPENAI_API_KEY) {
+    throw new Error("Missing OPENAI_API_KEY in environment.");
 }
 
 const MAX_RESULTS_PER_QUERY = 30;
 const MAX_DISCOVERED_TO_TRY = 200;
 const MAX_ENRICH_ATTEMPTS = 100;
 const MAX_NEW_WORDS = 12;
+const MAX_LLM_REVIEW_ATTEMPTS = 30;
+const PROMPT_VERSION = 3;
 
 const BANNED_EASY_WORDS = new Set([
     "smart",
@@ -71,11 +79,207 @@ function normalize(str) {
     return String(str).trim().toLowerCase();
 }
 
-function escapeForTS(str) {
-    return String(str)
-        .replace(/\\/g, "\\\\")
-        .replace(/"/g, '\\"')
-        .replace(/\n/g, " ");
+async function openaiStructured(name, schema, input) {
+    const res = await fetch("https://api.openai.com/v1/responses", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            model: OPENAI_MODEL,
+            store: false,
+            input,
+            text: {
+                format: {
+                    type: "json_schema",
+                    name,
+                    strict: true,
+                    schema,
+                },
+            },
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error(`OpenAI error ${res.status}: ${await res.text()}`);
+    }
+
+    const payload = await res.json();
+    const outputText = payload.output
+        ?.flatMap((item) => item.content ?? [])
+        .find((part) => part.type === "output_text")?.text;
+
+    if (!outputText) throw new Error("OpenAI response did not contain structured output.");
+    return JSON.parse(outputText);
+}
+
+async function proposeCandidates(existingWords) {
+    const result = await openaiStructured(
+        "lexiclues_candidates",
+        {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+                words: {
+                    type: "array",
+                    minItems: 30,
+                    maxItems: 40,
+                    items: { type: "string" },
+                },
+            },
+            required: ["words"],
+        },
+        [
+            {
+                role: "developer",
+                content: "Choose engaging English vocabulary for an adult daily learning game. Favor useful but challenging words, varied parts of speech, 6-12 alphabetic characters, and avoid proper nouns, archaic curiosities, offensive terms, and near-duplicates.",
+            },
+            {
+                role: "user",
+                content: `Propose 30-40 words not already in this bank: ${existingWords.join(", ")}`,
+            },
+        ]
+    );
+
+    return result.words
+        .map(normalize)
+        .filter((word) => isLikelyLexiclueWord(word) && !existingWords.includes(word));
+}
+
+async function critiqueEntry(entry, selectedSense) {
+    return openaiStructured(
+        "lexiclues_entry_critic",
+        {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+                accept: { type: "boolean" },
+                issues: { type: "array", items: { type: "string" }, maxItems: 8 },
+            },
+            required: ["accept", "issues"],
+        },
+        [
+            {
+                role: "developer",
+                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; or if the example fails to demonstrate the intended sense.",
+            },
+            { role: "user", content: JSON.stringify({ entry, selectedSense }) },
+        ]
+    );
+}
+
+function isValidCurated(entry) {
+    if (entry.definition.length < 16 || entry.definition.length > 120) return false;
+    if (normalize(entry.definition).includes(normalize(entry.word))) return false;
+    if (!isGoodExampleSentence(entry.exampleSentence, entry.word)) return false;
+    if (!entry.synonym || normalize(entry.synonym) === normalize(entry.word)) return false;
+    if (!Array.isArray(entry.distractors) || entry.distractors.length !== 3) return false;
+    if (new Set(entry.distractors.map(normalize)).size !== 3) return false;
+    if (entry.distractors.some((value) => value.length < 12 || value.length > 140)) return false;
+    if (entry.distractors.some((value) => normalize(value) === normalize(entry.definition))) return false;
+    return true;
+}
+
+async function repairEntry(entry, selectedSense, issues) {
+    const result = await openaiStructured(
+        "lexiclues_entry_repair",
+        {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+                definition: { type: "string" },
+                synonym: { type: "string" },
+                exampleSentence: { type: "string" },
+                distractors: {
+                    type: "array",
+                    minItems: 3,
+                    maxItems: 3,
+                    items: { type: "string" },
+                },
+            },
+            required: ["definition", "synonym", "exampleSentence", "distractors"],
+        },
+        [
+            {
+                role: "developer",
+                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, make the example demonstrate that sense, and make all three same-form distractors plausible but unambiguously wrong.",
+            },
+            { role: "user", content: JSON.stringify({ entry, selectedSense, issues }) },
+        ]
+    );
+
+    return {
+        ...entry,
+        definition: String(result.definition).trim(),
+        synonym: String(result.synonym).trim(),
+        exampleSentence: String(result.exampleSentence).trim(),
+        distractors: result.distractors.map((value) => String(value).trim()),
+    };
+}
+
+async function curateEntry(bundle) {
+    const result = await openaiStructured(
+        "lexiclues_sense_selection",
+        {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+                accept: { type: "boolean" },
+                senseIndex: { type: "integer" },
+                definition: { type: "string" },
+                synonym: { type: "string" },
+                exampleSentence: { type: "string" },
+                distractors: {
+                    type: "array",
+                    minItems: 3,
+                    maxItems: 3,
+                    items: { type: "string" },
+                },
+            },
+            required: ["accept", "senseIndex", "definition", "synonym", "exampleSentence", "distractors"],
+        },
+        [
+            {
+                role: "developer",
+                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
+            },
+            { role: "user", content: JSON.stringify(bundle) },
+        ]
+    );
+
+    if (!result.accept) return null;
+    const selectedSense = bundle.senses[result.senseIndex];
+    if (!selectedSense) return null;
+
+    const curated = {
+        word: bundle.word,
+        definition: String(result.definition).trim(),
+        partOfSpeech: selectedSense.partOfSpeech,
+        synonym: String(result.synonym).trim(),
+        exampleSentence: String(result.exampleSentence).trim(),
+        distractors: result.distractors.map((value) => String(value).trim()),
+        sourceDictionary: selectedSense.sourceDictionary,
+        sourceAttribution: selectedSense.attributionText,
+    };
+
+    if (!isValidCurated(curated)) return null;
+
+    const critique = await critiqueEntry(curated, selectedSense);
+    if (!critique.accept) {
+        console.log(`  critic rejected: ${critique.issues.join("; ")}`);
+        const repaired = await repairEntry(curated, selectedSense, critique.issues);
+        if (!isValidCurated(repaired)) return null;
+        const repairedCritique = await critiqueEntry(repaired, selectedSense);
+        if (!repairedCritique.accept) {
+            console.log(`  repaired entry rejected: ${repairedCritique.issues.join("; ")}`);
+            return null;
+        }
+        console.log("  repaired entry accepted by critic");
+        return repaired;
+    }
+
+    return curated;
 }
 
 function stripHtml(text = "") {
@@ -198,28 +402,24 @@ async function wordnikFetch(pathname, params = {}) {
     return res.json();
 }
 
-async function readExportedArray(filePath, exportName) {
-    try {
-        const raw = await fs.readFile(filePath, "utf8");
-        const regex = new RegExp(`export const ${exportName} = (\\[[\\s\\S]*\\]);?`);
-        const match = raw.match(regex);
-
-        if (!match) return [];
-
-        return Function(`"use strict"; return (${match[1]});`)();
-    } catch {
-        return [];
-    }
+async function loadBanks() {
+    const ledger = JSON.parse(await fs.readFile(path.resolve("content/word-ledger.json"), "utf8"));
+    return { ledger, seedWords: ledger.entries, generatedWords: [] };
 }
 
-async function loadBanks() {
-    const seedPath = path.resolve("lib/seedWords.ts");
-    const generatedPath = path.resolve("lib/generatedWords.ts");
+function stableId(entry) {
+    return `${entry.word}-${entry.partOfSpeech}-1`
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+}
 
-    const seedWords = await readExportedArray(seedPath, "SEED_WORDS");
-    const generatedWords = await readExportedArray(generatedPath, "GENERATED_WORDS");
-
-    return { seedWords, generatedWords };
+async function writeLedger(baseLedger, entries) {
+    await fs.writeFile(
+        path.resolve("content/word-ledger.json"),
+        `${JSON.stringify({ ...baseLedger, updatedAt: new Date().toISOString(), entries }, null, 2)}\n`,
+        "utf8"
+    );
 }
 
 function buildAnchorWords(seedWords) {
@@ -299,7 +499,7 @@ async function enrichWord(word) {
     try {
         const [definitions, related, examples] = await Promise.all([
             wordnikFetch(`/word.json/${encodeURIComponent(word)}/definitions`, {
-                limit: 10,
+                limit: 20,
                 useCanonical: true,
                 includeTags: false,
             }),
@@ -310,50 +510,49 @@ async function enrichWord(word) {
             }),
             wordnikFetch(`/word.json/${encodeURIComponent(word)}/examples`, {
                 useCanonical: true,
-                limit: 5,
+                limit: 10,
             }),
         ]);
 
-        const bestDef =
-            definitions.find((d) => d.text && d.partOfSpeech) ||
-            definitions.find((d) => d.text);
+        const senses = definitions
+            .map((definition) => ({
+                definition: cleanDefinition(definition?.text),
+                partOfSpeech: definition?.partOfSpeech ?? "",
+                sourceDictionary: definition?.sourceDictionary ?? "Wordnik",
+                attributionText:
+                    definition?.attributionText ?? `Definition source: ${definition?.sourceDictionary ?? "Wordnik"}`,
+            }))
+            .filter(
+                (sense) =>
+                    sense.definition &&
+                    ["noun", "verb", "adjective", "adverb"].includes(sense.partOfSpeech) &&
+                    sense.definition.length >= 8 &&
+                    sense.definition.length <= 240
+            )
+            .filter(
+                (sense, index, all) =>
+                    all.findIndex(
+                        (other) =>
+                            normalize(other.definition) === normalize(sense.definition) &&
+                            other.partOfSpeech === sense.partOfSpeech
+                    ) === index
+            );
 
-        const definition = cleanDefinition(bestDef?.text);
-        const partOfSpeech = bestDef?.partOfSpeech ?? "";
-
-        const lowerDef = normalize(definition);
-
-        if (!definition || !partOfSpeech) return null;
-        if (!["noun", "verb", "adjective", "adverb"].includes(partOfSpeech)) return null;
-        if (definition.length < 16 || definition.length > 120) return null;
-
-        // Reject circular / giveaway definitions
-        if (lowerDef.includes(normalize(word))) return null;
-        if (lowerDef.includes("synonym is")) return null;
-        if (lowerDef.includes("synonyms are")) return null;
-        if (lowerDef.startsWith("synonym")) return null;
-        if (lowerDef.startsWith("see ")) return null;
-
-        const synonymBucket = related.find((r) => r.relationshipType === "synonym");
-        const synonym =
-            synonymBucket?.words?.find(
-                (s) => normalize(s) !== normalize(word) && isGoodSurfaceWord(s)
-            ) ?? word;
-
+        if (senses.length === 0) return null;
+        const synonyms = related
+            .filter((bucket) => bucket.relationshipType === "synonym")
+            .flatMap((bucket) => bucket.words ?? [])
+            .filter((synonym) => normalize(synonym) !== normalize(word));
         const rawExamples = Array.isArray(examples?.examples) ? examples.examples : [];
-
-        const exampleSentence =
-            rawExamples
-                .map((e) => cleanExampleSentence(e?.text))
-                .find((text) => isGoodExampleSentence(text, word)) ||
-            `The meaning of "${word}" became clear in context.`;
 
         return {
             word,
-            definition,
-            partOfSpeech,
-            synonym,
-            exampleSentence,
+            senses,
+            synonyms: [...new Set(synonyms)].slice(0, 30),
+            examples: rawExamples
+                .map((example) => cleanExampleSentence(example?.text))
+                .filter(Boolean)
+                .slice(0, 10),
         };
     } catch {
         return null;
@@ -404,25 +603,94 @@ function isGoodExampleSentence(sentence, word) {
     return true;
 }
 
-function formatGeneratedWordsFile(words) {
-    const rows = words.map(
-        (entry) => `  {
-    word: "${escapeForTS(entry.word)}",
-    definition: "${escapeForTS(entry.definition)}",
-    partOfSpeech: "${escapeForTS(entry.partOfSpeech)}",
-    synonym: "${escapeForTS(entry.synonym)}",
-    exampleSentence: "${escapeForTS(entry.exampleSentence)}"
-  }`
-    );
+async function reprocessBank(entries, label, repairOnly = false, outdatedOnly = false) {
+    const reviewed = [];
+    let improved = 0;
 
-    return `export const GENERATED_WORDS = [
-${rows.join(",\n\n")}
-];
-`;
+    for (let index = 0; index < entries.length; index += 1) {
+        const existing = entries[index];
+        if (outdatedOnly && (existing.promptVersion ?? 0) >= PROMPT_VERSION) {
+            reviewed.push(existing);
+            continue;
+        }
+        if (repairOnly && existing.distractors?.length === 3) {
+            reviewed.push(existing);
+            continue;
+        }
+        console.log(`\nReviewing ${label} ${index + 1}/${entries.length}: ${existing.word}`);
+
+        let bundle = await enrichWord(existing.word);
+        if (!bundle) {
+            console.log("  Wordnik unavailable; reviewing the existing editorial sense.");
+            bundle = {
+                word: existing.word,
+                senses: [{
+                    definition: existing.definition,
+                    partOfSpeech: existing.partOfSpeech,
+                    sourceDictionary: existing.sourceDictionary ?? "Lexiclues editorial bank",
+                    attributionText: existing.sourceAttribution ?? "Lexiclues editorial entry",
+                }],
+                synonyms: existing.synonym ? [existing.synonym] : [],
+                examples: existing.exampleSentence ? [existing.exampleSentence] : [],
+            };
+        }
+
+        try {
+            const curated = await curateEntry(bundle);
+            if (curated) {
+                reviewed.push({
+                    ...existing,
+                    ...curated,
+                    id: existing.id ?? stableId(curated),
+                    status: "approved",
+                    reviewedAt: new Date().toISOString().slice(0, 10),
+                    model: OPENAI_MODEL,
+                    promptVersion: PROMPT_VERSION,
+                    reviewVersion: (existing.reviewVersion ?? 0) + 1,
+                });
+                improved += 1;
+                console.log("  accepted by sense selector and critic");
+            } else {
+                reviewed.push(existing);
+                console.log("  retained existing entry after rejection");
+            }
+        } catch (error) {
+            reviewed.push(existing);
+            console.warn(`  retained existing entry after API error: ${error.message}`);
+        }
+    }
+
+    return { reviewed, improved };
+}
+
+async function reprocessAllBanks(baseLedger, seedWords, generatedWords, repairOnly = false, outdatedOnly = false) {
+    const seedResult = await reprocessBank(seedWords, "ledger word", repairOnly, outdatedOnly);
+    const generatedResult = await reprocessBank(generatedWords, "generated word", repairOnly, outdatedOnly);
+
+    await writeLedger(baseLedger, [...seedResult.reviewed, ...generatedResult.reviewed]);
+
+    console.log(
+        `\nReprocessed banks: ${seedResult.improved}/${seedWords.length} seed and ${generatedResult.improved}/${generatedWords.length} generated entries improved.`
+    );
 }
 
 async function main() {
-    const { seedWords, generatedWords } = await loadBanks();
+    const { ledger, seedWords, generatedWords } = await loadBanks();
+
+    if (
+        process.argv.includes("--reprocess") ||
+        process.argv.includes("--repair-missing") ||
+        process.argv.includes("--outdated")
+    ) {
+        await reprocessAllBanks(
+            ledger,
+            seedWords,
+            generatedWords,
+            process.argv.includes("--repair-missing"),
+            process.argv.includes("--outdated")
+        );
+        return;
+    }
 
     const allExistingWords = [...seedWords, ...generatedWords];
     const existingWordSet = new Set(allExistingWords.map((w) => normalize(w.word)));
@@ -433,8 +701,23 @@ async function main() {
     const anchorWords = buildAnchorWords(seedWords);
     console.log(`Using ${anchorWords.length} anchor words from seed bank.`);
 
-    const candidates = await discoverCandidates(anchorWords, existingWordSet);
-    console.log(`Discovered ${candidates.length} shortlisted candidates.`);
+    console.log(`Requesting candidate ideas from ${OPENAI_MODEL}.`);
+    const llmWords = await proposeCandidates([...existingWordSet]);
+    const llmCandidates = llmWords.map((word) => ({
+        word,
+        sourceAnchor: "openai",
+        datamuseFreq: null,
+        datamusePos: null,
+        score: 10,
+    }));
+    const discoveredCandidates = await discoverCandidates(anchorWords, existingWordSet);
+    const candidates = [...llmCandidates, ...discoveredCandidates].filter(
+        (candidate, index, all) =>
+            all.findIndex((other) => other.word === candidate.word) === index
+    );
+    console.log(
+        `Shortlisted ${candidates.length} candidates (${llmCandidates.length} LLM-proposed).`
+    );
 
     if (candidates.length > 0) {
         console.log(
@@ -448,19 +731,27 @@ async function main() {
 
     for (const candidate of candidates) {
         if (accepted.length >= MAX_NEW_WORDS) break;
-        if (attempts >= MAX_ENRICH_ATTEMPTS) break;
+        if (attempts >= Math.min(MAX_ENRICH_ATTEMPTS, MAX_LLM_REVIEW_ATTEMPTS)) break;
 
         attempts += 1;
-        console.log(`\nTrying ${candidate.word} (${attempts}/${MAX_ENRICH_ATTEMPTS})`);
+        console.log(
+            `\nTrying ${candidate.word} (${attempts}/${Math.min(MAX_ENRICH_ATTEMPTS, MAX_LLM_REVIEW_ATTEMPTS)})`
+        );
         console.log(
             `  anchor=${candidate.sourceAnchor} pos=${candidate.datamusePos ?? "?"} freq=${candidate.datamuseFreq ?? "?"} score=${candidate.score}`
         );
 
-        const entry = await enrichWord(candidate.word);
+        const dictionaryEntry = await enrichWord(candidate.word);
         await sleep(250);
 
-        if (!entry) {
+        if (!dictionaryEntry) {
             console.log("  rejected: enrichment failed");
+            continue;
+        }
+
+        const entry = await curateEntry(dictionaryEntry);
+        if (!entry) {
+            console.log("  rejected: LLM quality review failed");
             continue;
         }
 
@@ -497,12 +788,24 @@ async function main() {
         return;
     }
 
-    const merged = [...generatedWords, ...accepted];
-    const fileContent = formatGeneratedWordsFile(merged);
+    const dated = new Date().toISOString().slice(0, 10);
+    const ledgerEntries = [
+        ...ledger.entries,
+        ...accepted.map((entry) => ({
+            id: stableId(entry),
+            ...entry,
+            status: "approved",
+            difficulty: entry.word.length >= 10 ? 4 : entry.word.length >= 8 ? 3 : 2,
+            reviewedAt: dated,
+            model: OPENAI_MODEL,
+            promptVersion: PROMPT_VERSION,
+            reviewVersion: 1,
+            timesUsed: 0,
+        })),
+    ];
+    await writeLedger(ledger, ledgerEntries);
 
-    await fs.writeFile(path.resolve("lib/generatedWords.ts"), fileContent, "utf8");
-
-    console.log(`\nDone. Added ${accepted.length} new words to lib/generatedWords.ts`);
+    console.log(`\nDone. Added ${accepted.length} new words to content/word-ledger.json`);
     console.log("Added words:", accepted.map((w) => w.word).join(", "));
 }
 

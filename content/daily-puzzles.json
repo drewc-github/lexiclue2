@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-23T15:17:18.323Z",
+  "puzzles": {
+    "2026-08-23": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "pragmatic-adjective-1",
+        "sporadic-adjective-1",
+        "assiduous-adjective-1",
+        "ambiguous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-24": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "coherent-adjective-1",
+        "credulous-adjective-1",
+        "succinct-adjective-1",
+        "pervasive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-25": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "deciduous-adjective-1",
+        "resilient-adjective-1",
+        "incisive-adjective-1",
+        "vicarious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-26": {
+      "wordIds": [
+        "apathy-noun-1",
+        "ephemeral-adjective-1",
+        "disparate-adjective-1",
+        "didactic-adjective-1",
+        "ebullient-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-27": {
+      "wordIds": [
+        "acumen-noun-1",
+        "dubious-adjective-1",
+        "antithetical-adjective-1",
+        "adventitious-adjective-1",
+        "erratic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-28": {
+      "wordIds": [
+        "resilience-noun-1",
+        "economical-adjective-1",
+        "disruptive-adjective-1",
+        "elusive-adjective-1",
+        "arcane-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-29": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "cogent-adjective-1",
+        "subtle-adjective-1",
+        "affable-adjective-1",
+        "polysemous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-30": {
+      "wordIds": [
+        "stringency-noun-1",
+        "compendious-adjective-1",
+        "prudent-adjective-1",
+        "formidable-adjective-1",
+        "expeditious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-08-31": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "boisterous-adjective-1",
+        "submissive-adjective-1",
+        "copious-adjective-1",
+        "tenuous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-01": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "deleterious-adjective-1",
+        "fastidious-adjective-1",
+        "candid-adjective-1",
+        "adroit-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-02": {
+      "wordIds": [
+        "approbation-noun-1",
+        "abstemious-adjective-1",
+        "incredulous-adjective-1",
+        "deft-adjective-1",
+        "effervescent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-03": {
+      "wordIds": [
+        "aberration-noun-1",
+        "fervent-adjective-1",
+        "frugal-adjective-1",
+        "capricious-adjective-1",
+        "astute-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-04": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "demure-adjective-1",
+        "arduous-adjective-1",
+        "lucid-adjective-1",
+        "punctilious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-05": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "cursory-adjective-1",
+        "multivalent-adjective-1",
+        "scrupulous-adjective-1",
+        "meticulous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-06": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "transitory-adjective-1",
+        "inconvenient-adjective-1",
+        "pernicious-adjective-1",
+        "anachronistic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-07": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "perfunctory-adjective-1",
+        "novel-adjective-1",
+        "ambivalent-adjective-1",
+        "didactic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-08": {
+      "wordIds": [
+        "acumen-noun-1",
+        "incisive-adjective-1",
+        "disparate-adjective-1",
+        "resilient-adjective-1",
+        "deciduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-09": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "ambiguous-adjective-1",
+        "assiduous-adjective-1",
+        "vicarious-adjective-1",
+        "pragmatic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-10": {
+      "wordIds": [
+        "apathy-noun-1",
+        "ebullient-adjective-1",
+        "succinct-adjective-1",
+        "sporadic-adjective-1",
+        "pervasive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-11": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "ephemeral-adjective-1",
+        "credulous-adjective-1",
+        "coherent-adjective-1",
+        "compendious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-12": {
+      "wordIds": [
+        "stringency-noun-1",
+        "cogent-adjective-1",
+        "fastidious-adjective-1",
+        "submissive-adjective-1",
+        "elusive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-13": {
+      "wordIds": [
+        "resilience-noun-1",
+        "tenuous-adjective-1",
+        "formidable-adjective-1",
+        "affable-adjective-1",
+        "adroit-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-14": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "economical-adjective-1",
+        "subtle-adjective-1",
+        "frugal-adjective-1",
+        "boisterous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-15": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "erratic-adjective-1",
+        "polysemous-adjective-1",
+        "prudent-adjective-1",
+        "disruptive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-16": {
+      "wordIds": [
+        "aberration-noun-1",
+        "dubious-adjective-1",
+        "deleterious-adjective-1",
+        "deft-adjective-1",
+        "candid-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-17": {
+      "wordIds": [
+        "approbation-noun-1",
+        "fervent-adjective-1",
+        "inconvenient-adjective-1",
+        "cursory-adjective-1",
+        "punctilious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-18": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "effervescent-adjective-1",
+        "multivalent-adjective-1",
+        "scrupulous-adjective-1",
+        "arcane-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-19": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "ambivalent-adjective-1",
+        "astute-adjective-1",
+        "incredulous-adjective-1",
+        "meticulous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-20": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "anachronistic-adjective-1",
+        "abstemious-adjective-1",
+        "adventitious-adjective-1",
+        "demure-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-21": {
+      "wordIds": [
+        "acumen-noun-1",
+        "novel-adjective-1",
+        "capricious-adjective-1",
+        "copious-adjective-1",
+        "arduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-22": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "antithetical-adjective-1",
+        "expeditious-adjective-1",
+        "transitory-adjective-1",
+        "perfunctory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-23": {
+      "wordIds": [
+        "stringency-noun-1",
+        "lucid-adjective-1",
+        "pernicious-adjective-1",
+        "ephemeral-adjective-1",
+        "assiduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-24": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "sporadic-adjective-1",
+        "resilient-adjective-1",
+        "credulous-adjective-1",
+        "pervasive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-25": {
+      "wordIds": [
+        "apathy-noun-1",
+        "didactic-adjective-1",
+        "ambiguous-adjective-1",
+        "coherent-adjective-1",
+        "pragmatic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-26": {
+      "wordIds": [
+        "resilience-noun-1",
+        "incisive-adjective-1",
+        "ebullient-adjective-1",
+        "disparate-adjective-1",
+        "deciduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-27": {
+      "wordIds": [
+        "aberration-noun-1",
+        "succinct-adjective-1",
+        "vicarious-adjective-1",
+        "submissive-adjective-1",
+        "adroit-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-28": {
+      "wordIds": [
+        "approbation-noun-1",
+        "punctilious-adjective-1",
+        "deft-adjective-1",
+        "affable-adjective-1",
+        "inconvenient-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-29": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "candid-adjective-1",
+        "formidable-adjective-1",
+        "fervent-adjective-1",
+        "subtle-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-09-30": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "fastidious-adjective-1",
+        "erratic-adjective-1",
+        "tenuous-adjective-1",
+        "prudent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-01": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "deleterious-adjective-1",
+        "astute-adjective-1",
+        "disruptive-adjective-1",
+        "ambivalent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-02": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "compendious-adjective-1",
+        "elusive-adjective-1",
+        "incredulous-adjective-1",
+        "anachronistic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-03": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "demure-adjective-1",
+        "antithetical-adjective-1",
+        "abstemious-adjective-1",
+        "cogent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-04": {
+      "wordIds": [
+        "acumen-noun-1",
+        "transitory-adjective-1",
+        "scrupulous-adjective-1",
+        "expeditious-adjective-1",
+        "cursory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-05": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "meticulous-adjective-1",
+        "polysemous-adjective-1",
+        "novel-adjective-1",
+        "arduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-06": {
+      "wordIds": [
+        "apathy-noun-1",
+        "perfunctory-adjective-1",
+        "economical-adjective-1",
+        "adventitious-adjective-1",
+        "frugal-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-07": {
+      "wordIds": [
+        "resilience-noun-1",
+        "arcane-adjective-1",
+        "multivalent-adjective-1",
+        "copious-adjective-1",
+        "pernicious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-08": {
+      "wordIds": [
+        "aberration-noun-1",
+        "capricious-adjective-1",
+        "dubious-adjective-1",
+        "boisterous-adjective-1",
+        "effervescent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-09": {
+      "wordIds": [
+        "stringency-noun-1",
+        "lucid-adjective-1",
+        "pervasive-adjective-1",
+        "incisive-adjective-1",
+        "vicarious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-10": {
+      "wordIds": [
+        "approbation-noun-1",
+        "ebullient-adjective-1",
+        "coherent-adjective-1",
+        "ephemeral-adjective-1",
+        "ambiguous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-11": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "sporadic-adjective-1",
+        "assiduous-adjective-1",
+        "disparate-adjective-1",
+        "resilient-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-12": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "didactic-adjective-1",
+        "succinct-adjective-1",
+        "pragmatic-adjective-1",
+        "deciduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-13": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "credulous-adjective-1",
+        "incredulous-adjective-1",
+        "fervent-adjective-1",
+        "submissive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-14": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "inconvenient-adjective-1",
+        "disruptive-adjective-1",
+        "candid-adjective-1",
+        "abstemious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-15": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "compendious-adjective-1",
+        "astute-adjective-1",
+        "fastidious-adjective-1",
+        "transitory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-16": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "antithetical-adjective-1",
+        "anachronistic-adjective-1",
+        "affable-adjective-1",
+        "cursory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-17": {
+      "wordIds": [
+        "apathy-noun-1",
+        "frugal-adjective-1",
+        "prudent-adjective-1",
+        "scrupulous-adjective-1",
+        "tenuous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-18": {
+      "wordIds": [
+        "resilience-noun-1",
+        "expeditious-adjective-1",
+        "erratic-adjective-1",
+        "demure-adjective-1",
+        "perfunctory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-19": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "deft-adjective-1",
+        "elusive-adjective-1",
+        "adroit-adjective-1",
+        "cogent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-20": {
+      "wordIds": [
+        "aberration-noun-1",
+        "multivalent-adjective-1",
+        "adventitious-adjective-1",
+        "arcane-adjective-1",
+        "novel-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-21": {
+      "wordIds": [
+        "acumen-noun-1",
+        "lucid-adjective-1",
+        "arduous-adjective-1",
+        "punctilious-adjective-1",
+        "boisterous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-22": {
+      "wordIds": [
+        "approbation-noun-1",
+        "deleterious-adjective-1",
+        "dubious-adjective-1",
+        "capricious-adjective-1",
+        "copious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-23": {
+      "wordIds": [
+        "stringency-noun-1",
+        "economical-adjective-1",
+        "subtle-adjective-1",
+        "ambivalent-adjective-1",
+        "polysemous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-24": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "meticulous-adjective-1",
+        "formidable-adjective-1",
+        "pernicious-adjective-1",
+        "effervescent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-25": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "ebullient-adjective-1",
+        "resilient-adjective-1",
+        "assiduous-adjective-1",
+        "ephemeral-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-26": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "coherent-adjective-1",
+        "succinct-adjective-1",
+        "pragmatic-adjective-1",
+        "deciduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-27": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "vicarious-adjective-1",
+        "sporadic-adjective-1",
+        "incisive-adjective-1",
+        "ambiguous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-28": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "didactic-adjective-1",
+        "disparate-adjective-1",
+        "pervasive-adjective-1",
+        "credulous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-29": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "demure-adjective-1",
+        "submissive-adjective-1",
+        "antithetical-adjective-1",
+        "perfunctory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-30": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "affable-adjective-1",
+        "candid-adjective-1",
+        "abstemious-adjective-1",
+        "deft-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-10-31": {
+      "wordIds": [
+        "aberration-noun-1",
+        "elusive-adjective-1",
+        "anachronistic-adjective-1",
+        "novel-adjective-1",
+        "compendious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-01": {
+      "wordIds": [
+        "acumen-noun-1",
+        "arduous-adjective-1",
+        "punctilious-adjective-1",
+        "boisterous-adjective-1",
+        "prudent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-02": {
+      "wordIds": [
+        "apathy-noun-1",
+        "expeditious-adjective-1",
+        "disruptive-adjective-1",
+        "copious-adjective-1",
+        "dubious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-03": {
+      "wordIds": [
+        "resilience-noun-1",
+        "erratic-adjective-1",
+        "subtle-adjective-1",
+        "frugal-adjective-1",
+        "cursory-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-04": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "polysemous-adjective-1",
+        "cogent-adjective-1",
+        "adroit-adjective-1",
+        "tenuous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-05": {
+      "wordIds": [
+        "approbation-noun-1",
+        "ambivalent-adjective-1",
+        "fervent-adjective-1",
+        "formidable-adjective-1",
+        "meticulous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-06": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "capricious-adjective-1",
+        "incredulous-adjective-1",
+        "transitory-adjective-1",
+        "effervescent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-07": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "arcane-adjective-1",
+        "economical-adjective-1",
+        "astute-adjective-1",
+        "inconvenient-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-08": {
+      "wordIds": [
+        "stringency-noun-1",
+        "pernicious-adjective-1",
+        "adventitious-adjective-1",
+        "scrupulous-adjective-1",
+        "multivalent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-09": {
+      "wordIds": [
+        "diatribe-noun-1",
+        "lucid-adjective-1",
+        "deleterious-adjective-1",
+        "fastidious-adjective-1",
+        "coherent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-10": {
+      "wordIds": [
+        "alacrity-noun-1",
+        "pragmatic-adjective-1",
+        "vicarious-adjective-1",
+        "sporadic-adjective-1",
+        "disparate-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-11": {
+      "wordIds": [
+        "conundrum-noun-1",
+        "succinct-adjective-1",
+        "resilient-adjective-1",
+        "didactic-adjective-1",
+        "assiduous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-12": {
+      "wordIds": [
+        "aberration-noun-1",
+        "ambiguous-adjective-1",
+        "incisive-adjective-1",
+        "deciduous-adjective-1",
+        "pervasive-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-13": {
+      "wordIds": [
+        "excoriation-noun-1",
+        "ebullient-adjective-1",
+        "credulous-adjective-1",
+        "ephemeral-adjective-1",
+        "punctilious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-14": {
+      "wordIds": [
+        "apathy-noun-1",
+        "submissive-adjective-1",
+        "deft-adjective-1",
+        "cursory-adjective-1",
+        "anachronistic-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-15": {
+      "wordIds": [
+        "ameliorate-verb-1",
+        "cogent-adjective-1",
+        "abstemious-adjective-1",
+        "polysemous-adjective-1",
+        "candid-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-16": {
+      "wordIds": [
+        "approbation-noun-1",
+        "dubious-adjective-1",
+        "formidable-adjective-1",
+        "boisterous-adjective-1",
+        "copious-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-17": {
+      "wordIds": [
+        "acumen-noun-1",
+        "ambivalent-adjective-1",
+        "affable-adjective-1",
+        "frugal-adjective-1",
+        "meticulous-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-18": {
+      "wordIds": [
+        "scrutinize-verb-1",
+        "adroit-adjective-1",
+        "arduous-adjective-1",
+        "transitory-adjective-1",
+        "fervent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-19": {
+      "wordIds": [
+        "stringency-noun-1",
+        "perfunctory-adjective-1",
+        "demure-adjective-1",
+        "astute-adjective-1",
+        "effervescent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-11-20": {
+      "wordIds": [
+        "conflagration-noun-1",
+        "fastidious-adjective-1",
+        "adventitious-adjective-1",
+        "antithetical-adjective-1",
+        "incredulous-adjective-1"
+      ],
+      "contentVersion": 1
+    }
+  }
+}

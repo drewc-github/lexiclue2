@@ -1,16 +1,5 @@
-import { buildRound } from "@/lib/buildRound";
+import { getDailyGame } from "@/lib/buildDailyGame";
 
 export async function GET() {
-  const rounds = await Promise.all([
-    buildRound(),
-    buildRound(),
-    buildRound(),
-    buildRound(),
-    buildRound(),
-  ]);
-
-  return Response.json({
-    dateKey: "v0",
-    rounds,
-  });
+  return Response.json(await getDailyGame());
 }

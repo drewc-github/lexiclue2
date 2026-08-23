@@ -1,26 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Game from "./Game";
 import type { DailyGame } from "../lib/types";
 
-const STORAGE_KEY = "lexiclues_intro_seen";
+const STORAGE_KEY = "lexiclues_intro_seen_this_session";
+const subscribe = () => () => {};
 
 export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
-    const [isReady, setIsReady] = useState(false);
-    const [showIntro, setShowIntro] = useState(false);
+    const isReady = useSyncExternalStore(subscribe, () => true, () => false);
+    const [startedHere, setStartedHere] = useState(false);
     const [shouldAutoFlip, setShouldAutoFlip] = useState(false);
 
-    useEffect(() => {
-        const hasSeenIntro = window.localStorage.getItem(STORAGE_KEY) === "true";
-        setShowIntro(!hasSeenIntro);
-        setIsReady(true);
-    }, []);
+    const showIntro =
+        isReady &&
+        !startedHere &&
+        window.sessionStorage.getItem(STORAGE_KEY) !== "true";
 
     function handlePlay() {
-        window.localStorage.setItem(STORAGE_KEY, "true");
+        window.sessionStorage.setItem(STORAGE_KEY, "true");
         setShouldAutoFlip(true);
-        setShowIntro(false);
+        setStartedHere(true);
     }
 
     if (!isReady) return null;
@@ -29,10 +30,13 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
         return (
             <main className="introPage">
                 <div className="introShell">
-                    <img
+                    <Image
                         src="/lexiclues-logo.svg"
                         alt="Lexiclues logo"
                         className="introLogo"
+                        width={220}
+                        height={220}
+                        priority
                     />
 
                     <h1 className="introTitle">Lexiclues</h1>

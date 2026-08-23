@@ -4,14 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import WordCard from "./WordCard";
 import Choices from "./Choices";
 import { DailyGame, HintType } from "../lib/types";
+import {
+    createInitialProgress,
+    restoreGameProgress,
+    type RoundProgress,
+} from "../lib/gameProgress";
 import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
-
-type RoundProgress = {
-    selectedIndex: number | null;
-    isCorrect: boolean | null;
-    used: Record<HintType, boolean>;
-};
 
 function calcPoints(isCorrect: boolean, usedCount: number) {
     if (!isCorrect) return 0;
@@ -78,62 +77,22 @@ export default function Game({
     const progressStorageKey = `lexiclues-progress:${daily.dateKey}`;
     const [didHydrateProgress, setDidHydrateProgress] = useState(false);
     const [progress, setProgress] = useState<RoundProgress[]>(
-        () =>
-            daily.rounds.map(() => ({
-                selectedIndex: null,
-                isCorrect: null,
-                used: { pos: false, synonym: false, sentence: false },
-            })) as RoundProgress[]
+        () => createInitialProgress(daily)
     );
 
     useEffect(() => {
         try {
             const raw = window.localStorage.getItem(progressStorageKey);
-            if (!raw) {
-                setDidHydrateProgress(true);
-                return;
-            }
-
-            const saved = JSON.parse(raw) as {
-                current?: number;
-                showResults?: boolean;
-                progress?: RoundProgress[];
-            };
-
-            if (Array.isArray(saved.progress) && saved.progress.length === daily.rounds.length) {
-                const repaired = saved.progress.map((p, idx) => {
-                    const selectedIndex =
-                        typeof p?.selectedIndex === "number" ? p.selectedIndex : null;
-
-                    return {
-                        selectedIndex,
-                        isCorrect:
-                            selectedIndex === null
-                                ? null
-                                : selectedIndex === daily.rounds[idx].correctIndex,
-                        used: {
-                            pos: !!p?.used?.pos,
-                            synonym: !!p?.used?.synonym,
-                            sentence: !!p?.used?.sentence,
-                        },
-                    };
-                });
-
-                setProgress(repaired);
-            }
-
-            if (typeof saved.current === "number") {
-                setCurrent(saved.current);
-            }
-            if (typeof saved.showResults === "boolean") {
-                setShowResults(saved.showResults);
-            }
+            const restored = restoreGameProgress(raw, daily);
+            setProgress(restored.progress);
+            setCurrent(restored.current);
+            setShowResults(restored.showResults);
         } catch {
             // ignore bad local data
         } finally {
             setDidHydrateProgress(true);
         }
-    }, [progressStorageKey, daily.rounds.length]);
+    }, [progressStorageKey, daily]);
 
     useEffect(() => {
         if (!didHydrateProgress) return;
@@ -145,8 +104,8 @@ export default function Game({
                 showResults,
                 progress,
             })
-        )
-    })
+        );
+    }, [current, didHydrateProgress, progress, progressStorageKey, showResults]);
 
     useEffect(() => {
         if (autoFlipHelpAfterMs <= 0) return;
@@ -163,7 +122,7 @@ export default function Game({
     const currentRound = daily.rounds[current];
     const currentProgress = progress[current];
 
-    const canGoNext = currentProgress?.selectedIndex !== null;
+    const canGoNext = typeof currentProgress?.selectedIndex === "number";
     const SLIDE_MS = 340;
 
     function onUseHint(roundIdx: number, h: HintType) {
@@ -224,8 +183,9 @@ export default function Game({
             return {
                 idx,
                 word: round.word,
-                pos: (round as any).partOfSpeech ?? "",
+                pos: round.partOfSpeech ?? "",
                 correctDefinition,
+                sourceAttribution: round.sourceAttribution,
                 usedCount,
                 isCorrect,
                 points,
@@ -253,8 +213,8 @@ export default function Game({
                             <div className="howText">
                                 Each day, <b>Lexiclues</b> will give you <b>{totalRounds} </b>new words to work
                                 through. Your goal is to choose the definition that fits.
-                                Some words you've seen, some you've never heard of, but either way
-                                you'll be improving your vocab.
+                                Some words you&apos;ve seen, some you&apos;ve never heard of, but either way
+                                you&apos;ll be improving your vocab.
                             </div>
                             <div className="howText">
                                 If stumped, you can use hints before locking in
@@ -408,6 +368,9 @@ export default function Game({
                                                                     {r.correctDefinition}
                                                                 </span>
                                                             </div>
+                                                            {r.sourceAttribution && (
+                                                                <div className="fineprint">{r.sourceAttribution}</div>
+                                                            )}
                                                         </div>
                                                     </div>
 
@@ -535,6 +498,9 @@ export default function Game({
                                                                     <div style={{ minWidth: 0 }}>
                                                                         <div className="breakdownWord">{r.word}</div>
                                                                         <div className="breakdownDef">{r.correctDefinition}</div>
+                                                                        {r.sourceAttribution && (
+                                                                            <div className="fineprint">{r.sourceAttribution}</div>
+                                                                        )}
                                                                     </div>
                                                                 </div>
                                                                 <div className="breakdownPts">{r.points}</div>
