@@ -24,6 +24,14 @@ function choiceSimilarity(left, right) {
   return union ? intersection / union : 0;
 }
 
+function sharesTemplateOpening(left, right) {
+  const words = (value) => value.toLowerCase().match(/[a-z]+/g) ?? [];
+  const leftWords = words(left);
+  const rightWords = words(right);
+  return leftWords.length >= 3 && rightWords.length >= 3 &&
+    leftWords.slice(0, 3).every((word, index) => word === rightWords[index]);
+}
+
 for (const entry of ledger.entries) {
   if (byId.has(entry.id)) errors.push(`Duplicate ledger id: ${entry.id}`);
   byId.set(entry.id, entry);
@@ -37,6 +45,9 @@ for (const entry of ledger.entries) {
         const similarity = choiceSimilarity(choices[left], choices[right]);
         if (similarity >= 0.45) {
           errors.push(`${entry.word}: choices ${left + 1} and ${right + 1} are too similar (${similarity.toFixed(2)})`);
+        }
+        if (sharesTemplateOpening(choices[left], choices[right])) {
+          errors.push(`${entry.word}: choices ${left + 1} and ${right + 1} reuse the same opening template`);
         }
       }
     }

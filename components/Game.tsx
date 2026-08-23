@@ -185,7 +185,6 @@ export default function Game({
                 word: round.word,
                 pos: round.partOfSpeech ?? "",
                 correctDefinition,
-                sourceAttribution: round.sourceAttribution,
                 usedCount,
                 isCorrect,
                 points,
@@ -368,9 +367,6 @@ export default function Game({
                                                                     {r.correctDefinition}
                                                                 </span>
                                                             </div>
-                                                            {r.sourceAttribution && (
-                                                                <div className="fineprint">{r.sourceAttribution}</div>
-                                                            )}
                                                         </div>
                                                     </div>
 
@@ -498,9 +494,6 @@ export default function Game({
                                                                     <div style={{ minWidth: 0 }}>
                                                                         <div className="breakdownWord">{r.word}</div>
                                                                         <div className="breakdownDef">{r.correctDefinition}</div>
-                                                                        {r.sourceAttribution && (
-                                                                            <div className="fineprint">{r.sourceAttribution}</div>
-                                                                        )}
                                                                     </div>
                                                                 </div>
                                                                 <div className="breakdownPts">{r.points}</div>

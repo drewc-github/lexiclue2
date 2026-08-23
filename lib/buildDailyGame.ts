@@ -47,6 +47,20 @@ function cleanBank(entries: BankWord[]): BankWord[] {
   return uniqueDefinitions(uniqueByWord(entries));
 }
 
+function formatDefinitionChoice(value: string): string {
+  const trimmed = value.trim();
+  return trimmed ? `${trimmed[0].toLocaleLowerCase()}${trimmed.slice(1)}` : trimmed;
+}
+
+function contentHash(value: string): string {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+
 function getDistractorDefinitions(
   correctEntry: BankWord,
   bank: BankWord[],
@@ -113,15 +127,16 @@ async function buildDailyGameForDate(dateKey: string): Promise<DailyGame> {
       ? tailoredDistractors
       : getDistractorDefinitions(entry, bank, `${dateKey}:${entry.word}:${idx}`);
 
+    const correctDefinition = formatDefinitionChoice(entry.definition);
     const choices = seededShuffle(
-      [entry.definition, ...wrongChoices],
+      [correctDefinition, ...wrongChoices.map(formatDefinitionChoice)],
       `${dateKey}:${entry.word}:choices:${idx}`
     );
 
     return {
       word: entry.word,
       choices,
-      correctIndex: choices.findIndex((choice) => choice === entry.definition),
+      correctIndex: choices.findIndex((choice) => choice === correctDefinition),
       partOfSpeech: entry.partOfSpeech,
       synonym: entry.synonym,
       exampleSentence: entry.exampleSentence,
@@ -131,7 +146,7 @@ async function buildDailyGameForDate(dateKey: string): Promise<DailyGame> {
 
   return {
     dateKey,
-    contentKey: `${dateKey}:${selected.map((entry) => entry.id ?? entry.word).join(",")}`,
+    contentKey: `${dateKey}:${contentHash(JSON.stringify(rounds.map(({ word, choices, correctIndex }) => ({ word, choices, correctIndex }))))}`,
     rounds,
   };
 }

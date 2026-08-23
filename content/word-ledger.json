@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T15:41:31.571Z",
+  "updatedAt": "2026-08-23T15:44:26.017Z",
   "entries": [
     {
       "id": "astute-adjective-1",
@@ -230,9 +230,9 @@
       "synonym": "unclear",
       "exampleSentence": "Her text was ambiguous, so no one knew whether she was coming or canceling.",
       "distractors": [
-        "able to be understood very quickly",
-        "able to be proven with complete certainty",
-        "able to be accepted by everyone equally"
+        "based on practical considerations rather than abstract theory",
+        "showing careful attention and persistent effort",
+        "present or noticeable throughout an entire area"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -494,9 +494,9 @@
       "synonym": "occasional",
       "exampleSentence": "Her internet connection was sporadic during the storm, cutting out every so often.",
       "distractors": [
-        "happening continuously without any breaks",
-        "happening in a fixed order each time",
-        "happening only in one specific place"
+        "covering a large area or affecting many people",
+        "remaining calm and unchanged despite difficulty",
+        "based on a clear sequence of logical ideas"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -560,9 +560,9 @@
       "synonym": "anomaly",
       "exampleSentence": "The team treated the sudden drop in sales as an aberration and expected numbers to recover next month.",
       "distractors": [
-        "something that is carefully planned to produce a desired result",
-        "something that is repeated so often that it becomes a habit",
-        "something that is strongly supported by clear evidence or proof"
+        "a deliberate strategy designed to achieve a particular result",
+        "a practice repeated until it becomes automatic",
+        "evidence strong enough to establish a claim as true"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -582,9 +582,9 @@
       "synonym": "insight",
       "exampleSentence": "Her business acumen helped her spot opportunities before anyone else did.",
       "distractors": [
-        "the ability to remember details accurately",
-        "the habit of avoiding difficult decisions",
-        "the skill of explaining ideas dramatically"
+        "accurate recall of small facts and details",
+        "reluctance to choose between difficult alternatives",
+        "dramatic presentation intended to entertain an audience"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -626,9 +626,9 @@
       "synonym": "improve",
       "exampleSentence": "The city planted more trees to ameliorate the effects of summer heat.",
       "distractors": [
-        "to make something worse or harder to deal with",
-        "to explain something clearly and in detail",
-        "to delay something until a later time"
+        "to remove something completely from its surroundings",
+        "to arrange items according to a consistent system",
+        "to examine evidence in order to reach a conclusion"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -648,9 +648,9 @@
       "synonym": "outdated",
       "exampleSentence": "The historical drama looked strange because one character wore an anachronistic wristwatch.",
       "distractors": [
-        "being appropriate for a formal public occasion",
-        "showing a strong dislike of modern technology",
-        "belonging to a remote place rather than a city"
+        "suitable for a formal or ceremonial occasion",
+        "strongly opposed to adopting unfamiliar technology",
+        "located far away from towns and populated areas"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1198,9 +1198,9 @@
       "synonym": "strictness",
       "exampleSentence": "The new safety rules were criticized for their stringency, but they reduced accidents almost immediately.",
       "distractors": [
-        "the quality of being easy to bend or stretch",
-        "the state of having many decorative details",
-        "the habit of speaking in a vague or indirect way"
+        "the capacity of a material to bend without breaking",
+        "an abundance of elaborate decorative features",
+        "a tendency to avoid expressing an opinion directly"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1220,9 +1220,9 @@
       "synonym": "adaptability",
       "exampleSentence": "After the storm damaged their shop, the owners showed remarkable resilience and reopened within a week.",
       "distractors": [
-        "the habit of avoiding difficulty or change",
-        "the ability to predict trouble before it happens",
-        "the process of making something stronger over time"
+        "a tendency to withdraw when circumstances become difficult",
+        "foresight that allows danger to be recognized in advance",
+        "gradual reinforcement that increases structural strength"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1880,9 +1880,9 @@
       "synonym": "comradeship",
       "exampleSentence": "Months of practicing together built a strong sense of camaraderie on the team.",
       "distractors": [
-        "a habit of avoiding contact with other people in a group",
-        "a formal system for ranking members by power and status",
-        "a feeling of anger or resentment shared by people in a group"
+        "a preference for remaining socially isolated from others",
+        "a formal hierarchy based on authority and status",
+        "collective resentment directed toward a common opponent"
       ],
       "sourceDictionary": "wiktionary",
       "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
