@@ -100,8 +100,21 @@ select {
   position: sticky;
   top: 0;
   z-index: 20;
+  isolation: isolate;
   margin: -10px 0 2px;
   padding: 10px 0 18px;
+  background: transparent;
+}
+
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
     #f6f7f9 0%,
