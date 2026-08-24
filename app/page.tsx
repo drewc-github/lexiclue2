@@ -1,7 +1,7 @@
-import LexiClueIntroGate from "../components/LexiClueIntroGate";
+import DailyGameLoader from "../components/DailyGameLoader";
 import { getDailyGame } from "../lib/buildDailyGame";
 
 export default async function Page() {
   const daily = await getDailyGame();
-  return <LexiClueIntroGate daily={daily} />;
+  return <DailyGameLoader initialDaily={daily} />;
 }
