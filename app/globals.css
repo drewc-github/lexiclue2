@@ -206,7 +206,7 @@ select {
 
 .panelBottom {
   padding-top: 10px;
-  padding-bottom: 16px 0;
+  padding-bottom: 0;
   border-top: 1px solid rgba(17, 24, 39, 0.06);
 }
 
@@ -583,6 +583,12 @@ select {
 /* ------------------------------
    Mobile polish
 -------------------------------- */
+@media (max-width: 600px) {
+  .gamePanel .panelInner {
+    padding-bottom: 22px;
+  }
+}
+
 @media (max-width: 380px) {
   .panelInner {
     padding: 14px;
