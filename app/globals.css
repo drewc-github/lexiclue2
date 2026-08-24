@@ -231,7 +231,8 @@ select {
 }
 
 .gamePanel .gameActions {
-  margin-top: auto;
+  margin-top: -4px;
+  padding-top: 0;
   flex-shrink: 0;
 }
 
@@ -589,9 +590,6 @@ select {
     padding-bottom: 18px;
   }
 
-  .gamePanel .gameActions {
-    margin-bottom: 10px;
-  }
 }
 
 @media (max-width: 380px) {
@@ -863,7 +861,7 @@ select {
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: #be185d;
+  color: #f472b6;
   font-weight: 500;
   font-size: 13px;
   white-space: nowrap;
