@@ -228,11 +228,12 @@ select {
 .gamePanel .panelInner {
   height: 100%;
   min-height: 0;
+  padding-bottom: 24px;
 }
 
 .gamePanel .gameActions {
-  margin-top: -4px;
-  padding-top: 0;
+  margin-top: auto;
+  padding-top: 10px;
   flex-shrink: 0;
 }
 
@@ -585,13 +586,6 @@ select {
 /* ------------------------------
    Mobile polish
 -------------------------------- */
-@media (max-width: 600px) {
-  .gamePanel .panelInner {
-    padding-bottom: 18px;
-  }
-
-}
-
 @media (max-width: 380px) {
   .panelInner {
     padding: 14px;
