@@ -232,6 +232,7 @@ select {
 
 .gamePanel .gameActions {
   margin-top: auto;
+  flex-shrink: 0;
 }
 
 /* --- Card-to-card carousel transition --- */
@@ -585,7 +586,11 @@ select {
 -------------------------------- */
 @media (max-width: 600px) {
   .gamePanel .panelInner {
-    padding-bottom: 22px;
+    padding-bottom: 18px;
+  }
+
+  .gamePanel .gameActions {
+    margin-bottom: 10px;
   }
 }
 
@@ -849,7 +854,7 @@ select {
   margin-bottom: 10px;
 }
 
-/* purple circular ? like a hint pill but circle */
+/* Branded text link that echoes the splash-page pink. */
 .helpBtn {
   width: auto;
   min-width: 44px;
@@ -858,7 +863,7 @@ select {
   border: 0;
   border-radius: 0;
   background: transparent;
-  color: rgb(147, 51, 234);
+  color: #be185d;
   font-weight: 500;
   font-size: 13px;
   white-space: nowrap;
