@@ -53,6 +53,14 @@ body {
   font-synthesis: none;
 }
 
+html.intro-active,
+html.intro-active body {
+  background: linear-gradient(180deg,
+      #fff4f8 0%,
+      #ffeaf2 60%,
+      #ffe3ee 100%) fixed;
+}
+
 /* Ensure every element uses the same font */
 *,
 *::before,
