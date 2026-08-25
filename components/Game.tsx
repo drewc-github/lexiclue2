@@ -14,7 +14,7 @@ import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
 function calcPoints(isCorrect: boolean, usedCount: number) {
     if (!isCorrect) return 0;
-    return Math.max(0, 5 - usedCount * 0.5);
+    return Math.max(0, 5 - usedCount * 1);
 }
 
 function getGradeData(percent: number) {
@@ -322,7 +322,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    Each hint you use costs <b>½ point</b>.
+                                    Each hint you use costs <b>1 point</b>.
                                 </div>
                             </div>
 
