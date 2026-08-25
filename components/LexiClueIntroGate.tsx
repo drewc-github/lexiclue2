@@ -20,16 +20,13 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
     useEffect(() => {
         const root = document.documentElement;
         const body = document.body;
-        const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
 
         root.classList.toggle("intro-active", showIntro);
         body.classList.toggle("intro-active", showIntro);
-        if (themeColor) themeColor.content = showIntro ? "#fff4f8" : "#f6f7f9";
 
         return () => {
             root.classList.remove("intro-active");
             body.classList.remove("intro-active");
-            if (themeColor) themeColor.content = "#f6f7f9";
         };
     }, [showIntro]);
 
