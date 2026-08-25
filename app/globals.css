@@ -585,6 +585,28 @@ body.hint-confirming button:not(.hintConfirmBtn) {
     border-color 120ms var(--ease);
 }
 
+/* Keep all four options in a round visually consistent. Longer answer sets
+   compact as a group so the fixed action area retains its bottom padding. */
+.choiceListCompact {
+  gap: 8px;
+}
+
+.choiceListCompact .choiceBtn {
+  padding: 9px 11px;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.choiceListDense {
+  gap: 7px;
+}
+
+.choiceListDense .choiceBtn {
+  padding: 8px 10px;
+  font-size: 12.5px;
+  line-height: 1.18;
+}
+
 .choiceList.hasSelection .choiceBtn:not(.selected) {
   opacity: 0.48;
 }
@@ -1082,6 +1104,10 @@ body.hint-confirming button:not(.hintConfirmBtn) {
 @media (max-height: 700px) {
   .page {
     padding: 14px 12px 18px;
+  }
+
+  .gamePanel {
+    height: clamp(540px, calc(100dvh - 100px), 668px);
   }
 
   .panelInner {
