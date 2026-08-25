@@ -908,13 +908,21 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   line-height: 1;
 }
 
-.helpBtn:hover {
-  background: transparent;
-  opacity: 0.75;
+@media (hover: hover) and (pointer: fine) {
+  .helpBtn:hover {
+    background: transparent;
+    opacity: 0.75;
+  }
 }
 
 .helpBtn:active {
   transform: scale(0.96);
+}
+
+@media (hover: none) {
+  .helpBtn {
+    opacity: 1;
+  }
 }
 
 /* ------------------------------
