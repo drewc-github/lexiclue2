@@ -281,7 +281,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                 <div>
                                     <div className="howHintLabel">Part of Speech</div>
                                     <div className="howHintDesc">
-                                        See whether the word is a noun, verb, or adjective.
+                                        Check whether the word is a noun, verb, or adjective.
                                     </div>
                                 </div>
                             </div>
