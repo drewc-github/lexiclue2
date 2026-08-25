@@ -25,12 +25,15 @@
 
 /* Apple-like system font everywhere */
 html {
+  min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   color: var(--text);
 
   font-family:
@@ -1182,9 +1185,15 @@ body.hint-confirming button:not(.hintConfirmBtn) {
 -------------------------------- */
 .introPage {
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    calc(24px + env(safe-area-inset-right))
+    calc(24px + env(safe-area-inset-bottom))
+    calc(24px + env(safe-area-inset-left));
   /* background: #fff4f7; */
   background: linear-gradient(180deg,
       #fff4f8 0%,
