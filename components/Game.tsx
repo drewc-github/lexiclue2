@@ -329,8 +329,8 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    Part of speech costs <b>1 point</b>, the example sentence costs <b>2</b>,
-                                    and the synonym costs <b>3</b>.
+                                    Part of speech costs <b>1 point</b>, example sentence costs <b>2 points</b>,
+                                    and a synonym costs <b>3 points</b>.
                                 </div>
                             </div>
 
