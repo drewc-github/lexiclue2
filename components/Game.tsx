@@ -12,9 +12,15 @@ import {
 import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
 
-function calcPoints(isCorrect: boolean, usedCount: number) {
+function calcPoints(isCorrect: boolean, used: RoundProgress["used"]) {
     if (!isCorrect) return 0;
-    return Math.max(0, 5 - usedCount * 1);
+
+    const hintCost =
+        (used.pos ? 1 : 0) +
+        (used.sentence ? 2 : 0) +
+        (used.synonym ? 3 : 0);
+
+    return Math.max(0, 10 - hintCost);
 }
 
 function getGradeData(percent: number) {
@@ -177,7 +183,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
 
             const round = daily.rounds[idx];
             const correctDefinition = round.choices[round.correctIndex];
-            const points = calcPoints(isCorrect, usedCount);
+            const points = calcPoints(isCorrect, p.used);
 
             return {
                 idx,
@@ -197,7 +203,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
     }, [progress, daily]);
 
     const gameOver = showResults || current >= totalRounds;
-    const maxScore = totalRounds * 5;
+    const maxScore = totalRounds * 10;
     const percent = Math.round((scoreSummary.total / maxScore) * 100);
     const gradeData = getGradeData(percent);
 
@@ -257,8 +263,9 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                <b>Need a clue?</b> Reveal the part of speech, a synonym, or an example sentence.
-                                Each hint costs half a point, so use them wisely.
+                                <b>Need a clue?</b> Reveal the part of speech, an example sentence, or a synonym.
+                                Stronger hints cost more points, so use them wisely. You&apos;ll confirm before any
+                                points are deducted.
                             </div>
                         </div>
                     </div>
@@ -280,18 +287,6 @@ export default function Game({ daily }: { daily: DailyGame }) {
                             </div>
 
                             <div className="howHintRow">
-                                <div className="howHintIcon hintSyn" aria-hidden="true">
-                                    <Repeat />
-                                </div>
-                                <div>
-                                    <div className="howHintLabel">Synonym</div>
-                                    <div className="howHintDesc">
-                                        Get a similar word to help point you in the right direction.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="howHintRow">
                                 <div className="howHintIcon hintSent" aria-hidden="true">
                                     <Pencil />
                                 </div>
@@ -299,6 +294,18 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     <div className="howHintLabel">Example Sentence</div>
                                     <div className="howHintDesc">
                                         See the word used in context before making your pick.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="howHintRow">
+                                <div className="howHintIcon hintSyn" aria-hidden="true">
+                                    <Repeat />
+                                </div>
+                                <div>
+                                    <div className="howHintLabel">Synonym</div>
+                                    <div className="howHintDesc">
+                                        Get a similar word to help point you in the right direction.
                                     </div>
                                 </div>
                             </div>
@@ -314,7 +321,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     ✅
                                 </div>
                                 <div className="howHintDesc">
-                                    Every round starts at <b>5 points</b>.
+                                    Every round starts at <b>10 points</b>.
                                 </div>
                             </div>
                             <div className="howHintRow">
@@ -322,7 +329,8 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    Each hint you use costs <b>1 point</b>.
+                                    Part of speech costs <b>1 point</b>, the example sentence costs <b>2</b>,
+                                    and the synonym costs <b>3</b>.
                                 </div>
                             </div>
 
@@ -411,7 +419,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="breakdownPts">{r.points}/5</div>
+                                                    <div className="breakdownPts">{r.points}/10</div>
                                                 </div>
                                             ))}
                                         </div>
@@ -525,7 +533,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         onClick={next}
                                                         disabled={!canGoNext || isSliding}
                                                     >
-                                                        {current === totalRounds - 1 ? "Finish" : "Next"}
+                                                        {current === totalRounds - 1 ? "Submit" : "Next"}
                                                     </button>
                                                 </div>
                                             </div>
@@ -572,7 +580,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="breakdownPts">{r.points}/5</div>
+                                                                <div className="breakdownPts">{r.points}/10</div>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -625,7 +633,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                             aria-hidden="true"
                                                             disabled
                                                         >
-                                                            {nextView === totalRounds - 1 ? "Finish" : "Next"}
+                                                            {nextView === totalRounds - 1 ? "Submit" : "Next"}
                                                         </button>
                                                     </div>
                                                 </div>

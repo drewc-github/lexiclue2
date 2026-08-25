@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { HintType, RoundData } from "../lib/types";
 import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
@@ -19,6 +19,7 @@ export default function WordCard({
   disableHints?: boolean;
 }) {
   const [active, setActive] = useState<HintType | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
   const [isSwitching, setIsSwitching] = useState(false);
 
   const timersRef = useRef<number[]>([]);
@@ -56,8 +57,38 @@ export default function WordCard({
     clearTimers();
     queuedHintRef.current = null;
     setSwitching(false);
+    setIsConfirming(false);
     setActive(null);
   }
+
+  useEffect(() => {
+    if (!isConfirming) return;
+
+    document.body.classList.add("hint-confirming");
+
+    function cancelFromOutsideClick(event: MouseEvent) {
+      const target = event.target;
+      if (target instanceof Element && target.closest(".hintConfirmBtn")) return;
+
+      // Confirmation temporarily takes priority over every other control on
+      // the page. The intercepted click only cancels the pending hint.
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      timersRef.current.forEach((timer) => window.clearTimeout(timer));
+      timersRef.current = [];
+      queuedHintRef.current = null;
+      switchingRef.current = false;
+      setIsSwitching(false);
+      setIsConfirming(false);
+      setActive(null);
+    }
+
+    document.addEventListener("click", cancelFromOutsideClick, true);
+    return () => {
+      document.removeEventListener("click", cancelFromOutsideClick, true);
+      document.body.classList.remove("hint-confirming");
+    };
+  }, [isConfirming]);
 
   function reveal(h: HintType) {
     if (disableHints) return;
@@ -69,11 +100,8 @@ export default function WordCard({
       return;
     }
 
-    // If already showing this hint on the back, do nothing
-    if (active === h) return;
-
-    // Charge only the first time
-    if (!used[h]) onUseHint(h);
+    // If already showing this hint in the same state, do nothing.
+    if (active === h && isConfirming === !used[h]) return;
 
     clearTimers();
 
@@ -82,7 +110,10 @@ export default function WordCard({
       setSwitching(false);
       requestAnimationFrame(() => setSwitching(true));
 
-      schedule(() => setActive(h), SWITCH_HALF);
+      schedule(() => {
+        setActive(h);
+        setIsConfirming(!used[h]);
+      }, SWITCH_HALF);
 
       schedule(() => {
         // IMPORTANT: make switching false synchronously BEFORE processing queue
@@ -97,8 +128,18 @@ export default function WordCard({
       return;
     }
 
-    // If on front, flip normally to the first hint
+    // New hints ask for confirmation before points are deducted. Previously
+    // purchased hints can be viewed again immediately at no additional cost.
+    setIsConfirming(!used[h]);
     setActive(h);
+  }
+
+  function confirmHint(event: ReactMouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    if (!active || used[active]) return;
+
+    onUseHint(active);
+    setIsConfirming(false);
   }
 
   function getHintLabel(hint: HintType | null) {
@@ -124,14 +165,16 @@ export default function WordCard({
       {/* Make the whole tile clickable like NYT */}
       <div
         className={`cardInner ${flipped ? "flipped" : ""} ${isSwitching ? "switching" : ""}`}
-        role="button"
-        tabIndex={0}
-        aria-label={flipped ? "Flip to word" : "Flip to clue"}
+        role={flipped && !isConfirming ? "button" : undefined}
+        tabIndex={flipped && !isConfirming ? 0 : -1}
+        aria-label={flipped && !isConfirming ? "Flip to word" : undefined}
         onClick={() => {
           if (flipped) flipToFront();
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
+          if (e.key === "Escape" && isConfirming) {
+            flipToFront();
+          } else if ((e.key === "Enter" || e.key === " ") && !isConfirming) {
             e.preventDefault();
             if (flipped) flipToFront();
           }
@@ -143,7 +186,22 @@ export default function WordCard({
 
         <div className="cardFace cardBack">
           {active && <div className="hintBackLabel">{getHintLabel(active)}</div>}
-          <div className="cardBackText">{hintText}</div>
+          {isConfirming && active ? (
+            <div className="hintConfirmation">
+              <div className="hintConfirmationText">
+                Are you sure you&apos;d like to use a hint?
+              </div>
+              <button
+                type="button"
+                className="hintConfirmBtn"
+                onClick={confirmHint}
+              >
+                Yes, I&apos;m sure.
+              </button>
+            </div>
+          ) : (
+            <div className="cardBackText">{hintText}</div>
+          )}
         </div>
       </div>
 
@@ -163,22 +221,22 @@ export default function WordCard({
 
           <button
             type="button"
-            className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
-            onClick={() => reveal("synonym")}
-            disabled={disableHints || hintsLocked}
-            aria-label="Synonym"
-          >
-            <Repeat size={18} strokeWidth={2} />
-          </button>
-
-          <button
-            type="button"
             className={`hintBtn hintSent ${used.sentence ? "used" : ""}`}
             onClick={() => reveal("sentence")}
             disabled={disableHints || hintsLocked}
             aria-label="Example Sentence"
           >
             <Pencil size={18} strokeWidth={2} />
+          </button>
+
+          <button
+            type="button"
+            className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
+            onClick={() => reveal("synonym")}
+            disabled={disableHints || hintsLocked}
+            aria-label="Synonym"
+          >
+            <Repeat size={18} strokeWidth={2} />
           </button>
         </div>
       </div>

@@ -412,6 +412,46 @@ select {
   text-align: center;
 }
 
+.hintConfirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.hintConfirmationText {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.hintConfirmBtn {
+  border: 0;
+  padding: 3px 6px;
+  background: transparent;
+  color: #f472b6;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.hintConfirmBtn:hover {
+  opacity: 0.75;
+}
+
+.hintConfirmBtn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* During hint confirmation, every other control acts only as a cancel target. */
+body.hint-confirming button:not(.hintConfirmBtn) {
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .cardBack {
   padding-top: 30px;
 }
