@@ -40,7 +40,7 @@ function getGradeData(percent: number) {
 
     if (percent >= 90)
         return {
-            letter: "A",
+            letter: "A-",
             emoji: "🎓",
             message: "Dean’s list. Words bow to you.",
         };
