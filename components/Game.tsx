@@ -31,6 +31,13 @@ function getGradeData(percent: number) {
             message: "Summa cum laude! Outstanding lexical excellence.",
         };
 
+    if (percent >= 93)
+        return {
+            letter: "A",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
     if (percent >= 90)
         return {
             letter: "A",
@@ -38,23 +45,65 @@ function getGradeData(percent: number) {
             message: "Dean’s list. Words bow to you.",
         };
 
-    if (percent >= 80)
+    if (percent >= 87)
+        return {
+            letter: "B+",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 83)
         return {
             letter: "B",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 80)
+        return {
+            letter: "B-",
             emoji: "📚",
             message: "Strong work. A scholar in the making.",
         };
 
-    if (percent >= 70)
+    if (percent >= 77)
+        return {
+            letter: "C+",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 73)
         return {
             letter: "C",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 70)
+        return {
+            letter: "C-",
             emoji: "✏️",
             message: "Passing with promise. Keep studying.",
         };
 
-    if (percent >= 60)
+    if (percent >= 67)
+        return {
+            letter: "D+",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 63)
         return {
             letter: "D",
+            emoji: "🎓",
+            message: "Dean’s list. Words bow to you.",
+        };
+
+    if (percent >= 60)
+        return {
+            letter: "D-",
             emoji: "📝",
             message: "Credit earned. Vocabulary needs polish.",
         };
