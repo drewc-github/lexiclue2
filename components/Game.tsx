@@ -84,7 +84,7 @@ function getGradeData(percent: number) {
         return {
             letter: "C-",
             emoji: "📖",
-            message: "Maybe we should open a book once in awhile.",
+            message: "Let's hope the teacher curves this.",
         };
 
     if (percent >= 67)
