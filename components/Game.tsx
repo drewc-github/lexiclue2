@@ -308,7 +308,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                             <div className="howEyebrow">How to Play</div>
                             <div className="howText">
                                 Work through <b>{totalRounds} words</b> each day and choose the definition that fits each one.
-                                Some may look familiar and others might be completely new. But either way, you&apos;ll
+                                Some may look familiar and others might be completely new. Either way, you&apos;ll
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
