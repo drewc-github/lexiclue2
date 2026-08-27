@@ -41,71 +41,71 @@ function getGradeData(percent: number) {
     if (percent >= 90)
         return {
             letter: "A-",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "🌟",
+            message: "Nice work, keep up the studying.",
         };
 
     if (percent >= 87)
         return {
             letter: "B+",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "📈",
+            message: "An A is on the horizon.",
         };
 
     if (percent >= 83)
         return {
             letter: "B",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "📚",
+            message: "Hey, we'll take it.",
         };
 
     if (percent >= 80)
         return {
             letter: "B-",
-            emoji: "📚",
-            message: "Strong work. A scholar in the making.",
+            emoji: "✏️",
+            message: "Really walking the line there.",
         };
 
     if (percent >= 77)
         return {
             letter: "C+",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "📝",
+            message: "A little studying goes a long way.",
         };
 
     if (percent >= 73)
         return {
             letter: "C",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "😅",
+            message: "C's get degrees, right?",
         };
 
     if (percent >= 70)
         return {
             letter: "C-",
-            emoji: "✏️",
-            message: "Passing with promise. Keep studying.",
+            emoji: "📖",
+            message: "Maybe we should open a book once in awhile.",
         };
 
     if (percent >= 67)
         return {
             letter: "D+",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "☀️",
+            message: "Summer school doesn't sound so bad.",
         };
 
     if (percent >= 63)
         return {
             letter: "D",
-            emoji: "🎓",
-            message: "Dean’s list. Words bow to you.",
+            emoji: "🙃",
+            message: "At least you got points for your name.",
         };
 
     if (percent >= 60)
         return {
             letter: "D-",
-            emoji: "📝",
-            message: "Credit earned. Vocabulary needs polish.",
+            emoji: "🫠",
+            message: "Did you forget to put your name down?",
         };
 
     return {
