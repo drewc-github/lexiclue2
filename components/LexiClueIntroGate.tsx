@@ -58,7 +58,7 @@ export default function LexiClueIntroGate({ daily }: { daily: DailyGame }) {
                     </button>
 
                     <div className="introCredit">Created by <b><a href="mailto:drewjc44@gmail.com">Drew Corsaro</a></b></div>
-                    <div className="introCredit">Powered by <b><a href="www.wordnik.com">Wordnik</a></b></div>
+                    <div className="introCredit">Powered by <b><a href="https://www.wordnik.com">Wordnik</a></b></div>
                 </div>
             </main>
         );

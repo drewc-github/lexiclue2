@@ -1337,6 +1337,10 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   color: rgba(17, 24, 39, 0.55);
 }
 
+.introCredit + .introCredit {
+  margin-top: 2px;
+}
+
 .introCredit a {
   color: inherit;
   text-decoration: none;
