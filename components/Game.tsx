@@ -132,7 +132,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
         () => createInitialProgress(daily)
     );
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         try {
             const raw = window.localStorage.getItem(progressStorageKey);
             const restored = restoreGameProgress(raw, daily);
