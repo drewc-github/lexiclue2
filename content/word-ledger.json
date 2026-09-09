@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-23T15:44:26.017Z",
+  "updatedAt": "2026-09-09T03:36:46.791Z",
   "entries": [
     {
       "id": "astute-adjective-1",
@@ -1521,28 +1521,6 @@
       "timesUsed": 6
     },
     {
-      "id": "transitory-adjective-1",
-      "word": "transitory",
-      "definition": "lasting for only a short time",
-      "partOfSpeech": "adjective",
-      "synonym": "temporary",
-      "exampleSentence": "The excitement of winning the game was transitory, fading by the next morning.",
-      "distractors": [
-        "changing easily to fit new situations",
-        "moving from place to place often",
-        "happening at regular times each year"
-      ],
-      "sourceDictionary": "Lexiclues editorial bank",
-      "sourceAttribution": "Lexiclues editorial entry",
-      "status": "approved",
-      "difficulty": 4,
-      "reviewedAt": "2026-08-23",
-      "model": "gpt-5.4",
-      "promptVersion": 2,
-      "reviewVersion": 2,
-      "timesUsed": 6
-    },
-    {
       "id": "adroit-adjective-1",
       "word": "adroit",
       "definition": "very skilled and clever in dealing with things or people",
@@ -1694,7 +1672,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "buoyant-adjective-1",
@@ -1716,7 +1694,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "catalyst-noun-1",
@@ -1782,7 +1760,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "alleviate-verb-1",
@@ -1826,7 +1804,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "belligerent-adjective-1",
@@ -1848,7 +1826,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "benevolent-adjective-1",
@@ -1870,7 +1848,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0
+      "timesUsed": 1
     },
     {
       "id": "camaraderie-noun-1",
