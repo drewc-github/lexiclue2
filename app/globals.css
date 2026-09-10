@@ -442,7 +442,6 @@ select {
   border: 0;
   padding: 3px 6px;
   background: transparent;
-  color: #f472b6;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -462,6 +461,18 @@ select {
 body.hint-confirming button:not(.hintConfirmBtn) {
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+.hintConfirm-pos {
+  color: #2563eb;
+}
+
+.hintConfirm-synonym {
+  color: #059669;
+}
+
+.hintConfirm-sentence {
+  color: #dc8426;
 }
 
 .cardBack {

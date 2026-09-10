@@ -6,6 +6,11 @@ import { MessageSquareText, Repeat, Pencil } from "lucide-react";
 
 const SWITCH_MS = 240;
 const SWITCH_HALF = 120;
+const HINT_COSTS: Record<HintType, number> = {
+  pos: 1,
+  synonym: 3,
+  sentence: 5,
+};
 
 export default function WordCard({
   round,
@@ -150,6 +155,7 @@ export default function WordCard({
   }
 
   const flipped = active !== null;
+  const activeHintCost = active ? HINT_COSTS[active] : 0;
 
   const hintText =
     active === "pos"
@@ -189,14 +195,14 @@ export default function WordCard({
           {isConfirming && active ? (
             <div className="hintConfirmation">
               <div className="hintConfirmationText">
-                Are you sure you&apos;d like to use a hint?
+                Use this hint for {activeHintCost} {activeHintCost === 1 ? "point" : "points"}?
               </div>
               <button
                 type="button"
-                className="hintConfirmBtn"
+                className={`hintConfirmBtn hintConfirm-${active}`}
                 onClick={confirmHint}
               >
-                Yes, I&apos;m sure.
+                Yes, show me
               </button>
             </div>
           ) : (
@@ -221,22 +227,22 @@ export default function WordCard({
 
           <button
             type="button"
-            className={`hintBtn hintSent ${used.sentence ? "used" : ""}`}
-            onClick={() => reveal("sentence")}
-            disabled={disableHints || hintsLocked}
-            aria-label="Example Sentence"
-          >
-            <Pencil size={18} strokeWidth={2} />
-          </button>
-
-          <button
-            type="button"
             className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
             onClick={() => reveal("synonym")}
             disabled={disableHints || hintsLocked}
             aria-label="Synonym"
           >
             <Repeat size={18} strokeWidth={2} />
+          </button>
+
+          <button
+            type="button"
+            className={`hintBtn hintSent ${used.sentence ? "used" : ""}`}
+            onClick={() => reveal("sentence")}
+            disabled={disableHints || hintsLocked}
+            aria-label="Example Sentence"
+          >
+            <Pencil size={18} strokeWidth={2} />
           </button>
         </div>
       </div>

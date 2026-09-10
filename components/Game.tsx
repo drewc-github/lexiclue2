@@ -17,8 +17,8 @@ function calcPoints(isCorrect: boolean, used: RoundProgress["used"]) {
 
     const hintCost =
         (used.pos ? 1 : 0) +
-        (used.sentence ? 2 : 0) +
-        (used.synonym ? 3 : 0);
+        (used.synonym ? 3 : 0) +
+        (used.sentence ? 5 : 0);
 
     return Math.max(0, 10 - hintCost);
 }
@@ -312,7 +312,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                <b>Need a clue?</b> Reveal the part of speech, an example sentence, or a synonym.
+                                <b>Need a clue?</b> Reveal the part of speech, a synonym, or an example sentence.
                                 Stronger hints cost more points, so use them wisely. You&apos;ll confirm before any
                                 points are deducted.
                             </div>
@@ -336,18 +336,6 @@ export default function Game({ daily }: { daily: DailyGame }) {
                             </div>
 
                             <div className="howHintRow">
-                                <div className="howHintIcon hintSent" aria-hidden="true">
-                                    <Pencil />
-                                </div>
-                                <div>
-                                    <div className="howHintLabel">Example Sentence</div>
-                                    <div className="howHintDesc">
-                                        See the word used in context before making your pick.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="howHintRow">
                                 <div className="howHintIcon hintSyn" aria-hidden="true">
                                     <Repeat />
                                 </div>
@@ -355,6 +343,18 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     <div className="howHintLabel">Synonym</div>
                                     <div className="howHintDesc">
                                         Get a similar word to help point you in the right direction.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="howHintRow">
+                                <div className="howHintIcon hintSent" aria-hidden="true">
+                                    <Pencil />
+                                </div>
+                                <div>
+                                    <div className="howHintLabel">Example Sentence</div>
+                                    <div className="howHintDesc">
+                                        See the word used in context before making your pick.
                                     </div>
                                 </div>
                             </div>
@@ -378,8 +378,8 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    Part of speech costs <b>1 point</b>, example sentence costs <b>2 points</b>,
-                                    and a synonym costs <b>3 points</b>.
+                                    Part of speech costs <b>1 point</b>, a synonym costs <b>3 points</b>,
+                                    and an example sentence costs <b>5 points</b>.
                                 </div>
                             </div>
 
