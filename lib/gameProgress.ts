@@ -3,6 +3,7 @@ import type { DailyGame, HintType } from "./types";
 export type RoundProgress = {
   selectedIndex: number | null;
   isCorrect: boolean | null;
+  eliminatedIndex: number | null;
   used: Record<HintType, boolean>;
 };
 
@@ -16,7 +17,8 @@ export function createInitialProgress(daily: DailyGame): RoundProgress[] {
   return daily.rounds.map(() => ({
     selectedIndex: null,
     isCorrect: null,
-    used: { pos: false, synonym: false, sentence: false },
+    eliminatedIndex: null,
+    used: { synonym: false, narrow: false, sentence: false },
   }));
 }
 
@@ -53,14 +55,24 @@ export function restoreGameProgress(
       const used = entry.used && typeof entry.used === "object"
         ? (entry.used as Record<string, unknown>)
         : {};
+      const eliminatedCandidate = entry.eliminatedIndex;
+      const eliminatedIndex =
+        used.narrow === true &&
+        Number.isInteger(eliminatedCandidate) &&
+        (eliminatedCandidate as number) >= 0 &&
+        (eliminatedCandidate as number) < round.choices.length &&
+        eliminatedCandidate !== round.correctIndex
+          ? (eliminatedCandidate as number)
+          : null;
 
       return {
         selectedIndex,
         isCorrect:
           selectedIndex === null ? null : selectedIndex === round.correctIndex,
+        eliminatedIndex,
         used: {
-          pos: used.pos === true,
           synonym: used.synonym === true,
+          narrow: used.narrow === true && eliminatedIndex !== null,
           sentence: used.sentence === true,
         },
       } satisfies RoundProgress;

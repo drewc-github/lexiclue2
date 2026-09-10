@@ -30,7 +30,8 @@ test("restored indexes are range checked and correctness is recomputed", () => {
     progress: daily.rounds.map((_, index) => ({
       selectedIndex: index === 0 ? 99 : index % 4,
       isCorrect: false,
-      used: { pos: 1, synonym: true, sentence: false },
+      eliminatedIndex: 0,
+      used: { narrow: true, synonym: true, sentence: false },
     })),
   });
   const restored = restoreGameProgress(raw, daily);
@@ -38,7 +39,8 @@ test("restored indexes are range checked and correctness is recomputed", () => {
   assert.equal(restored.current, 0);
   assert.equal(restored.progress[0].selectedIndex, null);
   assert.equal(restored.progress[1].isCorrect, true);
-  assert.equal(restored.progress[1].used.pos, false);
+  assert.equal(restored.progress[1].used.narrow, true);
+  assert.equal(restored.progress[1].eliminatedIndex, 0);
   assert.equal(restored.progress[1].used.synonym, true);
 });
 
@@ -49,7 +51,8 @@ test("a tentative answer on the current question is not restored", () => {
     progress: daily.rounds.map((_, index) => ({
       selectedIndex: index % 4,
       isCorrect: true,
-      used: { pos: false, synonym: false, sentence: false },
+      eliminatedIndex: null,
+      used: { narrow: false, synonym: false, sentence: false },
     })),
   });
   const restored = restoreGameProgress(raw, daily);

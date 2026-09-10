@@ -1,4 +1,4 @@
-export type HintType = "pos" | "synonym" | "sentence";
+export type HintType = "synonym" | "narrow" | "sentence";
 
 export type WordEntry = {
   id?: string;

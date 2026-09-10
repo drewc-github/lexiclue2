@@ -2,14 +2,26 @@
 
 import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { HintType, RoundData } from "../lib/types";
-import { MessageSquareText, Repeat, Pencil } from "lucide-react";
+import { Repeat, Pencil, Scissors } from "lucide-react";
 
 const SWITCH_MS = 240;
 const SWITCH_HALF = 120;
-const HINT_COSTS: Record<HintType, number> = {
-  pos: 1,
-  synonym: 3,
-  sentence: 5,
+const HINT_CONFIRMATION_COPY: Record<
+  HintType,
+  { prompt: string; cost: number }
+> = {
+  synonym: {
+    prompt: "See a synonym?",
+    cost: 1,
+  },
+  narrow: {
+    prompt: "Narrow down the choices?",
+    cost: 3,
+  },
+  sentence: {
+    prompt: "Check out the word in action?",
+    cost: 5,
+  },
 };
 
 export default function WordCard({
@@ -144,23 +156,27 @@ export default function WordCard({
     if (!active || used[active]) return;
 
     onUseHint(active);
+
+    if (active === "narrow") {
+      flipToFront();
+      return;
+    }
+
     setIsConfirming(false);
   }
 
   function getHintLabel(hint: HintType | null) {
-    if (hint === "pos") return "Part of Speech";
     if (hint === "synonym") return "Synonym";
+    if (hint === "narrow") return "Narrow Answers";
     if (hint === "sentence") return "Example Sentence";
     return "";
   }
 
   const flipped = active !== null;
-  const activeHintCost = active ? HINT_COSTS[active] : 0;
+  const confirmationCopy = active ? HINT_CONFIRMATION_COPY[active] : null;
 
   const hintText =
-    active === "pos"
-      ? round.partOfSpeech ?? ""
-      : active === "synonym"
+    active === "synonym"
         ? round.synonym ?? ""
         : active === "sentence"
           ? round.exampleSentence ?? ""
@@ -195,8 +211,13 @@ export default function WordCard({
           {isConfirming && active ? (
             <div className="hintConfirmation">
               <div className="hintConfirmationText">
-                Use this hint for {activeHintCost} {activeHintCost === 1 ? "point" : "points"}?
+                {confirmationCopy?.prompt}
               </div>
+              {confirmationCopy && (
+                <div className="hintConfirmationCost">
+                  Cost: {confirmationCopy.cost} {confirmationCopy.cost === 1 ? "point" : "points"}
+                </div>
+              )}
               <button
                 type="button"
                 className={`hintConfirmBtn hintConfirm-${active}`}
@@ -217,22 +238,22 @@ export default function WordCard({
         <div className="hints">
           <button
             type="button"
-            className={`hintBtn hintPos ${used.pos ? "used" : ""}`}
-            onClick={() => reveal("pos")}
-            disabled={disableHints || hintsLocked}
-            aria-label="Part of Speech"
-          >
-            <MessageSquareText size={18} strokeWidth={2} />
-          </button>
-
-          <button
-            type="button"
             className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
             onClick={() => reveal("synonym")}
             disabled={disableHints || hintsLocked}
             aria-label="Synonym"
           >
             <Repeat size={18} strokeWidth={2} />
+          </button>
+
+          <button
+            type="button"
+            className={`hintBtn hintNarrow ${used.narrow ? "used" : ""}`}
+            onClick={() => reveal("narrow")}
+            disabled={disableHints || hintsLocked || used.narrow}
+            aria-label="Narrow Answers"
+          >
+            <Scissors size={18} strokeWidth={2} />
           </button>
 
           <button

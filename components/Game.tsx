@@ -9,15 +9,15 @@ import {
     restoreGameProgress,
     type RoundProgress,
 } from "../lib/gameProgress";
-import { MessageSquareText, Repeat, Pencil } from "lucide-react";
+import { Repeat, Pencil, Scissors } from "lucide-react";
 
 
 function calcPoints(isCorrect: boolean, used: RoundProgress["used"]) {
     if (!isCorrect) return 0;
 
     const hintCost =
-        (used.pos ? 1 : 0) +
-        (used.synonym ? 3 : 0) +
+        (used.synonym ? 1 : 0) +
+        (used.narrow ? 3 : 0) +
         (used.sentence ? 5 : 0);
 
     return Math.max(0, 10 - hintCost);
@@ -176,7 +176,20 @@ export default function Game({ daily }: { daily: DailyGame }) {
             const copy = [...prev];
             const p = copy[roundIdx];
             if (!p.used[h]) {
-                copy[roundIdx] = { ...p, used: { ...p.used, [h]: true } };
+                const round = daily.rounds[roundIdx];
+                const eliminatedIndex = h === "narrow"
+                    ? round.choices.findIndex(
+                        (_, choiceIndex) =>
+                            choiceIndex !== round.correctIndex &&
+                            choiceIndex !== p.selectedIndex
+                    )
+                    : p.eliminatedIndex;
+
+                copy[roundIdx] = {
+                    ...p,
+                    eliminatedIndex,
+                    used: { ...p.used, [h]: true },
+                };
             }
             return copy;
         });
@@ -312,7 +325,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                <b>Need a clue?</b> Reveal the part of speech, a synonym, or an example sentence.
+                                <b>Need a clue?</b> Reveal a synonym, narrow the answers, or see an example sentence.
                                 Stronger hints cost more points, so use them wisely. You&apos;ll confirm before any
                                 points are deducted.
                             </div>
@@ -324,18 +337,6 @@ export default function Game({ daily }: { daily: DailyGame }) {
 
                         <div className="howHints">
                             <div className="howHintRow">
-                                <div className="howHintIcon hintPos" aria-hidden="true">
-                                    <MessageSquareText />
-                                </div>
-                                <div>
-                                    <div className="howHintLabel">Part of Speech</div>
-                                    <div className="howHintDesc">
-                                        Check whether the word is a noun, verb, or adjective.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="howHintRow">
                                 <div className="howHintIcon hintSyn" aria-hidden="true">
                                     <Repeat />
                                 </div>
@@ -343,6 +344,18 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     <div className="howHintLabel">Synonym</div>
                                     <div className="howHintDesc">
                                         Get a similar word to help point you in the right direction.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="howHintRow">
+                                <div className="howHintIcon hintNarrow" aria-hidden="true">
+                                    <Scissors />
+                                </div>
+                                <div>
+                                    <div className="howHintLabel">Narrow Answers</div>
+                                    <div className="howHintDesc">
+                                        Remove one incorrect answer from the choices.
                                     </div>
                                 </div>
                             </div>
@@ -378,7 +391,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    Part of speech costs <b>1 point</b>, a synonym costs <b>3 points</b>,
+                                    A synonym costs <b>1 point</b>, narrowing the answers costs <b>3 points</b>,
                                     and an example sentence costs <b>5 points</b>.
                                 </div>
                             </div>
@@ -569,6 +582,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                         choices={currentRound.choices}
                                                         correctIndex={currentRound.correctIndex}
                                                         selectedIndex={currentProgress.selectedIndex}
+                                                        eliminatedIndex={currentProgress.eliminatedIndex}
                                                         onSelect={onSelectAnswer}
                                                         revealCorrectness={false}
                                                         disabled={isSliding}
@@ -668,6 +682,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                             choices={daily.rounds[nextView].choices}
                                                             correctIndex={daily.rounds[nextView].correctIndex}
                                                             selectedIndex={progress[nextView].selectedIndex}
+                                                            eliminatedIndex={progress[nextView].eliminatedIndex}
                                                             onSelect={() => { }}
                                                             revealCorrectness={false}
                                                             disabled

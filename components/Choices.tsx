@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 export default function Choices({
   choices = [],
   correctIndex,
   selectedIndex,
+  eliminatedIndex = null,
   onSelect,
   revealCorrectness = false,
   disabled = false,
@@ -11,18 +14,36 @@ export default function Choices({
   choices?: string[];
   correctIndex: number;
   selectedIndex: number | null;
+  eliminatedIndex?: number | null;
   onSelect: (i: number) => void;
   revealCorrectness?: boolean;
   disabled?: boolean;
 }) {
   // Safety: avoid crashing if something upstream passes undefined/null.
-  if (!Array.isArray(choices)) return null;
+  const safeChoices = Array.isArray(choices) ? choices : [];
 
-  const longestChoice = choices.reduce(
+  const [settledEliminatedIndex, setSettledEliminatedIndex] = useState(
+    eliminatedIndex
+  );
+
+  useEffect(() => {
+    if (eliminatedIndex === null) return;
+
+    const timer = window.setTimeout(
+      () => setSettledEliminatedIndex(eliminatedIndex),
+      680
+    );
+    return () => window.clearTimeout(timer);
+  }, [eliminatedIndex]);
+
+  const sizingChoices = settledEliminatedIndex === eliminatedIndex && eliminatedIndex !== null
+    ? safeChoices.filter((_, index) => index !== eliminatedIndex)
+    : safeChoices;
+  const longestChoice = sizingChoices.reduce(
     (longest, choice) => Math.max(longest, choice.trim().length),
     0
   );
-  const totalChoiceLength = choices.reduce(
+  const totalChoiceLength = sizingChoices.reduce(
     (total, choice) => total + choice.trim().length,
     0
   );
@@ -37,14 +58,16 @@ export default function Choices({
     <div
       className={`choiceList ${densityClass} ${selectedIndex !== null ? "hasSelection" : ""}`}
     >
-      {choices.map((c, i) => {
+      {safeChoices.map((c, i) => {
         const isSelected = selectedIndex === i;
+        const isEliminated = eliminatedIndex === i;
 
         const showCorrectness = revealCorrectness && selectedIndex !== null;
 
         const classNames = [
           "choiceBtn",
           isSelected ? "selected" : "",
+          isEliminated ? "eliminated" : "",
           showCorrectness && i === correctIndex ? "correct" : "",
           showCorrectness && isSelected && i !== correctIndex ? "wrong" : "",
         ]
@@ -52,19 +75,28 @@ export default function Choices({
           .join(" ");
 
         return (
-          <button
+          <div
             key={i}
-            type="button"
-            className={classNames}
-            onClick={() => {
-              if (disabled) return;
-              onSelect(i);
-            }}
-            disabled={disabled}
-            aria-pressed={isSelected}
+            className={`choiceSlot ${isEliminated ? "eliminated" : ""}`}
+            aria-hidden={isEliminated}
           >
-            {c}
-          </button>
+            <div className="choiceSlotInner">
+              <button
+                type="button"
+                className={classNames}
+                onClick={() => {
+                  if (disabled || isEliminated) return;
+                  onSelect(i);
+                }}
+                disabled={disabled || isEliminated}
+                aria-pressed={isSelected}
+                aria-label={c}
+                tabIndex={isEliminated ? -1 : undefined}
+              >
+                {c}
+              </button>
+            </div>
+          </div>
         );
       })}
     </div>

@@ -438,6 +438,18 @@ select {
   line-height: 1.35;
 }
 
+.hintConfirmationCost {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.07);
+  color: rgba(17, 24, 39, 0.68);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .hintConfirmBtn {
   border: 0;
   padding: 3px 6px;
@@ -463,16 +475,16 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   -webkit-tap-highlight-color: transparent;
 }
 
-.hintConfirm-pos {
-  color: #2563eb;
-}
-
 .hintConfirm-synonym {
   color: #059669;
 }
 
+.hintConfirm-narrow {
+  color: #ca8a04;
+}
+
 .hintConfirm-sentence {
-  color: #dc8426;
+  color: #2563eb;
 }
 
 .cardBack {
@@ -538,7 +550,7 @@ body.hint-confirming button:not(.hintConfirmBtn) {
 }
 
 /* Subtle color accents via border, not fill */
-.hintPos {
+.hintSent {
   color: #2563eb;
   /* refined blue */
   border-color: rgba(37, 99, 235, 0.35);
@@ -552,11 +564,10 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   background: rgba(5, 150, 105, 0.06);
 }
 
-.hintSent {
-  color: #dc8426;
-  /* soft red */
-  border-color: rgba(220, 123, 38, 0.3);
-  background: rgba(220, 147, 38, 0.06);
+.hintNarrow {
+  color: #ca8a04;
+  border-color: rgba(202, 138, 4, 0.38);
+  background: rgba(234, 179, 8, 0.07);
 }
 
 /* ------------------------------
@@ -584,8 +595,30 @@ body.hint-confirming button:not(.hintConfirmBtn) {
    Choices (Answer list)
 -------------------------------- */
 .choiceList {
+  display: block;
+}
+
+.choiceSlot {
   display: grid;
-  gap: 10px;
+  grid-template-rows: 1fr;
+  margin-bottom: 10px;
+  transition:
+    grid-template-rows 320ms var(--ease) 340ms,
+    margin-bottom 320ms var(--ease) 340ms;
+}
+
+.choiceList .choiceSlot:last-child {
+  margin-bottom: 0;
+}
+
+.choiceSlotInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.choiceList .choiceSlot.eliminated {
+  grid-template-rows: 0fr;
+  margin-bottom: 0;
 }
 
 .choiceBtn {
@@ -604,14 +637,18 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   transition:
     transform 120ms var(--ease),
     opacity 120ms var(--ease),
+    color 220ms var(--ease),
     background-color 120ms var(--ease),
-    border-color 120ms var(--ease);
+    border-color 220ms var(--ease),
+    box-shadow 220ms var(--ease),
+    padding 180ms var(--ease),
+    font-size 180ms var(--ease);
 }
 
 /* Keep all four options in a round visually consistent. Longer answer sets
    compact as a group so the fixed action area retains its bottom padding. */
-.choiceListCompact {
-  gap: 8px;
+.choiceListCompact .choiceSlot {
+  margin-bottom: 8px;
 }
 
 .choiceListCompact .choiceBtn {
@@ -620,8 +657,8 @@ body.hint-confirming button:not(.hintConfirmBtn) {
   line-height: 1.2;
 }
 
-.choiceListDense {
-  gap: 7px;
+.choiceListDense .choiceSlot {
+  margin-bottom: 7px;
 }
 
 .choiceListDense .choiceBtn {
@@ -647,9 +684,33 @@ body.hint-confirming button:not(.hintConfirmBtn) {
 }
 
 .choiceBtn.selected {
-  border-color: rgba(17, 24, 39, 0.72);
+  border-color: #374151;
   background: rgba(17, 24, 39, 0.07);
-  box-shadow: 0 0 0 1px rgba(17, 24, 39, 0.28);
+  box-shadow: none;
+}
+
+.choiceBtn:focus {
+  outline: none;
+}
+
+.choiceBtn:focus-visible {
+  outline: 2px solid rgba(55, 65, 81, 0.65);
+  outline-offset: 2px;
+}
+
+.choiceBtn.eliminated {
+  color: #ffffff !important;
+  border-color: #ffffff;
+  background: #ffffff;
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    color 320ms var(--ease),
+    border-color 320ms var(--ease),
+    background-color 320ms var(--ease),
+    box-shadow 320ms var(--ease),
+    opacity 320ms var(--ease);
 }
 
 .choiceBtn.correct {
