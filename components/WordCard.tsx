@@ -11,15 +11,15 @@ const HINT_CONFIRMATION_COPY: Record<
   { prompt: string; cost: number }
 > = {
   synonym: {
-    prompt: "Reveal a related word?",
+    prompt: "Related word",
     cost: 1,
   },
   narrow: {
-    prompt: "Remove an answer option?",
+    prompt: "Eliminate a Definition",
     cost: 3,
   },
   sentence: {
-    prompt: "See the word in a sentence?",
+    prompt: "Example Sentence",
     cost: 5,
   },
 };
@@ -208,7 +208,7 @@ export default function WordCard({
               </div>
               {confirmationCopy && (
                 <div className="hintConfirmationCost">
-                  Cost: {confirmationCopy.cost} {confirmationCopy.cost === 1 ? "point" : "points"}
+                  Deduct {confirmationCopy.cost} {confirmationCopy.cost === 1 ? "point" : "points"}
                 </div>
               )}
               <button
@@ -216,7 +216,7 @@ export default function WordCard({
                 className={`hintConfirmBtn hintConfirm-${active}`}
                 onClick={confirmHint}
               >
-                Yes, show me
+                Use this Lexiclue
               </button>
             </div>
           ) : (
@@ -244,7 +244,7 @@ export default function WordCard({
             className={`hintBtn hintNarrow ${used.narrow ? "used" : ""}`}
             onClick={() => reveal("narrow")}
             disabled={disableHints || hintsLocked || used.narrow}
-            aria-label="Narrow Answers"
+            aria-label="Eliminate a Definition"
           >
             <Scissors size={18} strokeWidth={2} />
           </button>

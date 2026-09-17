@@ -325,7 +325,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                <b>Need a Lexiclue?</b> Reveal a related word, narrow the answers, or see an example sentence.
+                                <b>Need a Lexiclue?</b> Reveal a related word, eliminate a definition, or see an example sentence.
                                 Stronger Lexiclues cost more points, so use them wisely. You&apos;ll confirm before any
                                 points are deducted.
                             </div>
@@ -353,9 +353,9 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     <Scissors />
                                 </div>
                                 <div>
-                                    <div className="howHintLabel">Narrow Answers</div>
+                                    <div className="howHintLabel">Eliminate a Definition</div>
                                     <div className="howHintDesc">
-                                        Remove one incorrect answer from the choices.
+                                        Remove one incorrect definition from the choices.
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +391,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    A related word costs <b>1 point</b>, narrowing the answers costs <b>3 points</b>,
+                                    A related word costs <b>1 point</b>, eliminating a definition costs <b>3 points</b>,
                                     and an example sentence costs <b>5 points</b>.
                                 </div>
                             </div>
@@ -559,7 +559,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                         </button>
 
                         <div className="roundFrac">
-                            {current + 1}/{totalRounds}
+                            Round {current + 1}/{totalRounds}
                         </div>
                     </div>
                 </header>
