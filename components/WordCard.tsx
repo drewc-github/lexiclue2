@@ -11,15 +11,15 @@ const HINT_CONFIRMATION_COPY: Record<
   { prompt: string; cost: number }
 > = {
   synonym: {
-    prompt: "See a synonym?",
+    prompt: "Reveal a related word?",
     cost: 1,
   },
   narrow: {
-    prompt: "Narrow down the choices?",
+    prompt: "Remove an answer option?",
     cost: 3,
   },
   sentence: {
-    prompt: "Check out the word in action?",
+    prompt: "See the word in a sentence?",
     cost: 5,
   },
 };
@@ -165,13 +165,6 @@ export default function WordCard({
     setIsConfirming(false);
   }
 
-  function getHintLabel(hint: HintType | null) {
-    if (hint === "synonym") return "Synonym";
-    if (hint === "narrow") return "Narrow Answers";
-    if (hint === "sentence") return "Example Sentence";
-    return "";
-  }
-
   const flipped = active !== null;
   const confirmationCopy = active ? HINT_CONFIRMATION_COPY[active] : null;
 
@@ -207,7 +200,7 @@ export default function WordCard({
         </div>
 
         <div className="cardFace cardBack">
-          {active && <div className="hintBackLabel">{getHintLabel(active)}</div>}
+          {active && <div className="hintBackLabel">Lexiclue</div>}
           {isConfirming && active ? (
             <div className="hintConfirmation">
               <div className="hintConfirmationText">
@@ -233,7 +226,7 @@ export default function WordCard({
       </div>
 
       <div className="sectionBlock">
-        <div className="sectionLabel">Hints</div>
+        <div className="sectionLabel">Lexiclues</div>
 
         <div className="hints">
           <button
@@ -241,7 +234,7 @@ export default function WordCard({
             className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
             onClick={() => reveal("synonym")}
             disabled={disableHints || hintsLocked}
-            aria-label="Synonym"
+            aria-label="Related Word"
           >
             <Repeat size={18} strokeWidth={2} />
           </button>

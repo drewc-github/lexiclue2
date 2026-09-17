@@ -422,6 +422,7 @@ select {
 
 .cardBackText {
   text-align: center;
+  color: rgba(17, 24, 39, 0.74);
 }
 
 .hintConfirmation {

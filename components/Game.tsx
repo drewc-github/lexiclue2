@@ -290,7 +290,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
             `Lexiclues ${daily.dateKey}`,
             `${scoreSummary.total}/${maxScore} points`,
             resultGrid,
-            `${hintCount} hint${hintCount === 1 ? "" : "s"} used`,
+            `${hintCount} Lexiclue${hintCount === 1 ? "" : "s"} used`,
         ].join("\n");
         const playUrl = new URL("/", window.location.href).toString();
 
@@ -320,20 +320,20 @@ export default function Game({ daily }: { daily: DailyGame }) {
                         <div className="howHero">
                             <div className="howEyebrow">How to Play</div>
                             <div className="howText">
-                                Work through <b>{totalRounds} words</b> each day and choose the definition that fits each one, words get harder as you progress.
+                                Match <b>{totalRounds} words</b> with their definitions each day, with each word getting harder as you go.
                                 Some may look familiar and others might be completely new. Either way, you&apos;ll
                                 finish with a sharper vocabulary.
                             </div>
                             <div className="howText">
-                                <b>Need a clue?</b> Reveal a synonym, narrow the answers, or see an example sentence.
-                                Stronger hints cost more points, so use them wisely. You&apos;ll confirm before any
+                                <b>Need a Lexiclue?</b> Reveal a related word, narrow the answers, or see an example sentence.
+                                Stronger Lexiclues cost more points, so use them wisely. You&apos;ll confirm before any
                                 points are deducted.
                             </div>
                         </div>
                     </div>
 
                     <div className="panelMid">
-                        <div className="sectionLabel">Hints</div>
+                        <div className="sectionLabel">Lexiclues</div>
 
                         <div className="howHints">
                             <div className="howHintRow">
@@ -341,7 +341,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     <Repeat />
                                 </div>
                                 <div>
-                                    <div className="howHintLabel">Synonym</div>
+                                    <div className="howHintLabel">Related Word</div>
                                     <div className="howHintDesc">
                                         Get a similar word to help point you in the right direction.
                                     </div>
@@ -391,7 +391,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                     🔍
                                 </div>
                                 <div className="howHintDesc">
-                                    A synonym costs <b>1 point</b>, narrowing the answers costs <b>3 points</b>,
+                                    A related word costs <b>1 point</b>, narrowing the answers costs <b>3 points</b>,
                                     and an example sentence costs <b>5 points</b>.
                                 </div>
                             </div>
@@ -477,7 +477,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                                 {r.usedCount > 0 && (
                                                                     <span className="breakdownHints">
                                                                         <span className="hintDot">·</span>
-                                                                        {r.usedCount} hint{r.usedCount > 1 ? "s" : ""} used
+                                                                        {r.usedCount} Lexiclue{r.usedCount > 1 ? "s" : ""} used
                                                                     </span>
                                                                 )}
                                                             </div>
@@ -641,7 +641,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                                                                             {r.usedCount > 0 && (
                                                                                 <span className="breakdownHints">
                                                                                     <span className="hintDot">·</span>
-                                                                                    {r.usedCount} hint{r.usedCount > 1 ? "s" : ""} used
+                                                                                    {r.usedCount} Lexiclue{r.usedCount > 1 ? "s" : ""} used
                                                                                 </span>
                                                                             )}
                                                                         </div>
