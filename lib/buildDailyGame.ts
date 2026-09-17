@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import type { DailyGame, RoundData, WordEntry } from "./types";
 import { seededShuffle, selectDailyEntries } from "./dailySelection";
 import { getApprovedWords } from "./wordLedger";
+import { orderEntriesByDifficulty } from "./difficulty";
 import scheduleData from "../content/daily-puzzles.json";
 
 type BankWord = WordEntry;
@@ -132,7 +133,9 @@ async function buildDailyGameForDate(dateKey: string): Promise<DailyGame> {
     ?.map((id) => bank.find((entry) => entry.id === id))
     .filter((entry): entry is BankWord => Boolean(entry));
   // Dates outside the frozen window retain a deterministic fallback.
-  const selected = scheduled?.length === 5 ? scheduled : selectDailyEntries(bank, dateKey, 5);
+  const selected = orderEntriesByDifficulty(
+    scheduled?.length === 5 ? scheduled : selectDailyEntries(bank, dateKey, 5)
+  );
 
   const rounds: RoundData[] = selected.map((entry, idx) => {
     const tailoredDistractors = entry.distractors?.filter(

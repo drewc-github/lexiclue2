@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { restoreGameProgress } from "../lib/gameProgress.ts";
 import { selectDailyEntries } from "../lib/dailySelection.ts";
+import { orderEntriesByDifficulty } from "../lib/difficulty.ts";
 const ledger = JSON.parse(fs.readFileSync(new URL("../content/word-ledger.json", import.meta.url), "utf8"));
 
 const daily = {
@@ -73,6 +74,20 @@ test("daily selection is deterministic and non-overlapping within a cycle", () =
 
   assert.deepEqual(selectDailyEntries(bank, keys[0]), selections[0]);
   assert.equal(new Set(selections.flat()).size, 20);
+});
+
+test("round entries are ordered from easiest to hardest", () => {
+  const entries = [
+    { word: "hard", difficulty: 5 },
+    { word: "easy", difficulty: 1 },
+    { word: "medium-b", difficulty: 3 },
+    { word: "medium-a", difficulty: 3 },
+  ];
+
+  assert.deepEqual(
+    orderEntriesByDifficulty(entries).map((entry) => entry.word),
+    ["easy", "medium-b", "medium-a", "hard"]
+  );
 });
 
 test("every playable word has a coherent, complete content bundle", () => {

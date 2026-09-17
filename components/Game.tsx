@@ -320,7 +320,7 @@ export default function Game({ daily }: { daily: DailyGame }) {
                         <div className="howHero">
                             <div className="howEyebrow">How to Play</div>
                             <div className="howText">
-                                Work through <b>{totalRounds} words</b> each day and choose the definition that fits each one.
+                                Work through <b>{totalRounds} words</b> each day and choose the definition that fits each one, questions get harder as you progress.
                                 Some may look familiar and others might be completely new. Either way, you&apos;ll
                                 finish with a sharper vocabulary.
                             </div>
@@ -409,6 +409,16 @@ export default function Game({ daily }: { daily: DailyGame }) {
                     </div>
                 </div>
             </section>
+        );
+    }
+
+    // Never paint the default score/card before saved progress has been restored.
+    // useLayoutEffect resolves this before the browser's first visible frame.
+    if (!didHydrateProgress) {
+        return (
+            <main className="page" aria-busy="true">
+                <div className="shell" />
+            </main>
         );
     }
 

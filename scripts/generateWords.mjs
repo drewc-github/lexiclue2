@@ -90,6 +90,28 @@ function normalize(str) {
     return String(str).trim().toLowerCase();
 }
 
+function wordEditDistance(left, right) {
+    const a = normalize(left).replace(/[^a-z]/g, "");
+    const b = normalize(right).replace(/[^a-z]/g, "");
+    const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= a.length; i += 1) {
+        let diagonal = row[0];
+        row[0] = i;
+        for (let j = 1; j <= b.length; j += 1) {
+            const previous = row[j];
+            row[j] = Math.min(row[j] + 1, row[j - 1] + 1, diagonal + (a[i - 1] === b[j - 1] ? 0 : 1));
+            diagonal = previous;
+        }
+    }
+    return row[b.length];
+}
+
+function synonymRevealsAnswer(word, synonym) {
+    const answer = normalize(word).replace(/[^a-z]/g, "");
+    const clue = normalize(synonym).replace(/[^a-z]/g, "");
+    return answer === clue || (Math.min(answer.length, clue.length) >= 6 && wordEditDistance(answer, clue) <= 2);
+}
+
 async function openaiStructured(name, schema, input) {
     const res = await fetch("https://api.openai.com/v1/responses", {
         method: "POST",
@@ -173,7 +195,7 @@ async function critiqueEntry(entry, selectedSense) {
         [
             {
                 role: "developer",
-                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; if options are antonyms, negated versions, minimal edits, or reuse the same sentence template; or if the example fails to demonstrate the intended sense. The four definitions should feel like definitions of four genuinely different words.",
+                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; if options are antonyms, negated versions, minimal edits, or reuse the same sentence template; or if the example fails to demonstrate the intended sense. The synonym is a low-cost clue and must be a less-obvious, challenging same-sense equivalent—not the first everyday translation—and must not share a lexical root with the answer. The four definitions should feel like definitions of four genuinely different words.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense }) },
         ]
@@ -184,7 +206,7 @@ function isValidCurated(entry) {
     if (entry.definition.length < 16 || entry.definition.length > 120) return false;
     if (normalize(entry.definition).includes(normalize(entry.word))) return false;
     if (!isGoodExampleSentence(entry.exampleSentence, entry.word)) return false;
-    if (!entry.synonym || normalize(entry.synonym) === normalize(entry.word)) return false;
+    if (!entry.synonym || synonymRevealsAnswer(entry.word, entry.synonym)) return false;
     if (!Array.isArray(entry.distractors) || entry.distractors.length !== 3) return false;
     if (new Set(entry.distractors.map(normalize)).size !== 3) return false;
     if (entry.distractors.some((value) => value.length < 12 || value.length > 140)) return false;
@@ -263,7 +285,7 @@ async function repairEntry(entry, selectedSense, issues) {
         [
             {
                 role: "developer",
-                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular, use an exact same-sense synonym, and make the example demonstrate that sense. Write the definition and all distractors with a lowercase first letter and no ending period. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
+                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular. For the synonym clue, choose a less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the simplest everyday translation or a word sharing the answer's lexical root. Make the example demonstrate the intended sense. Write the definition and all distractors with a lowercase first letter and no ending period. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense, issues }) },
         ]
@@ -296,13 +318,14 @@ async function curateEntry(bundle) {
                     maxItems: 3,
                     items: { type: "string" },
                 },
+                difficulty: { type: "integer", minimum: 1, maximum: 5 },
             },
-            required: ["accept", "senseIndex", "definition", "synonym", "exampleSentence", "distractors"],
+            required: ["accept", "senseIndex", "definition", "synonym", "exampleSentence", "distractors", "difficulty"],
         },
         [
             {
                 role: "developer",
-                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word, give a concise synonym for that exact sense, and write a natural sentence that clearly demonstrates it. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter and no ending period. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words.",
+                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word. For the synonym clue, choose a concise, less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the first everyday translation or a word sharing the answer's lexical root. Write a natural sentence that clearly demonstrates the sense. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter and no ending period. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words. Rate difficulty for a general adult player using the word and selected sense: 1=very familiar, 2=familiar, 3=intermediate, 4=advanced, 5=rare or expert-level. Judge familiarity, not spelling length.",
             },
             { role: "user", content: JSON.stringify(bundle) },
         ]
@@ -321,6 +344,7 @@ async function curateEntry(bundle) {
         distractors: result.distractors.map(formatChoice),
         sourceDictionary: selectedSense.sourceDictionary,
         sourceAttribution: selectedSense.attributionText,
+        difficulty: result.difficulty,
     };
 
     if (!isValidCurated(curated)) return null;
@@ -891,7 +915,7 @@ async function main() {
             id: stableId(entry),
             ...entry,
             status: "approved",
-            difficulty: entry.word.length >= 10 ? 4 : entry.word.length >= 8 ? 3 : 2,
+            difficulty: entry.difficulty,
             reviewedAt: dated,
             model: OPENAI_MODEL,
             promptVersion: PROMPT_VERSION,

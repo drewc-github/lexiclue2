@@ -4,6 +4,11 @@ import path from "path";
 const DAYS = Number(process.env.SCHEDULE_DAYS || 90);
 const RECENT_WINDOW = 10;
 
+function difficulty(entry) {
+  const value = Number(entry.difficulty);
+  return Number.isFinite(value) ? Math.min(5, Math.max(1, Math.round(value))) : 3;
+}
+
 function nyDateKey(date = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/New_York",
@@ -50,6 +55,12 @@ if (process.argv.includes("--rebuild")) {
 }
 
 const start = nyDateKey();
+if (process.argv.includes("--rebuild-future")) {
+  schedule.puzzles = Object.fromEntries(
+    Object.entries(schedule.puzzles).filter(([dateKey]) => dateKey <= start)
+  );
+}
+
 const usage = new Map(approved.map((entry) => [entry.id, 0]));
 for (const puzzle of Object.values(schedule.puzzles)) {
   for (const id of puzzle.wordIds) usage.set(id, (usage.get(id) ?? 0) + 1);
@@ -65,20 +76,29 @@ for (let day = 0; day < DAYS; day += 1) {
     prior?.wordIds.forEach((id) => recentIds.add(id));
   }
 
-  const rank = (entries) => entries.sort((a, b) => {
+  const rank = (entries, targetDifficulty) => entries.sort((a, b) => {
     const score = (entry) =>
-      (usage.get(entry.id) ?? 0) * 100 +
-      Math.abs((entry.difficulty ?? 3) - 3) * 2 +
+      Math.abs(difficulty(entry) - targetDifficulty) * 100 +
+      (usage.get(entry.id) ?? 0) * 10 +
       (hash(`${dateKey}:${entry.id}`) % 1000) / 1000;
     return score(a) - score(b);
   });
   const available = approved.filter((entry) => !recentIds.has(entry.id));
-  const nonAdjectives = rank(available.filter((entry) => entry.partOfSpeech !== "adjective"));
-  const adjectives = rank(available.filter((entry) => entry.partOfSpeech === "adjective"));
+  const nonAdjectives = rank(available.filter((entry) => entry.partOfSpeech !== "adjective"), 3);
+  const adjectivePool = available.filter((entry) => entry.partOfSpeech === "adjective");
+  const adjectives = [];
+  for (const target of [1, 2, 4, 5]) {
+    const candidate = rank(
+      adjectivePool.filter((entry) => !adjectives.some((picked) => picked.id === entry.id)),
+      target
+    )[0];
+    if (candidate) adjectives.push(candidate);
+  }
   if (nonAdjectives.length < 1 || adjectives.length < 4) {
     throw new Error(`Not enough fresh, balanced words for ${dateKey}`);
   }
-  const selected = [nonAdjectives[0], ...adjectives.slice(0, 4)];
+  const selected = [nonAdjectives[0], ...adjectives]
+    .sort((a, b) => difficulty(a) - difficulty(b));
 
   schedule.puzzles[dateKey] = {
     wordIds: selected.map((entry) => entry.id),

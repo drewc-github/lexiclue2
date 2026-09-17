@@ -32,11 +32,36 @@ function sharesTemplateOpening(left, right) {
     leftWords.slice(0, 3).every((word, index) => word === rightWords[index]);
 }
 
+function editDistance(left, right) {
+  const row = Array.from({ length: right.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= left.length; i += 1) {
+    let diagonal = row[0];
+    row[0] = i;
+    for (let j = 1; j <= right.length; j += 1) {
+      const previous = row[j];
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, diagonal + (left[i - 1] === right[j - 1] ? 0 : 1));
+      diagonal = previous;
+    }
+  }
+  return row[right.length];
+}
+
 for (const entry of ledger.entries) {
   if (byId.has(entry.id)) errors.push(`Duplicate ledger id: ${entry.id}`);
   byId.set(entry.id, entry);
   if (entry.status === "approved") {
+    if (!Number.isInteger(entry.difficulty) || entry.difficulty < 1 || entry.difficulty > 5) {
+      errors.push(`${entry.word}: difficulty must be an integer from 1 to 5`);
+    }
     if (entry.distractors?.length !== 3) errors.push(`${entry.word}: needs 3 distractors`);
+    const answerLetters = entry.word.toLowerCase().replace(/[^a-z]/g, "");
+    const synonymLetters = String(entry.synonym).toLowerCase().replace(/[^a-z]/g, "");
+    if (
+      answerLetters === synonymLetters ||
+      (Math.min(answerLetters.length, synonymLetters.length) >= 6 && editDistance(answerLetters, synonymLetters) <= 2)
+    ) {
+      errors.push(`${entry.word}: synonym is too similar to the answer`);
+    }
     if (!entry.sourceAttribution) errors.push(`${entry.word}: missing attribution`);
     const choices = [entry.definition, ...(entry.distractors ?? [])].map((value) => value.toLowerCase());
     for (const choice of [entry.definition, ...(entry.distractors ?? [])]) {

@@ -17,6 +17,8 @@
     "schedule:games": "node scripts/generateSchedule.mjs",
     "batch:words": "node scripts/batchReviewWords.mjs",
     "backfill:words": "node scripts/generateWords.mjs --outdated",
+    "rate:difficulty": "node scripts/rateDifficulty.mjs",
+    "harden:synonyms": "node scripts/hardenSynonyms.mjs",
     "validate:content": "node scripts/validateContent.mjs"
   },
   "dependencies": {
