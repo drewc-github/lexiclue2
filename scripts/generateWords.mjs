@@ -24,6 +24,12 @@ const MAX_DISCOVERED_TO_TRY = 200;
 const MAX_ENRICH_ATTEMPTS = 100;
 const MAX_NEW_WORDS = 12;
 const MAX_LLM_REVIEW_ATTEMPTS = 30;
+const MAX_ACCEPTED_PER_INITIAL = 2;
+const TARGET_DIFFICULTY_COUNTS = new Map([
+    [3, 3],
+    [4, 6],
+    [5, 3],
+]);
 const PROMPT_VERSION = 3;
 const WORDNIK_MIN_INTERVAL_MS = Number(process.env.WORDNIK_MIN_INTERVAL_MS || 13000);
 const WORDNIK_CACHE_PATH = path.resolve("work/wordnik-cache.json");
@@ -166,7 +172,7 @@ async function proposeCandidates(existingWords) {
         [
             {
                 role: "developer",
-                content: "Choose engaging English vocabulary for an adult daily learning game. Favor useful but challenging words, varied parts of speech, 6-12 alphabetic characters, and avoid proper nouns, archaic curiosities, offensive terms, and near-duplicates.",
+                content: "Choose engaging upper-intermediate through expert English vocabulary for an adult daily learning game. Most suggestions should be advanced but still contemporary, useful, and teachable; include a smaller number of rare expert-level words and only a few intermediate words. Exclude basic everyday vocabulary, proper nouns, archaic curiosities, offensive terms, narrow technical jargon, and near-duplicates. Use varied parts of speech, keep words 6-12 alphabetic characters, spread suggestions across at least 15 different starting letters, and do not alphabetize the list.",
             },
             {
                 role: "user",
@@ -178,6 +184,45 @@ async function proposeCandidates(existingWords) {
     return result.words
         .map(normalize)
         .filter((word) => isLikelyLexiclueWord(word) && !existingWords.includes(word));
+}
+
+function hashString(value) {
+    let result = 2166136261;
+    for (const character of value) {
+        result = Math.imul(result ^ character.charCodeAt(0), 16777619);
+    }
+    return result >>> 0;
+}
+
+function diversifyCandidatesByInitial(candidates, seed) {
+    const buckets = new Map();
+
+    for (const candidate of candidates) {
+        const initial = candidate.word[0];
+        const bucket = buckets.get(initial) ?? [];
+        bucket.push(candidate);
+        buckets.set(initial, bucket);
+    }
+
+    const initials = [...buckets.keys()].sort(
+        (left, right) =>
+            hashString(`${seed}:${left}`) - hashString(`${seed}:${right}`) ||
+            left.localeCompare(right)
+    );
+    const diversified = [];
+
+    for (let depth = 0; diversified.length < candidates.length; depth += 1) {
+        let added = false;
+        for (const initial of initials) {
+            const candidate = buckets.get(initial)?.[depth];
+            if (!candidate) continue;
+            diversified.push(candidate);
+            added = true;
+        }
+        if (!added) break;
+    }
+
+    return diversified;
 }
 
 async function critiqueEntry(entry, selectedSense) {
@@ -440,10 +485,10 @@ function scoreCandidate({ word, freq, pos, anchor }) {
     if (w.length >= 10) score += 1;
 
     if (freq != null) {
-        if (freq >= 0.05 && freq <= 5) score += 2;
-        else if (freq > 5 && freq <= 12) score += 1;
-        else if (freq > 20) score -= 3;
-        else if (freq < 0.002) score -= 2;
+        if (freq >= 0.005 && freq <= 1.5) score += 3;
+        else if (freq > 1.5 && freq <= 5) score += 1;
+        else if (freq > 12) score -= 3;
+        else if (freq < 0.001) score -= 2;
     }
 
     if (pos && ["adj", "n", "v"].includes(pos)) score += 1;
@@ -556,6 +601,7 @@ function buildAnchorWords(seedWords) {
     for (const entry of seedWords) {
         const word = normalize(entry.word);
         if (!isLikelyLexiclueWord(word)) continue;
+        if ((entry.difficulty ?? 3) < 3) continue;
         if (seen.has(word)) continue;
 
         seen.add(word);
@@ -831,10 +877,12 @@ async function main() {
         score: 10,
     }));
     const discoveredCandidates = await discoverCandidates(anchorWords, existingWordSet);
-    const candidates = [...llmCandidates, ...discoveredCandidates].filter(
+    const dedupedCandidates = [...llmCandidates, ...discoveredCandidates].filter(
         (candidate, index, all) =>
             all.findIndex((other) => other.word === candidate.word) === index
     );
+    const diversitySeed = `${new Date().toISOString().slice(0, 10)}:${existingWordSet.size}`;
+    const candidates = diversifyCandidatesByInitial(dedupedCandidates, diversitySeed);
     console.log(
         `Shortlisted ${candidates.length} candidates (${llmCandidates.length} LLM-proposed).`
     );
@@ -847,11 +895,18 @@ async function main() {
     }
 
     const accepted = [];
+    const acceptedByInitial = new Map();
+    const acceptedByDifficulty = new Map();
     let attempts = 0;
 
     for (const candidate of candidates) {
         if (accepted.length >= MAX_NEW_WORDS) break;
         if (attempts >= Math.min(MAX_ENRICH_ATTEMPTS, MAX_LLM_REVIEW_ATTEMPTS)) break;
+
+        const initial = candidate.word[0];
+        if ((acceptedByInitial.get(initial) ?? 0) >= MAX_ACCEPTED_PER_INITIAL) {
+            continue;
+        }
 
         attempts += 1;
         console.log(
@@ -872,6 +927,18 @@ async function main() {
         const entry = await curateEntry(dictionaryEntry);
         if (!entry) {
             console.log("  rejected: LLM quality review failed");
+            continue;
+        }
+
+        const difficulty = Math.round(Number(entry.difficulty));
+        const difficultyTarget = TARGET_DIFFICULTY_COUNTS.get(difficulty) ?? 0;
+        const acceptedAtDifficulty = acceptedByDifficulty.get(difficulty) ?? 0;
+        if (difficultyTarget === 0) {
+            console.log(`  rejected: difficulty ${difficulty} is below the level 3 minimum`);
+            continue;
+        }
+        if (acceptedAtDifficulty >= difficultyTarget) {
+            console.log(`  rejected: difficulty ${difficulty} quota already filled`);
             continue;
         }
 
@@ -900,7 +967,9 @@ async function main() {
         }
 
         accepted.push(entry);
-        console.log(`  accepted: ${entry.word}`);
+        acceptedByInitial.set(initial, (acceptedByInitial.get(initial) ?? 0) + 1);
+        acceptedByDifficulty.set(difficulty, acceptedAtDifficulty + 1);
+        console.log(`  accepted: ${entry.word} (difficulty ${difficulty})`);
     }
 
     if (accepted.length === 0) {
@@ -927,6 +996,12 @@ async function main() {
 
     console.log(`\nDone. Added ${accepted.length} new words to content/word-ledger.json`);
     console.log("Added words:", accepted.map((w) => w.word).join(", "));
+    console.log(
+        "Difficulty mix:",
+        [...TARGET_DIFFICULTY_COUNTS.keys()]
+            .map((difficulty) => `${difficulty}=${acceptedByDifficulty.get(difficulty) ?? 0}`)
+            .join(", ")
+    );
 }
 
 main().catch((err) => {

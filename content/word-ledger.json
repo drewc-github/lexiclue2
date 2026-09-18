@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-18T04:44:06.385Z",
+  "updatedAt": "2026-09-18T05:15:47.889Z",
   "entries": [
     {
       "id": "astute-adjective-1",
@@ -197,9 +197,9 @@
       "synonym": "springy",
       "exampleSentence": "Even after the team lost its first two games, it stayed resilient and finished the season strong.",
       "distractors": [
-        "calm even in situations that would upset most people",
-        "eager to explore unfamiliar places or ideas",
-        "difficult to influence because of strong convictions"
+        "steady and controlled even under emotional pressure",
+        "drawn to discovering unfamiliar places or ideas",
+        "firm in opinions and not easily persuaded"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -278,9 +278,9 @@
       "synonym": "equivocal",
       "exampleSentence": "Her text was ambiguous, so no one knew whether she was coming or canceling.",
       "distractors": [
-        "based on practical considerations rather than abstract theory",
-        "showing careful attention and persistent effort",
-        "present or noticeable throughout an entire area"
+        "guided by practical results instead of abstract principles",
+        "relentless in pursuing a goal despite obstacles",
+        "noticeable in every part of a place or thing"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -294,7 +294,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "cursory-adjective-1",
@@ -331,9 +332,9 @@
       "synonym": "adroit",
       "exampleSentence": "With a deft touch, the chef sliced the herbs in seconds.",
       "distractors": [
-        "slow and careful in making decisions",
-        "easy to notice because it stands out",
-        "likely to change suddenly without warning"
+        "hesitant when choices must be made quickly",
+        "plain enough to attract little notice",
+        "prone to uneven moods or shifting behavior"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -347,7 +348,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "dubious-adjective-1",
@@ -437,9 +439,9 @@
       "synonym": "redoubtable",
       "exampleSentence": "Even the top players were nervous about facing the formidable champion.",
       "distractors": [
-        "showing kindness and warmth toward other people",
-        "changing often and without a clear pattern",
-        "easy to understand because it is plainly stated"
+        "gentle and considerate toward other people",
+        "highly adaptable when conditions keep changing",
+        "clear in meaning and easy to follow"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -453,7 +455,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "lucid-adjective-1",
@@ -650,9 +653,9 @@
       "synonym": "faint",
       "exampleSentence": "There was a subtle change in her tone that made everyone in the room uneasy.",
       "distractors": [
-        "obvious because it attracts immediate attention",
-        "hazardous enough to threaten bodily safety",
-        "carefully organized to achieve an exact result"
+        "difficult to classify using ordinary categories",
+        "showing skill through carefully judged detail",
+        "unlikely to attract much public attention"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -729,9 +732,9 @@
       "synonym": "eagerness",
       "exampleSentence": "She responded with alacrity when the team asked for volunteers.",
       "distractors": [
-        "careful and detailed planning before acting",
-        "quiet dislike of doing what is asked",
-        "slow and reluctant movement from place to place"
+        "a generous offer to help without being asked",
+        "a pattern of delay caused by repeated hesitation",
+        "a strict commitment to following every rule exactly"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -745,7 +748,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "ameliorate-verb-1",
@@ -807,9 +811,9 @@
       "synonym": "diametric",
       "exampleSentence": "Her approach to leadership was antithetical to the company's collaborative culture.",
       "distractors": [
-        "working together toward a shared outcome",
-        "concealed from ordinary observation",
-        "prone to abrupt changes in movement or speed"
+        "working together toward a shared objective",
+        "concealed from view or discovery",
+        "changing direction with abrupt uneven motion"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -834,9 +838,9 @@
       "synonym": "indifference",
       "exampleSentence": "After weeks of bad news, he responded with apathy instead of anger or hope.",
       "distractors": [
-        "a sudden burst of excitement or energy",
-        "a strong desire to help other people",
-        "a careful habit of noticing small details"
+        "a habit of noticing minor differences in complex things",
+        "warm concern for easing another person's distress",
+        "a preference for excitement and lively activity"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -850,7 +854,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "approbation-noun-1",
@@ -886,9 +891,9 @@
       "synonym": "recondite",
       "exampleSentence": "The manual was full of arcane terms that confused everyone except the engineers.",
       "distractors": [
-        "common enough to appear in introductory materials",
-        "related to the excavation of ancient sites",
-        "scheduled to happen after a brief interval"
+        "used mainly in connection with ancient artifacts",
+        "likely to return or occur again fairly soon",
+        "welcomed easily by people with little experience"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -913,9 +918,9 @@
       "synonym": "sedulous",
       "exampleSentence": "He was assiduous about practicing the piano every day, even on weekends.",
       "distractors": [
-        "feeling nervous and unable to relax for long",
-        "wanting to avoid work or effort whenever possible",
-        "changing mood or opinion very quickly and often"
+        "uneasy in unfamiliar social situations",
+        "drawn to novelty rather than steady routine",
+        "quick to alter opinions after little reflection"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -929,7 +934,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "capricious-adjective-1",
@@ -939,9 +945,9 @@
       "synonym": "mercurial",
       "exampleSentence": "Our capricious manager praised the plan in the morning and rejected it by lunch.",
       "distractors": [
-        "even-tempered under sustained pressure",
-        "careful to follow established procedures",
-        "shaped by thoughtful evaluation rather than whim"
+        "steady in manner even during prolonged strain",
+        "guided by established steps and regular practice",
+        "formed after weighing options with care"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -966,9 +972,9 @@
       "synonym": "compelling",
       "exampleSentence": "She made a cogent case for changing the policy.",
       "distractors": [
-        "rich in sensory imagery and feeling",
-        "too skeletal to support the main point",
-        "so muddled that its meaning remains uncertain"
+        "evoking strong feeling through vivid descriptive language",
+        "relying on broad generalities instead of close detail",
+        "difficult to follow because key points are scattered"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1100,9 +1106,9 @@
       "synonym": "philippic",
       "exampleSentence": "During the meeting, he went on a diatribe about the company's new policy.",
       "distractors": [
-        "a careful speech or article that calmly explains an issue",
-        "a short message that shares good news with a group",
-        "a humorous story or performance meant to entertain an audience"
+        "a formal statement that announces a policy or position",
+        "an organized account of events presented in time order",
+        "a detailed explanation of a subject for learners or readers"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1116,7 +1122,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "didactic-adjective-1",
@@ -1233,9 +1240,9 @@
       "synonym": "frugal",
       "exampleSentence": "They chose an economical way to renovate the kitchen by reusing the existing cabinets.",
       "distractors": [
-        "reserved in manner and unwilling to draw notice",
-        "consistent in obeying rules and accepted standards",
-        "hesitant to alter plans once a course is set"
+        "careful to follow traditional standards of behavior",
+        "slow to reveal thoughts or personal feelings",
+        "having a practical design that saves space or effort"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -1365,9 +1372,9 @@
       "synonym": "penetrating",
       "exampleSentence": "Her incisive questions quickly revealed the weakness in the proposal.",
       "distractors": [
-        "patient and untroubled during hardship or delay",
-        "dramatically expressive of intense personal feeling",
-        "precise in carrying out small tasks and habits"
+        "remaining calm and steady under strain or delay",
+        "filled with vivid decorative detail rather than clarity",
+        "careful about outward appearance and neat presentation"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1418,9 +1425,9 @@
       "synonym": "exacting",
       "exampleSentence": "She was scrupulous about checking every figure in the report before submitting it.",
       "distractors": [
-        "inclined to act at once without reflection",
-        "changeable in belief from one occasion to the next",
-        "content with results that meet only a low standard"
+        "fond of showing off in a bold and noisy way",
+        "slow to make choices because of uncertainty",
+        "drawn to beauty and artistic effect above utility"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1471,9 +1478,9 @@
       "synonym": "hardiness",
       "exampleSentence": "After the storm damaged their shop, the owners showed remarkable resilience and reopened within a week.",
       "distractors": [
-        "a tendency to withdraw when circumstances become difficult",
-        "foresight that allows danger to be recognized in advance",
-        "gradual reinforcement that increases structural strength"
+        "a habit of preserving the same methods over time",
+        "early awareness that something harmful may happen",
+        "the quality of being firmly fixed in place"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1487,7 +1494,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "ambivalent-adjective-1",
@@ -1551,9 +1559,9 @@
       "synonym": "manifold",
       "exampleSentence": "The novel is multivalent, inviting political, psychological, and moral readings at the same time.",
       "distractors": [
-        "made of corresponding parts joined into one structure",
-        "progressing through several stages in a single sequence",
-        "blended into an even whole from differing tones"
+        "open to several lines of interpretation without one fixed sense",
+        "relying on shared customs rather than written rules",
+        "made to serve a practical purpose with little decoration"
       ],
       "sourceDictionary": "wordnet",
       "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
@@ -1578,9 +1586,9 @@
       "synonym": "exogenous",
       "exampleSentence": "The delays were adventitious, caused by a shipping strike rather than any problem with the plan itself.",
       "distractors": [
-        "inherent in the basic nature of a thing",
-        "set to happen at regular times by design",
-        "improved gradually through repeated effort"
+        "capable of being measured with exact numerical precision",
+        "marked by loyalty to long-established custom",
+        "formed by combining unlike elements into a whole"
       ],
       "sourceDictionary": "Lexiclues editorial bank",
       "sourceAttribution": "Lexiclues editorial entry",
@@ -1590,7 +1598,7 @@
       "model": "gpt-5.4",
       "promptVersion": 2,
       "reviewVersion": 2,
-      "timesUsed": 9,
+      "timesUsed": 10,
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
@@ -1631,9 +1639,9 @@
       "synonym": "insidious",
       "exampleSentence": "Misinformation can have a pernicious effect on public health because it spreads quietly and changes behavior over time.",
       "distractors": [
-        "creating intense public disorder and confusion",
-        "harmful to moral principles or proper behavior",
-        "certain to provoke bitter anger over time"
+        "easily spread through casual contact among people",
+        "giving a false appearance of truth or safety",
+        "likely to remain active for a very long time"
       ],
       "sourceDictionary": "wiktionary",
       "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
@@ -1658,9 +1666,9 @@
       "synonym": "troublesome",
       "exampleSentence": "The teacher moved the disruptive student to the front row so the rest of the class could focus.",
       "distractors": [
-        "encouraging smooth cooperation among a group",
-        "protective of long-established habits and practices",
-        "useful for maintaining steady concentration"
+        "difficult to understand without special knowledge",
+        "inclined to reward careful planning and restraint",
+        "marked by a calm and reassuring manner"
       ],
       "sourceDictionary": "wordnet",
       "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
@@ -1685,9 +1693,9 @@
       "synonym": "pliant",
       "exampleSentence": "The new puppy was gentle and submissive during training, quickly following every command.",
       "distractors": [
-        "ready to take charge and direct other people",
-        "stubborn about defending personal preferences",
-        "calm and even-tempered under social pressure"
+        "eager for public recognition and praise",
+        "firm in maintaining established rules and limits",
+        "able to remain composed during awkward encounters"
       ],
       "sourceDictionary": "wordnet",
       "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
@@ -2004,9 +2012,9 @@
       "synonym": "spartan",
       "exampleSentence": "The hotel lobby was austere, with white walls, wooden benches, and almost no decoration.",
       "distractors": [
-        "marked by elaborate ornament and vivid color",
-        "gentle and reassuring in social manner",
-        "casual about enforcing standards or rules"
+        "having an unusually cheerful and welcoming character",
+        "concerned with precise measurement and exact results",
+        "prone to sudden changes in feeling or attitude"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2057,9 +2065,9 @@
       "synonym": "spur",
       "exampleSentence": "Her speech was the catalyst for a citywide effort to improve public schools.",
       "distractors": [
-        "a device for recording tiny differences over time",
-        "an obstacle that slows progress toward a result",
-        "a summary that explains events after they occur"
+        "a guideline used to judge whether work is acceptable",
+        "a signal that warns of danger before it arrives",
+        "a document that records ownership or legal rights"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2084,9 +2092,9 @@
       "synonym": "tribulation",
       "exampleSentence": "She showed remarkable courage in the face of adversity after losing her home and job in the same year.",
       "distractors": [
-        "a surge of eager hope about what lies ahead",
-        "an interval of deep calm and security",
-        "a choice made on sudden impulse"
+        "a habit of avoiding unnecessary conflict",
+        "a period marked by public celebration",
+        "an act of careful attention to detail"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2176,7 +2184,7 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 4,
+      "timesUsed": 5,
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
@@ -2245,9 +2253,9 @@
       "synonym": "fellowship",
       "exampleSentence": "Months of practicing together built a strong sense of camaraderie on the team.",
       "distractors": [
-        "a preference for remaining socially isolated from others",
-        "a formal hierarchy based on authority and status",
-        "collective resentment directed toward a common opponent"
+        "the habit of delaying needed action until later",
+        "a system of shared symbols used for communication",
+        "a strong desire to achieve fame or success"
       ],
       "sourceDictionary": "wiktionary",
       "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
@@ -2261,7 +2269,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "caustic-adjective-1",
@@ -2325,9 +2334,9 @@
       "synonym": "unified",
       "exampleSentence": "Despite their different backgrounds, the team remained cohesive throughout the project.",
       "distractors": [
-        "rough enough to catch on nearby objects easily",
-        "changing shape quickly in response to pressure",
-        "showing a preference for working completely alone"
+        "marked by a strong tendency toward sudden change",
+        "able to be carried or moved without difficulty",
+        "showing skill in judging what is likely to happen"
       ],
       "sourceDictionary": "wordnet",
       "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
@@ -2341,7 +2350,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "complacent-adjective-1",
@@ -2351,9 +2361,9 @@
       "synonym": "self-satisfied",
       "exampleSentence": "The company grew complacent after years of success and ignored warning signs from new competitors.",
       "distractors": [
-        "too eager to agree with other people in order to be liked",
-        "deeply worried that something bad is about to happen",
-        "careful to notice small details and avoid mistakes"
+        "eager to take charge and direct other people",
+        "likely to change suddenly without warning",
+        "guided by strict attention to moral principles"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2367,7 +2377,8 @@
       "difficultyModel": "gpt-5.4",
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "contentious-adjective-1",
@@ -2453,9 +2464,9 @@
       "synonym": "passionately",
       "exampleSentence": "She ardently supported the campaign from the very beginning.",
       "distractors": [
-        "with careful attention to small details",
-        "in a calm and unhurried way",
-        "with a playful sense of humor"
+        "with close attention to precise detail",
+        "in a manner that invites laughter or amusement",
+        "by relying on reason rather than emotion"
       ],
       "sourceDictionary": "gcide",
       "sourceAttribution": "from the GNU version of the Collaborative International Dictionary of English.",
@@ -2468,7 +2479,8 @@
       "timesUsed": 0,
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "articulate-adjective-1",
@@ -2553,9 +2565,9 @@
       "synonym": "forthrightness",
       "exampleSentence": "Her candor during the interview made it easy to understand her concerns.",
       "distractors": [
-        "staying composed in stressful situations",
-        "careful attention to every small detail",
-        "an unbiased sense of what is just and reasonable"
+        "the ability to remain calm under pressure",
+        "a habit of checking work for small errors",
+        "respect for rules and established authority"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2568,7 +2580,8 @@
       "timesUsed": 0,
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "cerebral-adjective-1",
@@ -2653,9 +2666,9 @@
       "synonym": "medium",
       "exampleSentence": "The community center became a conduit for donations after the storm.",
       "distractors": [
-        "a written order that grants official permission to act",
-        "a protective cover worn over clothes during messy work",
-        "a formal meeting held to settle a public dispute"
+        "a padded bandage placed around a joint to support it",
+        "a narrow path made by repeated travel across the ground",
+        "a tool used for shaping wood by scraping thin layers away"
       ],
       "sourceDictionary": "ahd-5",
       "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
@@ -2665,10 +2678,11 @@
       "model": "gpt-5.4",
       "promptVersion": 3,
       "reviewVersion": 1,
-      "timesUsed": 0,
+      "timesUsed": 1,
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
-      "choiceReviewVersion": 2
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
     },
     {
       "id": "conspicuous-adjective-1",
@@ -2693,6 +2707,703 @@
       "timesUsed": 0,
       "synonymModel": "gpt-5.4",
       "synonymVersion": 2,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "aberrant-adjective-1",
+      "word": "aberrant",
+      "definition": "departing from what is usual or acceptable",
+      "partOfSpeech": "adjective",
+      "synonym": "atypical",
+      "exampleSentence": "The audit flagged several aberrant transactions that didn't match the company's normal spending patterns.",
+      "distractors": [
+        "able to be interpreted in several valid ways",
+        "showing deep respect through formal ceremony",
+        "created by gradual wearing away from friction"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "abhorred-verb-1",
+      "word": "abhorred",
+      "definition": "past tense and past participle form of abhor",
+      "partOfSpeech": "verb",
+      "synonym": "execrated",
+      "exampleSentence": "Many reformers abhorred the practice and campaigned publicly against it.",
+      "distractors": [
+        "drifted from one temporary job to another",
+        "weighed several risky options before deciding",
+        "bantered easily with the guests at dinner"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "accrue-verb-1",
+      "word": "accrue",
+      "definition": "to arise as an added gain, cost, or other result over time",
+      "partOfSpeech": "verb",
+      "synonym": "redound",
+      "exampleSentence": "If the contractor misses the deadline, penalty fees will accrue on the unpaid balance each week.",
+      "distractors": [
+        "to secure a debt against property as collateral",
+        "to loosen from a surface and hang away from it",
+        "to estimate a quantity by rough practical judgment"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "adamant-adjective-1",
+      "word": "adamant",
+      "definition": "refusing to change one's mind or course of action",
+      "partOfSpeech": "adjective",
+      "synonym": "intransigent",
+      "exampleSentence": "Even after seeing the budget numbers, the director remained adamant about not delaying the launch.",
+      "distractors": [
+        "done with careful attention to tiny details",
+        "likely to happen at a later time than expected",
+        "showing a cheerful readiness to cooperate"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 1,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "adverse-adjective-1",
+      "word": "adverse",
+      "definition": "harmful or working against your interests",
+      "partOfSpeech": "adjective",
+      "synonym": "deleterious",
+      "exampleSentence": "The hikers turned back when adverse weather made the mountain trail unsafe.",
+      "distractors": [
+        "eager to take charge and make decisions",
+        "having a rough, grainy texture to the touch",
+        "likely to happen at irregular intervals"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "aggregate-adjective-1",
+      "word": "aggregate",
+      "definition": "equal to the whole amount when all parts are added together",
+      "partOfSpeech": "adjective",
+      "synonym": "cumulative",
+      "exampleSentence": "The aggregate cost of the repairs ended up being much higher than we expected.",
+      "distractors": [
+        "consisting of repeated changes in direction or focus",
+        "divided into clearly separate layers or levels",
+        "shaped like a ring with an open center"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 1,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "amicable-adjective-1",
+      "word": "amicable",
+      "definition": "showing friendliness and a willingness to avoid conflict",
+      "partOfSpeech": "adjective",
+      "synonym": "cordial",
+      "exampleSentence": "Despite the tense negotiations, both sides kept the discussion amicable and reached an agreement by evening.",
+      "distractors": [
+        "ready to act before being asked or told",
+        "strictly following accepted social rules",
+        "able to be changed to fit new conditions"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "anomaly-noun-1",
+      "word": "anomaly",
+      "definition": "a departure from what is usual or expected",
+      "partOfSpeech": "noun",
+      "synonym": "aberration",
+      "exampleSentence": "The sudden spike in winter temperatures was treated as an anomaly until the pattern appeared again the next year.",
+      "distractors": [
+        "a formal rule that guides how a process should be done",
+        "a brief period of relief after stress or hardship",
+        "a careful grouping of things by shared features"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "aplomb-noun-1",
+      "word": "aplomb",
+      "definition": "calm, confident poise in the way someone acts",
+      "partOfSpeech": "noun",
+      "synonym": "equanimity",
+      "exampleSentence": "Even when the microphone failed, she handled the presentation with impressive aplomb.",
+      "distractors": [
+        "the habit of delaying tasks despite knowing better",
+        "an understated style that avoids unnecessary decoration",
+        "public recognition given for notable service or merit"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "artifice-noun-1",
+      "word": "artifice",
+      "definition": "a cleverly planned trick used to achieve a goal by misleading someone",
+      "partOfSpeech": "noun",
+      "synonym": "ruse",
+      "exampleSentence": "The email promising a huge refund was an artifice designed to get people to reveal their bank details.",
+      "distractors": [
+        "a gradual decline in strength or intensity over time",
+        "habitual obedience to established customs and practices",
+        "the quality of being easy to approach without fear"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "avarice-noun-1",
+      "word": "avarice",
+      "definition": "an excessive desire to accumulate money and riches",
+      "partOfSpeech": "noun",
+      "synonym": "cupidity",
+      "exampleSentence": "The scandal exposed a culture of avarice in which executives chased bonuses while ignoring the harm to their customers.",
+      "distractors": [
+        "a tendency to forgive offenses without resentment",
+        "the quality of speaking in a brief and forceful way",
+        "skill in judging and appreciating artistic quality"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "banality-noun-1",
+      "word": "banality",
+      "definition": "the quality of being dull, predictable, and lacking originality",
+      "partOfSpeech": "noun",
+      "synonym": "triteness",
+      "exampleSentence": "Critics praised the film's visuals but complained about the banality of its dialogue.",
+      "distractors": [
+        "the ability to recover quickly after hardship or shock",
+        "a style of speech that uses far more words than needed",
+        "strong dislike shown openly and without restraint"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "evanescent-adjective-1",
+      "word": "evanescent",
+      "definition": "fading or disappearing very quickly",
+      "partOfSpeech": "adjective",
+      "synonym": "fugitive",
+      "exampleSentence": "A hush fell over the field as an evanescent mist drifted above the grass and vanished with the rising sun.",
+      "distractors": [
+        "marked by careful attention to tiny details",
+        "having a rough, weathered surface",
+        "full of lively energy and movement"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "diligent-adjective-1",
+      "word": "diligent",
+      "definition": "showing steady care and persistence in getting work done",
+      "partOfSpeech": "adjective",
+      "synonym": "assiduous",
+      "exampleSentence": "She was diligent about checking every figure in the report before submitting it.",
+      "distractors": [
+        "easily influenced by other people's opinions or demands",
+        "willing to take big chances without much concern for risk",
+        "able to express ideas in a clear and persuasive way"
+      ],
+      "sourceDictionary": "wordnet",
+      "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "genuine-adjective-1",
+      "word": "genuine",
+      "definition": "openly honest in feeling or expression",
+      "partOfSpeech": "adjective",
+      "synonym": "unfeigned",
+      "exampleSentence": "Her apology sounded genuine, and even the harshest critics believed she meant it.",
+      "distractors": [
+        "ready to take action without waiting for instructions",
+        "marked by a rough, uneven surface or texture",
+        "carefully arranged to create a pleasing appearance"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "fickle-adjective-1",
+      "word": "fickle",
+      "definition": "likely to change feelings, loyalties, or attachments suddenly and often",
+      "partOfSpeech": "adjective",
+      "synonym": "mercurial",
+      "exampleSentence": "Jenna stopped confiding in her fickle friend, who was warm and devoted one week and distant the next.",
+      "distractors": [
+        "easily hurt in feeling or pride",
+        "full of lively energy and enthusiasm",
+        "difficult to predict because it is strange or mysterious"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "cryptic-adjective-1",
+      "word": "cryptic",
+      "definition": "having a hidden meaning that is hard to understand",
+      "partOfSpeech": "adjective",
+      "synonym": "enigmatic",
+      "exampleSentence": "Her cryptic text left everyone guessing whether she was joking or announcing big news.",
+      "distractors": [
+        "showing lively excitement and cheerful energy",
+        "made to look older or more valuable than it really is",
+        "strictly following traditional rules or accepted forms"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "luminous-adjective-1",
+      "word": "luminous",
+      "definition": "giving off light; glowing in the dark or with a steady shine",
+      "partOfSpeech": "adjective",
+      "synonym": "effulgent",
+      "exampleSentence": "The watch hands were luminous, so I could read the time in the dark theater.",
+      "distractors": [
+        "showing deep and lasting loyalty to a person or cause",
+        "covered with tiny holes that let air or liquid pass through",
+        "moving in a graceful, lightly bouncing way"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "opaque-adjective-1",
+      "word": "opaque",
+      "definition": "so hard to understand that it makes little sense",
+      "partOfSpeech": "adjective",
+      "synonym": "cryptic",
+      "exampleSentence": "The contract was so opaque that even the manager asked a lawyer to explain it.",
+      "distractors": [
+        "showing calm confidence in social situations",
+        "liable to change suddenly without warning",
+        "inclined to avoid work through laziness"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "nimble-adjective-1",
+      "word": "nimble",
+      "definition": "quick and graceful in movement or action",
+      "partOfSpeech": "adjective",
+      "synonym": "deft",
+      "exampleSentence": "The nimble cat leapt onto the fence and balanced there with ease.",
+      "distractors": [
+        "showing deep sadness in a quiet way",
+        "likely to happen at any moment",
+        "made stronger through long experience"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "intrepid-adjective-1",
+      "word": "intrepid",
+      "definition": "showing steady courage in dangerous or difficult situations",
+      "partOfSpeech": "adjective",
+      "synonym": "undaunted",
+      "exampleSentence": "The intrepid reporter traveled alone into the war zone to document what was happening there.",
+      "distractors": [
+        "needing careful thought before a decision is made",
+        "easily changed to fit new conditions or uses",
+        "giving a false impression of depth or importance"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "hinder-verb-1",
+      "word": "hinder",
+      "definition": "to make something harder to do or achieve",
+      "partOfSpeech": "verb",
+      "synonym": "impede",
+      "exampleSentence": "Heavy rain continued to hinder the rescue efforts throughout the night.",
+      "distractors": [
+        "to divide something into smaller equal parts",
+        "to give public praise for an achievement",
+        "to move steadily from one place to another"
+      ],
+      "sourceDictionary": "wiktionary",
+      "sourceAttribution": "from Wiktionary, Creative Commons Attribution/Share-Alike License.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "jubilant-adjective-1",
+      "word": "jubilant",
+      "definition": "feeling great joy and pride, especially after a success",
+      "partOfSpeech": "adjective",
+      "synonym": "exultant",
+      "exampleSentence": "The team was jubilant after winning the championship in overtime.",
+      "distractors": [
+        "showing careful attention to tiny details",
+        "likely to change suddenly without warning",
+        "eager to argue over unimportant matters"
+      ],
+      "sourceDictionary": "wordnet",
+      "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "difficulty": 2,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "urbane-adjective-1",
+      "word": "urbane",
+      "definition": "polite and sophisticated in a smooth, socially confident way",
+      "partOfSpeech": "adjective",
+      "synonym": "suave",
+      "exampleSentence": "Even when the interview turned tense, the diplomat remained urbane and unflustered.",
+      "distractors": [
+        "having a playful tendency to tease or joke around",
+        "marked by careful thrift and avoidance of waste",
+        "full of restless energy and hard to keep still"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "reticent-adjective-1",
+      "word": "reticent",
+      "definition": "not revealing much about your thoughts, feelings, or private life",
+      "partOfSpeech": "adjective",
+      "synonym": "closemouthed",
+      "exampleSentence": "Even after months on the team, Maya remained reticent about her family and rarely shared personal stories.",
+      "distractors": [
+        "prone to acting on sudden impulses without much thought",
+        "able to recover quickly after difficulties or setbacks",
+        "showing strong loyalty and support for a person or cause"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2,
+      "choiceReviewModel": "gpt-5.4"
+    },
+    {
+      "id": "placidly-adverb-1",
+      "word": "placidly",
+      "definition": "in a quiet and tranquil manner",
+      "partOfSpeech": "adverb",
+      "synonym": "equably",
+      "exampleSentence": "Even when the meeting grew tense, he replied placidly and kept the discussion on track.",
+      "distractors": [
+        "as if expressing something through symbols or signs",
+        "with showy elegance and rich detail",
+        "from a great distance in space or time"
+      ],
+      "sourceDictionary": "wordnet",
+      "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "quandary-noun-1",
+      "word": "quandary",
+      "definition": "a state of not knowing what to do because the situation is confusing or difficult",
+      "partOfSpeech": "noun",
+      "synonym": "predicament",
+      "exampleSentence": "She faced a quandary when two excellent job offers arrived on the same day.",
+      "distractors": [
+        "a strong and sudden feeling of enthusiasm for something new",
+        "an official delay of an event until a later time",
+        "a quiet feeling of sadness mixed with thoughtful reflection"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 3,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "garrulous-adjective-1",
+      "word": "garrulous",
+      "definition": "talking too much in a tiring way, especially about small or wandering matters",
+      "partOfSpeech": "adjective",
+      "synonym": "voluble",
+      "exampleSentence": "Our garrulous seatmate kept up a stream of trivial stories for the entire flight.",
+      "distractors": [
+        "easily upset by minor discomforts or setbacks",
+        "graceful and confident in formal social situations",
+        "liable to sudden shifts in attitude or feeling"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "disquiet-noun-1",
+      "word": "disquiet",
+      "definition": "uneasy concern about what might happen next",
+      "partOfSpeech": "noun",
+      "synonym": "foreboding",
+      "exampleSentence": "Despite the cheerful announcement, a note of disquiet spread through the office when the manager mentioned restructuring.",
+      "distractors": [
+        "a burst of admiration from a crowd",
+        "careful wording meant to avoid giving offense",
+        "a talent for making difficult tasks look easy"
+      ],
+      "sourceDictionary": "wordnet",
+      "sourceAttribution": "from WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
+      "choiceReviewVersion": 2
+    },
+    {
+      "id": "iconoclast-noun-1",
+      "word": "iconoclast",
+      "definition": "a person who attacks and tries to overthrow traditional or widely accepted ideas or institutions",
+      "partOfSpeech": "noun",
+      "synonym": "subverter",
+      "exampleSentence": "The columnist built a reputation as an iconoclast by questioning long-held assumptions about education and government.",
+      "distractors": [
+        "an official chosen to help two opposing sides reach an agreement",
+        "someone devoted to the study and collection of coins, medals, or paper money",
+        "a historian who records events in the order they happened"
+      ],
+      "sourceDictionary": "ahd-5",
+      "sourceAttribution": "from The American Heritage® Dictionary of the English Language, 5th Edition.",
+      "difficulty": 4,
+      "status": "approved",
+      "reviewedAt": "2026-09-18",
+      "model": "gpt-5.4",
+      "promptVersion": 3,
+      "reviewVersion": 1,
+      "timesUsed": 0,
       "choiceReviewVersion": 2
     }
   ]

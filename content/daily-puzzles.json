@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-17T16:41:47.207Z",
+  "generatedAt": "2026-09-18T05:15:47.889Z",
   "puzzles": {
     "2026-08-23": {
       "wordIds": [
@@ -1149,6 +1149,16 @@
         "pragmatic-adjective-1",
         "pernicious-adjective-1",
         "multivalent-adjective-1"
+      ],
+      "contentVersion": 1
+    },
+    "2026-12-16": {
+      "wordIds": [
+        "adamant-adjective-1",
+        "aggregate-adjective-1",
+        "conduit-noun-1",
+        "analogous-adjective-1",
+        "adventitious-adjective-1"
       ],
       "contentVersion": 1
     }
