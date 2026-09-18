@@ -19,6 +19,7 @@
     "backfill:words": "node scripts/generateWords.mjs --outdated",
     "rate:difficulty": "node scripts/rateDifficulty.mjs",
     "harden:synonyms": "node scripts/hardenSynonyms.mjs",
+    "audit:choices": "node scripts/auditChoices.mjs",
     "validate:content": "node scripts/validateContent.mjs"
   },
   "dependencies": {

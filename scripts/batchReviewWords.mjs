@@ -67,7 +67,7 @@ if (command === "prepare" || command === "prepare-words") {
       input: [
         {
           role: "developer",
-          content: "Review this vocabulary-game entry for exact sense agreement, learner-friendly wording, a natural example, and three plausible but unambiguously wrong same-form distractors. The synonym is a low-cost game clue: require a challenging, less-obvious exact same-sense equivalent with matching part of speech, not the simplest everyday translation and not a word sharing the answer's lexical root. Reject and explain any unresolved issue.",
+          content: "Review this vocabulary-game entry for exact sense agreement, learner-friendly wording, a natural example, and three plausible but unambiguously wrong same-form distractors. Distractors must define genuinely different concepts and use varied natural syntax; reject semantic neighbors, repeated opening phrases, and parallel fill-in templates. The synonym is a low-cost game clue: require a challenging, less-obvious exact same-sense equivalent with matching part of speech, not the simplest everyday translation and not a word sharing the answer's lexical root. Reject and explain any unresolved issue.",
         },
         { role: "user", content: JSON.stringify(entry) },
       ],

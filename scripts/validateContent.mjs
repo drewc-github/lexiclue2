@@ -28,8 +28,8 @@ function sharesTemplateOpening(left, right) {
   const words = (value) => value.toLowerCase().match(/[a-z]+/g) ?? [];
   const leftWords = words(left);
   const rightWords = words(right);
-  return leftWords.length >= 3 && rightWords.length >= 3 &&
-    leftWords.slice(0, 3).every((word, index) => word === rightWords[index]);
+  return leftWords.length >= 2 && rightWords.length >= 2 &&
+    leftWords.slice(0, 2).every((word, index) => word === rightWords[index]);
 }
 
 function editDistance(left, right) {

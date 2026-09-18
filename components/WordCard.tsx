@@ -109,7 +109,7 @@ export default function WordCard({
 
   function reveal(h: HintType) {
     if (disableHints) return;
-    if (hintsLocked) return;
+    if (hintsLocked && !used[h]) return;
 
     // If switching, remember the last hint the user asked for
     if (switchingRef.current) {
@@ -233,7 +233,7 @@ export default function WordCard({
             type="button"
             className={`hintBtn hintSyn ${used.synonym ? "used" : ""}`}
             onClick={() => reveal("synonym")}
-            disabled={disableHints || hintsLocked}
+            disabled={disableHints || (hintsLocked && !used.synonym)}
             aria-label="Related Word"
           >
             <Repeat size={18} strokeWidth={2} />
@@ -253,7 +253,7 @@ export default function WordCard({
             type="button"
             className={`hintBtn hintSent ${used.sentence ? "used" : ""}`}
             onClick={() => reveal("sentence")}
-            disabled={disableHints || hintsLocked}
+            disabled={disableHints || (hintsLocked && !used.sentence)}
             aria-label="Example Sentence"
           >
             <Pencil size={18} strokeWidth={2} />

@@ -195,7 +195,7 @@ async function critiqueEntry(entry, selectedSense) {
         [
             {
                 role: "developer",
-                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; if options are antonyms, negated versions, minimal edits, or reuse the same sentence template; or if the example fails to demonstrate the intended sense. The synonym is a low-cost clue and must be a less-obvious, challenging same-sense equivalent—not the first everyday translation—and must not share a lexical root with the answer. The four definitions should feel like definitions of four genuinely different words.",
+                content: "Act as a strict independent editor for a vocabulary game. Reject if the definition, part of speech, synonym, example sentence, or any distractor does not match the selected dictionary sense; if a distractor is arguably correct; if grammar gives the answer away; if wording is circular, obscure, awkward, or inappropriate; if options are semantic neighbors, antonyms, negated versions, minimal edits, or reuse the same opening phrase or sentence template; or if the example fails to demonstrate the intended sense. The synonym is a low-cost clue and must be a less-obvious, challenging same-sense equivalent—not the first everyday translation—and must not share a lexical root with the answer. The four definitions must describe genuinely different word concepts and use varied natural syntax while retaining matching grammatical form.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense }) },
         ]
@@ -238,8 +238,8 @@ function sharesTemplateOpening(left, right) {
     const words = (value) => normalize(value).replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(Boolean);
     const leftWords = words(left);
     const rightWords = words(right);
-    return leftWords.length >= 3 && rightWords.length >= 3 &&
-        leftWords.slice(0, 3).every((word, index) => word === rightWords[index]);
+    return leftWords.length >= 2 && rightWords.length >= 2 &&
+        leftWords.slice(0, 2).every((word, index) => word === rightWords[index]);
 }
 
 function findChoiceSimilarityIssues(entry) {
@@ -285,7 +285,7 @@ async function repairEntry(entry, selectedSense, issues) {
         [
             {
                 role: "developer",
-                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular. For the synonym clue, choose a less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the simplest everyday translation or a word sharing the answer's lexical root. Make the example demonstrate the intended sense. Write the definition and all distractors with a lowercase first letter and no ending period. The three distractors must describe genuinely different word concepts. Never use an antonym, negated definition, minimal edit, or the same sentence template with one noun or modifier changed.",
+                content: "Repair the vocabulary entry using the critic feedback. Every field must match only the selected dictionary sense. Keep the definition learner-friendly and non-circular. For the synonym clue, choose a less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the simplest everyday translation or a word sharing the answer's lexical root. Make the example demonstrate the intended sense. Write the definition and all distractors with a lowercase first letter and no ending period. The three distractors must describe genuinely different word concepts and use varied natural syntax while preserving matching grammatical form. Never use an antonym, semantic neighbor, negated definition, minimal edit, repeated opening phrase, or the same sentence template with one noun or modifier changed.",
             },
             { role: "user", content: JSON.stringify({ entry, selectedSense, issues }) },
         ]
@@ -325,7 +325,7 @@ async function curateEntry(bundle) {
         [
             {
                 role: "developer",
-                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word. For the synonym clue, choose a concise, less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the first everyday translation or a word sharing the answer's lexical root. Write a natural sentence that clearly demonstrates the sense. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter and no ending period. Each option must feel like the definition of a genuinely different word. Never create antonyms, negated definitions, minimal edits, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words. Rate difficulty for a general adult player using the word and selected sense: 1=very familiar, 2=familiar, 3=intermediate, 4=advanced, 5=rare or expert-level. Judge familiarity, not spelling length.",
+                content: "Build one coherent vocabulary-game entry from dictionary evidence. Choose the most useful, contemporary, teachable sense and return its zero-based senseIndex. Rewrite that sense in plain language without the target word. For the synonym clue, choose a concise, less-obvious, challenging exact same-sense equivalent with matching part of speech; do not use the first everyday translation or a word sharing the answer's lexical root. Write a natural sentence that clearly demonstrates the sense. Create exactly three plausible but definitely incorrect definitions with the same grammatical form and similar length. Write the definition and all distractors with a lowercase first letter and no ending period. Each option must define a genuinely different word concept and use varied natural syntax. Never create semantic neighbors, antonyms, negated definitions, minimal edits, repeated opening phrases, or repeated sentence templates. Reject archaic, offensive, highly technical, ambiguous, or poorly supported words. Rate difficulty for a general adult player using the word and selected sense: 1=very familiar, 2=familiar, 3=intermediate, 4=advanced, 5=rare or expert-level. Judge familiarity, not spelling length.",
             },
             { role: "user", content: JSON.stringify(bundle) },
         ]
